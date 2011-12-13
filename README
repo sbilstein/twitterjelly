@@ -1,1 +1,15 @@
 Commit early and commit often!
+
+Quick tips for the unitiated in git:
+
+git add .
+~Adds all new files in directory that are not yet part of the repo
+
+git commit -m "SWAG"
+~Commits to the local master branch, not to the github repo
+
+git push master origin
+~pushes your master branch up top to the github reco
+~you need to commit locally before you do this
+
+Best practices recommedn you create a local branch as soon as you start working, then commit locally. When you are done merge into your master branch...then test :) then push to the origin. I'll be damn surprised if this gains traction.
