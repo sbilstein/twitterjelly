@@ -1,50 +1,73 @@
 #!/usr/bin/env bash
 
 #Generate a new project from your HTML5 Boilerplate repo clone
-#by: Rick Waldron & Michael Cetrulo
+#Created 2010-10-13, Rick Waldron
 
 
 ##first run
-# $ cd  html5-boilerplate/build
-# $ chmod +x createproject.sh && ./createproject.sh
+# $ cd  html5-boilerplate
+# $ sudo chmod a+x createproject.sh && ./createproject.sh
 
 ##usage
 # $ cd  html5-boilerplate/build
 # $ ./createproject.sh
 
-# find project root (also ensure script is ran from within repo)
-src=$(git rev-parse --show-toplevel) || {
-  echo "try running the script from within html5-boilerplate directories." >&2
-  exit 1
-}
-[[ -d $src ]] || {
-  echo "fatal: could not determine html5-boilerplate's root directory." >&2
-  echo "try updating git." >&2
-  exit 1
-}
+echo "To create a new html5-boilerplate project, enter a new directory name:"
 
-# get a name for new project
-while [[ -z $name ]]
-do
-    echo "To create a new html5-boilerplate project, enter a new directory name:"
-    read name || exit
-done
-dst=$src/../$name
+read name
 
-if [[ -d $dst ]]
+cd ..
+
+webroot=$PWD
+
+SRC=$webroot"/html5-boilerplate"
+DST=$webroot"/../"$name
+
+if [ -d "$DST" ]
 then
-    echo "$dst exists"
+    echo "$DST exists"
 else
     #create new project
-    mkdir -- "$dst" || exit 1
+    mkdir $name
 
     #sucess message
-    echo "Created Directory: $dst"
-
-    cd -- "$src"
-    cp -vr -- css js img build test *.html *.xml *.txt *.png *.ico .htaccess "$dst"
+    echo "Created Directory: $DST"
+    
+    cd $SRC
+    
+    #copy to new project directory
+    #http://en.wikipedia.org/wiki/Cpio#Copy
+    #http://cybertiggyr.com/cpio-howto/
+    #http://www.cyberciti.biz/faq/how-do-i-use-cpio-command-under-linux/
+    find . -depth -print0 | cpio -0pdmv $DST
+    
 
     #sucess message
-    echo "Created Project: $dst"
+    echo "Created Project: $DST"
+    
+    # delete that temporary folder
+    rm -r $name
+    
+    #move into new project
+    cd $DST
+    
+    #in Bourne Again Shell, the cpio was copying 
+    #the whole dir into the new project, along with the contents
+    if [ -d "$DST/html5-boilerplate" ]
+    then
+         rm -r html5-boilerplate
+    fi        
+    
+    if [ -e "$DST/createproject.sh" ]
+    then
+         rm -r createproject.sh
+    fi  
+    
+    if [ -e "$DST/.git" ]
+    then
+         rm -rf .git
+    fi
+
+
 fi
 
