@@ -11,7 +11,7 @@
  */
 
 /* for testing */
-div { /* border: 1px solid grey;  */
+div {
 	
 }
 /* =============================================================================
@@ -116,7 +116,127 @@ audio
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 :not
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -294,6 +414,66 @@ controls
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 )
 {
 display
@@ -339,7 +519,67 @@ display
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -425,6 +665,36 @@ display
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
 
 
@@ -468,7 +738,97 @@ display
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 none
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -847,6 +1207,66 @@ svg
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 :not
 
 
@@ -896,7 +1316,67 @@ svg
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -995,7 +1475,67 @@ svg
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1143,7 +1683,97 @@ overflow
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 :
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1241,7 +1871,97 @@ overflow
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 hidden
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1489,7 +2209,8 @@ header {
 	-moz-box-shadow: 0 0 5px 3px #888;
 	-webkit-box-shadow: 0 0 5px 3px #888;
 	box-shadow: 0 0 5px 3px #888;
-	text-align: left;
+	/* text-align: left;*/
+	text-align: right;
 	position: fixed;
 	z-index: 2;
 	top: 0%;
@@ -1531,12 +2252,75 @@ footer {
 	vertical-align: bottom;
 }
 
-#main {
-	width: 75%;
+#debug {
+	position: fixed;
+	leftt: 90%;
 	top: 10%;
-	position: absolute; 
-	margin-left: 20%;
-	margin-right: 25%;
+	background-color: #e4f3fe;
+	padding: 10px 0 0px 0;
+	border-radius: 5px;
+	/* 	box-shadow: -3px 3px 5px 0px #888;
+ */
+	box-shadow: 0px 0px 5px 0px #888;
+	font-size: 13px;
+}
+
+#main { /* 	width: 80%;
+ */
+	top: 2%;
+	position: absolute;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#searchbox {
+	z-index: 1;
+	/*  	width: 70%; */
+	float: left;
+	background-color: #e4f3fe;
+	padding: 5px 0 10px 0;
+	border-bottom-right-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	box-shadow: 0px 0px 5px 0px #888;
+	font-size: 2.0em;
+	position: relative;
+	font-family: "Lucida Grande", Arial, sans-serif;
+	background-color: #e4f3fe;
+	font-family: "Lucida Grande", Arial, sans-serif;
+	width: 960px;
+}
+
+#selector {
+	width: 28%;
+	float: right;
+	display: table-cell;
+	margin-top: 6px;
+	padding: 3px;
+}
+
+div.namerow {
+	width: 100%;
+	/* 	height: 30px; */
+	font-spacing: 1.0em;
+	padding: 5px;
+	vertical-align: middle;
+	font-weight: 900;
+	letter-spacing: -0.11em;
+	font-size: 18px;
+	display: block;
+	float: right;
+	font-weight: 900;
+}
+
+#selector div img {
+	margin: 0px -2px 0px -2px;
+	padding: 0px 0px 0px 0px;
+	float: left;
+}
+
+#selector {
+	align: center;
 }
 
 #sidebar {
@@ -1576,22 +2360,6 @@ footer {
 	display: none;
 }
 
-#searchbox {
-	z-index: 1;
-	width: 74%;
-	float: left;
-	background-color: #e4f3fe;
-	padding: 5px 0 10px 0;
-	border-radius: 5px;
-	box-shadow: 0px 0px 5px 0px #888;
-	font-size: 2.0em;
-	line-height: 50%;
-	position: relative;
-	font-family: "Lucida Grande", Arial, sans-serif;
-	background-color: #e4f3fe;
-	font-family: "Lucida Grande", Arial, sans-serif;
-}
-
 #query { /* 	border: 2px solid grey; */
 	text-align: center;
 	width: 100%;
@@ -1601,33 +2369,68 @@ footer {
 	margin: 0px;
 	border-left-style: none;
 	border-right-style: none;
-	float: left;
-	display: block;
-	width: 100%;
+	/* 	float: left; */
+	/* 	display: block; */
+	/* 	width: 100%; */
+	width: 70%;
 }
 
-div.result {
-	padding: 10px 10px 5px 10px;
+div.result { /* 	padding: 10px 10px 5px 10px; */
 	overflow: hidden;
 	display: block;
 	float: left;
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	border: 2px solid transparent;
 	/* 	border-top: 1px solid grey; */
 	/* 	border-bottom: 1px inset grey; */
-	width: 100%;
+	/* 	width: 100%; */
+}
+
+div.result:hover {
+	border: solid 2px black;
 }
 
 div.tweetbox {
 	padding: 1px;
 	text-align: left;
-	font-size: 12px;
+	font-size: 10px;
 	color: #999;
-	float: top;
+	float: left;
+	display: inline;
+	/* width: 46%;
+ 	*/
+	width: 180px;
+	margin-left: 12px;
+}
+
+div.load {
+	display: table-cell;
+	vertical-align: middle;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	/* 	position: absolute; */
+	/* left: 50%; */
+	text-align: center;
+}
+
+#related {
+	width: 100%;
+	text-align: center;
+	font-size: 18px;
+}
+
+#topic {
+	width: 100%;
+	font-size: 14px;
 }
 
 div.tweetbox div {
 	padding: 0px;
-	text-align: left;
-	font-size: 15px;
+	text-align: justify;
+	font-size: 12px;
 	color: #000;
 	margin: 0px 0px 0px 10px;
 	word-wrap: break-word;
@@ -1641,7 +2444,7 @@ div.sharerow {
 	padding: 5px 0px 0px 5px;
 	line-height: 35px;
 	align: center;
-	text-align: right;
+	/* text-align: right; */
 }
 
 span.quote {
@@ -1657,7 +2460,7 @@ span.match {
 div.avatar img {
 	margin-right: 10px;
 	padding-right: 10px;
-	f
+	float: left;
 }
 
 div.descr {
@@ -1666,8 +2469,7 @@ div.descr {
 	line-height: 19px;
 	padding: 3px;
 	float: left;
-	display: inline;
-	width: 73%;
+	/* 		width: 80%; use this if using the share row. */
 }
 
 span.timestamp {
@@ -1678,12 +2480,13 @@ span.timestamp {
 div.namerow {
 	margin: 0px 0px 0px 0px;
 	padding: 0px 0px 0px 0px;
+	line-height: 100%;
 }
 
 div.username {
 	font-weight: 900;
 	letter-spacing: -0.11em;
-	font-size: 23px;
+	font-size: 14px;
 	width: 80%;
 	text-align: left;
 }
@@ -1750,20 +2553,23 @@ div.score {
 	padding: 0px 0px 4px 0px; */
 }
 
+
 #go.enabled {
 	background-color: 
 }
 
 #lead {
 	text-decoration: none;
-	text-align: center;
+	text-align: left;
 	/* 	font-family: "Lucida Grande", Arial, sans-serif;  */
 	/* 	font-size : 1.5em; */
 	font-weight: 700;
 	letter-spacing: -0.11em;
 	word-spacing: -0.07em;
-	line-height: 0px;
+	/* line-height: 4px; */
 	color: #000000;
+	line-height: 50%;
+	padding-left: 5px;
 }
 
 /* ==|== non-semantic helper classes ========================================

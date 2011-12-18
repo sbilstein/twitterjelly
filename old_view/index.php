@@ -51,7 +51,7 @@
 		}(document, 'script', 'facebook-jssdk'));
 	</script>
 
-<?php include("header.html"); ?>
+	<?php include("header.html"); ?>
 	<div id="container">
 
 		<div id="main" role="main">
@@ -61,11 +61,17 @@
 		 -->
 				<div width="100%" id="lead">
 					<h2>
-						<span id="lead">YOUR CELEB TWITTER MATCH IS...</span>
+						<span id="lead">LOREM IPSUM DOLOR SIT POS...</span>
 					</h2>
+					<script src="js/libs/twit.js"></script>
+					<a class="twitter-share-button" href="https://twitter.com/share"
+						data-lang="en"
+						data-text="My celeb twitter match is@ ! Find yours at http://www.twitter.jelly.com"></a>
+
+					<div class="fb-like" data-send="false" data-width="450"
+						data-show-faces="false" data-font="arial"></div>
+
 				</div>
-
-
 				<div id="query">
 					<form id="querybox">
 						<input type="search" size="30"
@@ -74,33 +80,45 @@
 
 					</form>
 				</div>
-				<div id="results"></div>
+				<div id="related">SWAGGER SWAGGER SWAGGER</div>
+				<div id= "topic">DRUGS CHEESE LOVE</div>
+				<!-- 				<div id="selector"></div> -->
+				<div id="results">
+					<div id="namerow"></div>
 
-			</div>
-
-			<div id="sidebar">
-				<h3>
-					YOUR MOST <em>JELLY</em> TWITTER WORDS
-				</h3>
-				<div id="words"></div>
-				<div class="help">
-					<a href="#" onclick="toggleinfo(); return false;"> what does
-						jelly mean?</a>
-				</div>
-				<div id="jellyinfo">
-					Jelly is a term we use to describe significance or importance. We
-					calculate the value of words using something called <a
-						href="http://en.wikipedia.org/wiki/Tf%E2%80%93idf">TF-IDF</a>. <br>
-					<a href="#" onclick="toggleinfo()">close this box</a>
 				</div>
 			</div>
 		</div>
-		<footer>
-			<div class="fb-like" data-send="false" data-width="450"
-				data-show-faces="false" data-font="arial"></div>
 
-		</footer>
+		<div id="sidebar" class="hidden">
+			<h3>
+				PAX ROMANA <em>VELIT</em> URSA MAJOR
+			</h3>
+			<div id="words"></div>
+			<div class="help">
+				<a href="#" onclick="toggleinfo(); return false;"> what does jelly
+					mean?</a>
+			</div>
+			<div id="jellyinfo">
+				Jelly is a term we use to describe significance or importance. We
+				calculate the value of words using something called <a
+					href="http://en.wikipedia.org/wiki/Tf%E2%80%93idf">TF-IDF</a>. <br>
+				<a href="#" onclick="toggleinfo()">close this box</a>
+			</div>
+		</div>
 	</div>
+
+	</div>
+
+	<footer>
+		<div id="debug">
+			<input type="checkbox" name="divborder" value="divb" id="borderbox">border</input>
+			<input type="checkbox" name="text" value="divj" id="justbox">justify
+			</border>
+		</div>
+
+
+	</footer>
 
 
 	<!-- JavaScript at the bottom for fast page loading -->
@@ -122,7 +140,7 @@
 
 
 	<!-- Change UA-XXXXX-X to be your site's ID -->
-	<!-- 	<script>
+	<script>
 		window._gaq = [ [ '_setAccount', 'UA-27643392-1' ], [ '_trackPageview' ],
 				[ '_trackPageLoadTime' ] ];
 		Modernizr.load({
@@ -130,7 +148,7 @@
 					+ '.google-analytics.com/ga.js'
 		});
 	</script>
- -->
+
 
 	<!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
        chromium.org/developers/how-tos/chrome-frame-getting-started -->
