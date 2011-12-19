@@ -43,7 +43,7 @@
 		<?php include("header.html"); ?>
 
 		<div class="grid_2 spacer"></div>
-		<div id="main" class="grid_12 main spacer">
+		<div id="main" class="grid_12 main centercol">
 			<div class="vert-spacer"></div>
 			<div id="lead">
 				<h2>
@@ -67,12 +67,24 @@
 				</form>
 			</div>
 			<!-- Append stuff right here -->
+			<div id="ajaxload">
+				<img src="img/loader.gif" />
+			</div>
+			<div class="clear"></div>
+			<div class="descr">
+				<div class="tweetbox grid_5">lorem ipsum swag lorem ipsum swag lorem</div>
+				<div class="tweetbox grid_5">lorem ipsum swag lorem ipsum swag lorem</div>
+				<div class="grid_1">SWAGGER</div>
+			</div>
+
+
 		</div>
-		<div class="grid_2 spacer"></div>
+
 		<div class="clear"></div>
 		<div class="grid_2 spacer"></div>
-		<div class="grid_12 bottom"></div>
+		<div class="grid_12 centercol bottom"></div>
 		<div class="grid_2 spacer"></div>
+
 		<footer> </footer>
 	</div>
 	<!-- end of #container -->
