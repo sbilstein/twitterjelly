@@ -49,7 +49,7 @@
 				<h2>
 					<span id="lead">LOREM IPSUM DOLOR SIT POS...</span>
 				</h2>
-
+	<div>
 				<script src="js/libs/twit.js"></script>
 				<a class="twitter-share-button" href="https://twitter.com/share"
 					data-lang="en"
@@ -57,6 +57,7 @@
 
 				<div class="fb-like" data-send="false" data-width="450"
 					data-show-faces="false" data-font="arial"></div>
+					</div>
 			</div>
 			<div id="query">
 				<form id="querybox">
@@ -67,14 +68,50 @@
 				</form>
 			</div>
 			<!-- Append stuff right here -->
-			<div id="ajaxload">
+			<!-- 		<div id="ajaxload">
 				<img src="img/loader.gif" />
-			</div>
+			</div> -->
 			<div class="clear"></div>
 			<div class="descr">
-				<div class="tweetbox grid_5">lorem ipsum swag lorem ipsum swag lorem</div>
-				<div class="tweetbox grid_5">lorem ipsum swag lorem ipsum swag lorem</div>
-				<div class="grid_1">SWAGGER</div>
+				<div class="tweetbox grid_4">
+					Snoop Dogg tweeted
+					<div class="tweet">lorem ipsum swag lorem ipsum swag lorem</div>
+				</div>
+				<div class="tweetbox grid_4">
+					Snoop Dogg tweeted
+					<div class="tweet">lorem ipsum swag lorem ipsum swag lorem</div>
+				</div>
+				<div class="spacer grid_1"></div>
+				<div id="selector" class="grid_3">
+					<div class="namerow">
+
+						<img src="img/dude.jpg" />
+						<div>
+							CAP'N SWAG<br> <em>98% MATCH</em>
+						</div>
+					</div>
+					<div class="namerow">
+
+						<img src="img/dude.jpg" />
+						<div>
+							CAP'N SWAG<br> <em>98% MATCH</em>
+						</div>
+					</div>
+					<div class="namerow">
+
+						<img src="img/dude.jpg" />
+						<div>
+							CAP'N SWAG<br> <em>98% MATCH</em>
+						</div>
+					</div>
+					<div class="namerow">
+
+						<img src="img/dude.jpg" />
+						<div>
+							CAP'N SWAG<br> <em>98% MATCH</em>
+						</div>
+					</div>
+				</div>
 			</div>
 
 
