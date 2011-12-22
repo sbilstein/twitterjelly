@@ -1,5 +1,12 @@
 *Roman's branch
 
+git commit -a -m "note to log"
+~this will commit changes to local branch
+
+git push origin
+~this pushes my changes to the main branch
+
+
 Commit early and commit often!
 
 Quick tips for the unitiated in git:
