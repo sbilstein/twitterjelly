@@ -1,0 +1,29 @@
+{
+	'user': {
+		'screen_name':'screenname',
+		'name': 'first last',
+		'pic_url': 'http://twitter.pic.url'},
+		
+	'celeb_matches': [
+		{
+			'screen_name': 'screenname',
+			'name': 'first last',
+			'pic_url': 'http://twitter.pic.url',
+			'tweets': [
+				{
+					'user_tweet1': user_tweet_obj1,
+					'celeb_tweet1': celeb_tweet_obj1
+				},
+				...
+			]
+		},
+		...
+	]
+}
+				
+					
+			 
+	
+	
+	
+ 
