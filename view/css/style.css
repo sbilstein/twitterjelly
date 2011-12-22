@@ -1094,7 +1094,7 @@ div.centercol {
 	content: '';
 	border-top: solid #e4f3fe 5px;
 	display: block;
- 	position: relative;
+	position: relative;
 	top: -4px;
 }
 
@@ -1115,7 +1115,7 @@ div.centercol {
 	vertical-align: bottom;
 }
 
-#ajaxload {
+div.ajaxload {
 	text-align: center;
 }
 
@@ -1133,5 +1133,29 @@ div.centercol {
 }
 
 div.tweetbox {
+	float: left;
+	padding-top: 5px;
+}
+div.namerow{
+	font-size: 1.75em;
+	font-weight: 800;
+	letter-spacing: -0.15em;
+	width: 100%;
+	display: block;
+	float: right;
+}
 	
+div.namerow img {
+	float: left;
+	}	
+div.tweet {
+	font-size: 1.6em;
+	margin-left: 5px;
+}
+#selector{
+	text-align: left;
+	color: black;
 	}
+div.descr {
+	font-size: 0.75em;
+}

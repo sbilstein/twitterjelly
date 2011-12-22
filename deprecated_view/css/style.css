@@ -2465,8 +2465,9 @@ div.avatar img {
 
 div.descr {
 	margin: 0px 0px 0px 0px;
-	font-size: 0.5em;
 	line-height: 19px;
+	
+	font-size: 0.5em;
 	padding: 3px;
 	float: left;
 	/* 		width: 80%; use this if using the share row. */
