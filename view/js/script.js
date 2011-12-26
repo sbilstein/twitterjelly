@@ -34,13 +34,13 @@ function submitRequest() {
 // $("#results").append(createLoading("ajaxload"));
 //
 // serverBusy = true;
-// $.get("submit.php", {
-// username : $("#usern").val()
-// // submit arguments
-// },
-//
-// // function that is called when server returns a value.
-// serverResponseHandler, "json");
+ $.get("../test.py", {
+ username : "test"
+ // submit arguments
+ },
+
+ // function that is called when server returns a value.
+ serverResponseHandler, "json");
 	inflate();
 	return;
 }
@@ -53,7 +53,7 @@ function inflate(){
 function serverResponseHandler(data) {
 
 	// do work swag
-
+	console.log(data);
 	// Set flag saying we are ready
 	serverBusy = false;
 }
