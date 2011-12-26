@@ -13,55 +13,102 @@ var picpath = "img/test.jpg";
 var score = 98;
 var submitted = false;
 var serverBusy = false;
-var borderon = false;
-var texton = false;
 
-function submit() {
+var debug_flag = true
+
+function debug(string){
+	if(debug_flag){
+		console.log(string);
+	}
+}
+
+
+function submitRequest() {
+	debug("Submitting request");
 	if (serverBusy == true) {
 		return false;
 	}
 	// Empty results pane, word list and selector
 	// Insert the loading gif
-	
-	$("#results").append(createLoading("ajaxloadgif"));
-	
-	
-	serverBusy = true;
-	$.get( "submit.php",
-	{
-		username : $("#usern").val() //submit arguments
-	}, 
 
-	// function that is called when server returns a value.
-	serverResponseHandler,
-	"json");
-
+// $("#results").append(createLoading("ajaxload"));
+//
+// serverBusy = true;
+// $.get("submit.php", {
+// username : $("#usern").val()
+// // submit arguments
+// },
+//
+// // function that is called when server returns a value.
+// serverResponseHandler, "json");
+	inflate();
 	return;
+}
+function inflate(){
+	$("#selector").append(createNamerow("dickhead", "img/test.jpg", 95));
+	$("#results").append(createTweetrow("swag", "swag", "swag", "swag"));
+
 }
 
 function serverResponseHandler(data) {
 
 	// do work swag
-	$("#ajaxloadgif").remove();
-	for (i = 0; i < 5; i++) {
-		$("#results").append(
-				createDesc(username, twitid, theirtweet, urtweet, picpath,
-						score));
-
-	}
-	$("#results").before("<div id=\"selector\"></div>");
-	$("#selector").append(createImgSelector("img/gaga.jpg", "LADY GAGA", 87));
 
 	// Set flag saying we are ready
 	serverBusy = false;
 }
-//
-function createLoading(id) {
-	var $loader = $("<div></div>");
-	$loader.addClass("ajaxload");
-	$loader.attr("id", id);
-	$loader.append($("<img/>").attr("src", "img/loader.gif"));
-	$loader.attr("align", "center");
-	return $loader;
+// Initialize query box
+$("#querybox").submit(function() {
+	submitRequest();
+	return false;
+});
+
+function createNamerow(name, picpath, score){
+// <div class="namerow">
+// <img src="img/dude.jpg" />
+// <div>
+// CAP'N SWAG<br> <em>98% MATCH</em>
+// </div>
+// </div>
+  	var $row = $("<div></div>");
+  	$row.addClass("namerow");
+  	$row.append("<img src=\"" + picpath +"\"/><div>" + name+"<br><em>" + score +"% MATCH</em></div>");
+  	return $row;
 }
 
+function createTweetrow(user_a, user_b, tweet_a, tweet_b){
+	
+// <div class="result_row">
+// <div class="tweetbox">
+// Snoop Dogg tweeted:
+// <div class="tweet">sdfsfsmsfs gdfgdfg
+// dfgdg dfgdfgdfg dfgdfgdfgdgf ipsum swag lorem</div>
+// </div>
+//
+// <div class="tweetbox">
+// Shwayze tweeted:
+// <div class="tweet">lorem ipsum swag lorem ipsum swag lorem
+// lorem ipsum swag loresdfsfsmsfs gdfgdfg dfgdg dfgdfgdfg
+// dfgdfgdfgdgf ipsum swag lorem</div>
+// </div>
+// </div>
+	$row = createResultrow();
+	$d1 = $("<div></div>").addClass("tweetbox");
+	$d1.append(user_a + " tweeted:");
+	$d1.append($("<div></div>").addClass("tweet").append(tweet_a));
+
+	$d2 = $("<div></div>").addClass("tweetbox");
+	$d2.append(user_a + " tweeted:");
+	$d2.append($("<div></div>").addClass("tweet").append(tweet_b));
+	$row.append($d1);
+	$row.append($d2);
+	return $row;
+	console.log("Swag city");
+}
+
+
+function createResultrow(){
+	var $row = $("<div></div>");
+	$row.addClass("result_row");
+	return $row;
+}

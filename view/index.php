@@ -49,15 +49,15 @@
 				<h2>
 					<span id="lead">LOREM IPSUM DOLOR SIT POS...</span>
 				</h2>
-	<div>
-				<script src="js/libs/twit.js"></script>
-				<a class="twitter-share-button" href="https://twitter.com/share"
-					data-lang="en"
-					data-text="My celeb twitter match is@ ! Find yours at http://www.twitter.jelly.com"></a>
+				<div class="social">
+					<script src="js/libs/twit.js"></script>
+					<a class="twitter-share-button" href="https://twitter.com/share"
+						data-lang="en"
+						data-text="My celeb twitter match is@ ! Find yours at http://www.twitter.jelly.com"></a>
 
-				<div class="fb-like" data-send="false" data-width="450"
-					data-show-faces="false" data-font="arial"></div>
-					</div>
+					<div class="fb-like" data-send="false" data-width="450"
+						data-show-faces="false" data-font="arial"></div>
+				</div>
 			</div>
 			<div id="query">
 				<form id="querybox">
@@ -72,57 +72,43 @@
 				<img src="img/loader.gif" />
 			</div> -->
 			<div class="clear"></div>
-			<div class="descr">
-				<div class="tweetbox grid_4">
-					Snoop Dogg tweeted
-					<div class="tweet">lorem ipsum swag lorem ipsum swag lorem</div>
-				</div>
-				<div class="tweetbox grid_4">
-					Snoop Dogg tweeted
-					<div class="tweet">lorem ipsum swag lorem ipsum swag lorem</div>
-				</div>
-				<div class="spacer grid_1"></div>
-				<div id="selector" class="grid_3">
-					<div class="namerow">
-
-						<img src="img/dude.jpg" />
-						<div>
-							CAP'N SWAG<br> <em>98% MATCH</em>
-						</div>
+			<div class="results grid_8" id="results">
+				<div class="result_row">
+					<div class="tweetbox">
+						Snoop Dogg tweeted:
+						<div class="tweet">sdfsfsmsfs gdfgdfg dfgdg dfgdfgdfg
+							dfgdfgdfgdgf ipsum swag lorem</div>
 					</div>
-					<div class="namerow">
 
-						<img src="img/dude.jpg" />
-						<div>
-							CAP'N SWAG<br> <em>98% MATCH</em>
-						</div>
-					</div>
-					<div class="namerow">
-
-						<img src="img/dude.jpg" />
-						<div>
-							CAP'N SWAG<br> <em>98% MATCH</em>
-						</div>
-					</div>
-					<div class="namerow">
-
-						<img src="img/dude.jpg" />
-						<div>
-							CAP'N SWAG<br> <em>98% MATCH</em>
-						</div>
+					<div class="tweetbox">
+						Shwayze tweeted:
+						<div class="tweet">lorem ipsum swag lorem ipsum swag lorem
+							lorem ipsum swag loresdfsfsmsfs gdfgdfg dfgdg dfgdfgdfg
+							dfgdfgdfgdgf ipsum swag lorem</div>
 					</div>
 				</div>
 			</div>
+			<!--  			<div class="spacer grid_1"></div> -->
+			<div id="selector" class="grid_3">
+				<div class="namerow">
+					<img src="img/dude.jpg" />
+					<div>
+						cap'n swag<br> <em>98% MATCH</em>
+					</div>
+				</div>
 
-
+			</div>
 		</div>
 
-		<div class="clear"></div>
-		<div class="grid_2 spacer"></div>
-		<div class="grid_12 centercol bottom"></div>
-		<div class="grid_2 spacer"></div>
 
-		<footer> </footer>
+	</div>
+
+	<div class="clear"></div>
+	<div class="grid_2 spacer"></div>
+	<div class="grid_12 centercol bottom"></div>
+	<div class="grid_2 spacer"></div>
+
+	<footer> </footer>
 	</div>
 	<!-- end of #container -->
 

@@ -1115,10 +1115,14 @@ div.centercol {
 	vertical-align: bottom;
 }
 
+div.social {
+	vertical-align: bottom;
+}
+
 div.ajaxload {
 	text-align: center;
 }
-
+/* FB like 24 pixels high */
 #usern {
 	font-size: 30px;
 	height: 30px;
@@ -1132,30 +1136,49 @@ div.ajaxload {
 	height: 1.0em;
 }
 
-div.tweetbox {
-	float: left;
-	padding-top: 5px;
+div.result_row {
+	display: table-row;
 }
-div.namerow{
-	font-size: 1.75em;
+
+div.tweetbox {
+	display: table-cell;
+	float: left;
+	background-color: pink;
+	width: 43%;
+	padding: 1%;
+	margin: 2%;
+	overflow: hidden;
+	word-wrap: breadk-word;
+}
+
+div.namerow {
+	font-size: 1.5em;
 	font-weight: 800;
 	letter-spacing: -0.15em;
 	width: 100%;
 	display: block;
 	float: right;
+
+	display: table-row;
 }
-	
+
 div.namerow img {
 	float: left;
-	}	
+}
+
 div.tweet {
-	font-size: 1.6em;
+	font-size: 1.3em;
 	margin-left: 5px;
 }
-#selector{
+
+#selector {
 	text-align: left;
 	color: black;
-	}
-div.descr {
+	background-color: orange;
+	display: table;
+}
+
+div.results {
+	display: table;
 	font-size: 0.75em;
 }
