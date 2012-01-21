@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: PyMySQL3
+Version: 0.4
+Summary: Pure Python MySQL Driver 
+Home-page: http://code.google.com/p/pymysql
+Author: David.Story
+Author-email: iDavidStory@gmail.com
+License: MIT
+Description: UNKNOWN
+Platform: UNKNOWN
