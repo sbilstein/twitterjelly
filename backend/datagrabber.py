@@ -2,6 +2,7 @@ from dbsql import *
 import pprint
 from tfidf import *
 import time
+import math
 import pickle
 import unidecode
 import urllib.request
@@ -9,6 +10,9 @@ import json
 from doshit import * #random funtions, forgot what they do.
 import hashlib
 from fetchtweets import TweetFetcher
+import tweetadder
+import datetime
+import collections
 
 class DataGrabber:
     def __init__(self):
@@ -49,8 +53,7 @@ class DataGrabber:
         f.close()
         print('done writing LDA data to file!')
 
-    def GetUserTFIDFs(self, user, canretry=True):
-        tfidfobj = TfIdf()
+    def GetUserTweets(self,user,canretry=True):
         userdata = None
         if self.tf.canFetchTimeline():
             userdata = self.tf.fetchUserTimeline(user, format="searchapi")
@@ -59,10 +62,128 @@ class DataGrabber:
 
         if 'results' not in userdata:
             if canretry:
-                return self.GetUserTFIDFs(user, canretry=False)
+                return self.GetUserTweets(user, canretry=False)
             else:
                 userdata = self.tf.getUserTweetsData(user)
 
+        return userdata
+
+    def GetUserTweetStats(self, userdata):
+
+        #declare all counts
+        num_days = 0.0
+
+        num_per_time = [0.0]*6
+
+        num_per_weekday = [0.0]*7
+        num_at = 0.0
+        num_rt = 0.0
+        num_hash = 0.0
+        num_links = 0.0
+
+        mentions = []
+        hashes = []
+
+        user_name = ""
+        #tweets per day logic depends on results coming back in chronological order
+        #MAKE SURE THIS IS ALWAYS THE CASE IN SEARCH API, REST API, CACHE
+        #IF NOT, NEED TO SORT AS PRE PROCESSING STEP
+        #JON NEEDS TO PUT IN A SIMILAR CHECK, NON EXISTENT USERS & USERS W 0 TWEETS CRASH CODE CURRENTLY
+        if len(userdata['results']) == 0 or type(userdata['results']) is dict:
+            return {}
+        
+        else:
+            if (len(userdata['results']) > 0):
+                created_at = tweetadder.replaceMonth(userdata['results'][0]['created_at'])
+                cur_datetime = datetime.datetime(int(created_at[25:]), int(created_at[4:6]), int(created_at[7:9]),
+                                   int(created_at[10:12]), int(created_at[13:15]), int(created_at[16:18]))
+                num_days+=1
+                user_name = userdata['results'][0]["user"]["screen_name"]
+                
+            for tweet in userdata['results']:
+                created_at = tweetadder.replaceMonth(tweet['created_at'])
+                created = datetime.datetime(int(created_at[25:]), int(created_at[4:6]), int(created_at[7:9]),
+                                   int(created_at[10:12]), int(created_at[13:15]), int(created_at[16:18]))
+                
+                text = tweet['text']
+
+                #update day count
+                if created.day != cur_datetime.day or created.month != cur_datetime.month or created.year != cur_datetime.year:
+                    cur_datetime = created
+                    num_days+=1
+
+                #update num_per_time count
+                num_per_time[math.floor(created.hour / 4)] += 1
+
+                #update num_per_weekday count
+                num_per_weekday[created.weekday()]+=1
+
+                #Get RT @ and # counts
+                link = False
+                mention = False
+                rt = False
+                has = False
+                for word in text.split(" "):
+                    if "http://" in word and not link:
+                        num_links+=1
+                        link = True
+                        
+                    if len(word) > 0 and word[0] == "@" and word[1:] != user_name:
+                        mentions.append(word)
+                        if not mention:
+                            num_at +=1
+                            mention = True
+
+                    if "RT" == word and not rt:
+                        num_rt+=1
+                        rt = True
+                        
+                    if len(word) > 0 and word[0] == "#":
+                        hashes.append(word)
+                        if not has:
+                            num_hash +=1
+                            has = True
+            
+            mention_count = collections.Counter(mentions)
+            unique_mentions = -1.0
+            if len(mentions)!=0:
+                unique_mentions = float(len(mention_count))/len(mentions)
+
+            hash_count = collections.Counter(hashes)
+            unique_hashes = -1.0
+            if len(hashes)!=0:
+                unique_hashes = float(len(hash_count))/len(hashes)
+
+            total_tweets = len(userdata['results'])
+            dicvals ={}
+            if total_tweets != 0:
+                dicvals = {"tr_day": float(total_tweets)/num_days,
+                               "tr_monday": num_per_weekday[0]/total_tweets,
+                               "tr_tuesday": num_per_weekday[1]/total_tweets,
+                               "tr_wednesday": num_per_weekday[2]/total_tweets,
+                               "tr_thursday": num_per_weekday[3]/total_tweets,
+                               "tr_friday": num_per_weekday[4]/total_tweets,
+                               "tr_saturday": num_per_weekday[5]/total_tweets,
+                               "tr_sunday": num_per_weekday[6]/total_tweets,
+                               "tr_latenight": num_per_time[0]/total_tweets,
+                               "tr_earlymorning": num_per_time[1]/total_tweets,
+                               "tr_morning": num_per_time[2]/total_tweets,
+                               "tr_afternoon": num_per_time[3]/total_tweets,
+                               "tr_evening": num_per_time[4]/total_tweets,
+                               "tr_night": num_per_time[5]/total_tweets,
+                               "mention_rate": float(num_at)/total_tweets,
+                               "retweet_rate": float(num_rt)/total_tweets,
+                               "hash_rate": float(num_hash)/total_tweets,
+                               "link_rate": float(num_links)/total_tweets,
+                               "unique_hash": unique_hashes,
+                               "unique_mention": unique_mentions,
+                               "user":user_name
+                               }
+
+            return dicvals
+
+    def GetUserTFIDFs(self, userdata):
+        tfidfobj = TfIdf()
 
         #GET TERM COUNTS AND BUILD DICS
         terms = {}
@@ -134,10 +255,29 @@ class DataGrabber:
 
         return results
 
+    def GetCelebTweetStats(self):
+        q = "SELECT * FROM celeb_stats WHERE tr_day > -1"
+        results = self.sql.q(q)
+
+        return results
 
     def GetCelebMatchesForUser(self, user):
+        #GET USER TWEETS
+        userdata = self.GetUserTweets(user)
+
+        #GET USER TWEET STATS
+        userstats = self.GetUserTweetStats(userdata)
+        pprint.pprint(userstats)
+
+
+        #GET CELEB STATS
+        
+
+        #CALCULATE TWEET STAT MATCH SCORES
+        
+
         #GET USER TFIDF
-        usertfidf = self.GetUserTFIDFs(user)
+        usertfidf = self.GetUserTFIDFs(userdata)
         userscores = usertfidf['scores_dic']
 
         print("top user terms are",usertfidf['scores_list'][:15])
@@ -194,7 +334,7 @@ if __name__ == '__main__':
     #user = "Live_2Belieb"
     #user = "iluvjb1518"
     #user = "Belieb_Forever"
-    #user = "sbilstein"
+    user = "sbilstein"
     #user = "boomshakanaka"
     #user = "nuqb"
     #user = "celebjelly"
@@ -203,10 +343,16 @@ if __name__ == '__main__':
     #user = "EmilyAnneNichol"
     #user = "james_quinlan"
     #user = "ggrenley"
-    #
     #user = "Suciaaaaa"
     #user = "dulcineadelech"
-    user = "pr0crastin8r"
+    #user = "pr0crastin8r"
+
+    #non existent user for testing
+    #user = "nonexistent75756fj"
+
+    #user with 0 tweets for testing
+    #user = "Adared"
+    
     pprint.pprint(DataGrabber().GetCelebMatchesForUser(user)[:10])
 
     
