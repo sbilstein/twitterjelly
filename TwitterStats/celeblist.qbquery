@@ -1,0 +1,6 @@
+﻿DELETE FROM celebs;
+
+LOAD DATA LOCAL INFILE 'E:\\lemurturtle\\celeb\\jonusers.txt' INTO TABLE celebs
+LINES TERMINATED BY '\r\n';
+
+SELECT DISTINCT celebs.*, tweets.from_user_name FROM celebs RIGHT JOIN tweets ON celebs.user=tweets.from_user;

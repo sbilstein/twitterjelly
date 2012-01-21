@@ -1,0 +1,12 @@
+﻿SELECT tfidf_scores.* FROM tokens,
+  (SELECT tfidf.token, tfidf.tf, tfidf.df, log(tfidf.tf/tfidf.df) as score FROM
+    (SELECT token,
+          COUNT(*) AS df,
+          SUM(CASE WHEN user='snoopdogg' THEN 1 ELSE 0 END) AS tf
+      FROM token_user_mapping
+      GROUP BY token
+      ORDER BY tf DESC) as tfidf
+  ORDER BY score DESC) as tfidf_scores
+WHERE tokens.token = tfidf_scores.token
+      AND tokens.type = 'word'
+      AND tfidf_scores.score != 0
