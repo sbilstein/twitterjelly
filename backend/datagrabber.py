@@ -298,11 +298,12 @@ class DataGrabber:
         celebscores = self.GetCelebTFIDFsForTerms([term[0] for term in usertfidf['scores_list']][:15])
 
         #CALCULATE MATCH SCORES
+
         cumcelebscores = {}
         celebwords = {}
         for entry in celebscores:
             celeb = entry[0]
-            token = entry[1]
+            token = unidecode.unidecode(entry[1])
             score = float(entry[2])
 
             if celeb in cumcelebscores:
@@ -310,9 +311,9 @@ class DataGrabber:
                 cumcelebscores[celeb] += userscores[token] * score
             else:
                 celebwords[celeb] = {token:score}
-                cumcelebscores[celeb] = userscores[unidecode.unidecode(token)] * score
+                cumcelebscores[celeb] = userscores[token] * score
 
-        matches = [(celeb,cumcelebscores[celeb], celebwords[celeb]) for celeb in cumcelebscores]
+        matches = [(celeb, cumcelebscores[celeb], celebwords[celeb]) for celeb in cumcelebscores]
         matches.sort(key=lambda x: -cumcelebscores[x[0]])
 
         #FIND MATCHING TWEETS FOR TOP 10 CELEBS
@@ -332,12 +333,15 @@ class DataGrabber:
             #pprint.pprint(results)
             matches[i] = list(matches[i])
             
-            matching_user_tweets = [usertfidf['tweets'][usertfidf['token_mapping'][token][0]]['text'] for token in matches[i][2]]
+            matching_user_tweets = [usertfidf['tweets'][usertfidf['token_mapping'][unidecode.unidecode(token)][0]]['text'] for token in matches[i][2]]
 
             #ADD TWEETS THAT MATCH ON TOKENS
-            for token in matches[i][2]:
+            sorted_tokens = [token for token in  sorted(matches[i][2].keys(), key=lambda x: -matches[i][2][x])]
+            #for token in matches[i][2]:
+            for token in sorted_tokens:
                 celeb_tweets_for_token = list(filter(lambda x: x.count(token) > 0, matching_celeb_tweets))
                 user_tweets_for_token = [usertfidf['tweets'][usertfidf['token_mapping'][token][k]] for k in range(len(usertfidf['token_mapping'][token]))]
+
                 for j in range(min(len(celeb_tweets_for_token), len(user_tweets_for_token))):
                     celeb_match['tweets'].append(
                         {
@@ -377,14 +381,14 @@ if __name__ == '__main__':
     #DataGrabber().GetTfIdfScores()
 
     #user = "KingGails"
-    user = "King32David"
+    #user = "King32David"
     #user = "joshrweinstein"
     #user = "simplycary"
     #user = "Live_2Belieb"
     #user = "iluvjb1518"
     #user = "Belieb_Forever"
-    user = "sbilstein"
-    #user = "boomshakanaka"
+    #user = "sbilstein"
+    user = "boomshakanaka"
     #user = "nuqb"
     #user = "celebjelly"
     #user = "jonslaught"
