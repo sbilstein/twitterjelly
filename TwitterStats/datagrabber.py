@@ -4,7 +4,7 @@ from tfidf import *
 import time
 import pickle
 import unidecode
-import urllib
+import urllib.request
 import json
 from doshit import * #random funtions, forgot what they do.
 import hashlib
@@ -21,7 +21,7 @@ class DataGrabber:
     def GetTweetsForUser(self, username):
         q = "SELECT (text) FROM tweets WHERE from_user=%s"
         v = username
-        results = self.sql.q(False,q,v)
+        results = self.sql.q(q,v)
         return results
 
     def GetTopUsers(self):
@@ -29,13 +29,13 @@ class DataGrabber:
         
     def GetAllText(self):
         q = "SELECT text FROM tweets"
-        return self.sql.q(False,q)
+        return self.sql.q(q)
 
     def GenerateLDAData(self):
         '''Output tab-separated file to be consumed by LDA.'''
         f = open('ldadata.tsv','w')
         q = "SELECT id, text FROM tweets"
-        data = self.sql.q(False,q)
+        data = self.sql.q(q)
         
         for d in data:
             try:
@@ -250,10 +250,15 @@ class DataGrabber:
 
         q = q[:len(q)-1] #remove last comma
         q += ") ORDER BY score DESC"
-        results = self.sql.q(False,q, vals)
+        results = self.sql.q(q, vals)
 
         return results
 
+    def GetCelebTweetStats(self):
+        q = "SELECT * FROM celeb_stats WHERE tr_day > -1"
+        results = self.sql.q(q)
+
+        return results
 
     def GetCelebMatchesForUser(self, user):
         #GET USER TWEETS
@@ -265,7 +270,7 @@ class DataGrabber:
 
 
         #GET CELEB STATS
-
+        
 
         #CALCULATE TWEET STAT MATCH SCORES
         
@@ -300,7 +305,7 @@ class DataGrabber:
         for i in range(10):
             vals = {'celeb':matches[i][0], 'tokens': ' '.join(matches[i][2])}
             q = "SELECT text FROM tweets WHERE from_user=%(celeb)s AND MATCH(text) AGAINST(%(tokens)s)"
-            matching_celeb_tweets = [result[0] for result in self.sql.q(False,q,vals)]
+            matching_celeb_tweets = [result[0] for result in self.sql.q(q,vals)]
             #pprint.pprint(results)
             matches[i] = list(matches[i])
             
