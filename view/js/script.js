@@ -45,7 +45,7 @@ function submitRequest() {
 	return;
 }
 function inflate(){
-	$("#selector").append(createNamerow("dickhead", "img/test.jpg", 95));
+//	$("#selector").append(createNamerow("dickhead", "img/test.jpg", 95));
 	$("#results").append(createTweetrow("swag", "swag", "swag", "swag"));
 
 }
