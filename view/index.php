@@ -67,7 +67,7 @@
 					<div class="matchlead">
 						SNOOP DOGG <span><em>3.45 JELLYRANK</em> </span>
 					</div>
-					<div>You guys match on words like: weed, consecetur, beanbag  <a href="#">Show more tweets</a></div>
+					<div>Y'all match on words like: weed, consecetur, beanbag  <a href="#">Show more tweets</a></div>
 					<div class="tweetbox">
 						<div class="twitprof">
 							<img src="img/dude.jpg" />
