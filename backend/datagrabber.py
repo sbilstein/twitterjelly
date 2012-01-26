@@ -13,6 +13,7 @@ from fetchtweets import TweetFetcher
 import tweetadder
 import datetime
 import collections
+import celebmatcher
 
 class DataGrabber:
     def __init__(self):
@@ -269,7 +270,11 @@ class DataGrabber:
         userstats = self.GetUserTweetStats(userdata)
         pprint.pprint(userstats)
 
-
+        #Pass User Stats To Get Celeb Matches
+        celebstats = self.GetCelebTweetStats()
+        
+        celebmatches = celebmatcher.getCelebMatches(userstats, celebstats)
+        pprint.pprint(celebmatches)
         #GET CELEB STATS
         
 
