@@ -40,77 +40,83 @@
 
 	<div id="container" class="container_16">
 
-		<?php include("header.html"); ?>
+	<?php include("header.html"); ?>
 
 		<div class="grid_2 spacer"></div>
 		<div id="main" class="grid_12 main centercol">
 			<div class="vert-spacer"></div>
 			<div id="lead">
 				<h2>
-					<span id="lead">LOREM IPSUM DOLOR SIT POS...</span>
-				</h2>
-				<div class="social">
-					<script src="js/libs/twit.js"></script>
-					<a class="twitter-share-button" href="https://twitter.com/share"
-						data-lang="en"
-						data-text="My celeb twitter match is@ ! Find yours at http://www.twitter.jelly.com"></a>
+					<span id="lead">FIND YOUR TOP CELEB TWITTER MATCHES</span>
+					<!-- <span id="lead">find your twitter celebrity match</span>-->
 
-					<div class="fb-like" data-send="false" data-width="450"
-						data-show-faces="false" data-font="arial"></div>
-				</div>
+				</h2>
+
 			</div>
 			<div id="query">
 				<form id="querybox">
-					<input type="search" size="30"
-						placeholder="Enter your twitter name..." id="usern" /> <input
+					<input type="search" size="26"
+						placeholder="Enter your twitter username..." id="usern" /> <input
 						type="submit" id="go" value="GO" />
 
 				</form>
 			</div>
-			<!-- Append stuff right here -->
-			<!-- 		<div id="ajaxload">
-				<img src="img/loader.gif" />
-			</div> -->
-			<div class="clear"></div>
-			<div class="results grid_8" id="results">
-				<div class="result_row">
+
+			<div class="results" id="results">
+				<div class="row">
+					<div class="matchlead">
+						SNOOP DOGG <span><em>3.45 JELLYRANK</em> </span>
+					</div>
+					<div>You guys match on words like: weed, consecetur, beanbag  <a href="#">Show more tweets</a></div>
 					<div class="tweetbox">
-						Snoop Dogg tweeted:
-						<div class="tweet">sdfsfsmsfs gdfgdfg dfgdg dfgdfgdfg
-							dfgdfgdfgdgf ipsum swag lorem</div>
+						<div class="twitprof">
+							<img src="img/dude.jpg" />
+						</div>
+						<span><a href="">Snoop Dogg</a> tweeted</span>
+						<div class="tweet">
+							Neque porro quisquam est qui dolorstrong ipsum quia dolor sit
+							amet, <strong>consectetur</strong>, adipisci velit..Neque porro
+							quisquam est qui dolorstrong ipsum quia dolor
+						</div>
+					</div>
+					<div class="tweetbox">
+						<div class="twitprof">
+							<img src="img/gaga.jpg" />
+						</div>
+						<span>You tweeted</span>
+						<div class="tweet">
+							Neque porro quisquam est qui dolorstrong ipsum quia dolor sit
+							amet, <strong>consectetur</strong>, adipisci velit..Neque porro
+							quisquam est qui dolorem ipsum quia dolor
+						</div>
 					</div>
 
-					<div class="tweetbox">
-						Shwayze tweeted:
-						<div class="tweet">lorem ipsum swag lorem ipsum swag lorem
-							lorem ipsum swag loresdfsfsmsfs gdfgdfg dfgdg dfgdfgdfg
-							dfgdfgdfgdgf ipsum swag lorem</div>
-					</div>
 				</div>
-			</div>
-			<!--  			<div class="spacer grid_1"></div> -->
-			<div id="selector" class="grid_3">
-				<div class="namerow">
-					<img src="img/dude.jpg" />
-					<div>
-						cap'n swag<br> <em>98% MATCH</em>
+				<div class="row" id="social">
+					<div id="facebook">
+						<div class="fb-like" data-href="http://www.twitterjelly.com"
+							data-send="false" data-width="250" data-show-faces="false"></div>
 					</div>
-				</div>
+					<div id="twitter">
+						<script src="js/libs/twit.js"></script>
+						<a class="twitter-share-button" href="https://twitter.com/share"
+							data-lang="en"
+							data-text="My celeb twitter match is@ ! Find yours at http://www.twitter.jelly.com"></a>
 
+					</div>
+					<a href="#">How do we compute jellyrank?</a>
+				</div>
 			</div>
 		</div>
 
 
 	</div>
-
-	<div class="clear"></div>
-	<div class="grid_2 spacer"></div>
-	<div class="grid_12 centercol bottom"></div>
-	<div class="grid_2 spacer"></div>
-
-	<footer> </footer>
-	</div>
 	<!-- end of #container -->
+
+	<!--  		
+	<footer> </footer>
+
+	-->
 
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
