@@ -80,6 +80,7 @@ body {
 	font: 13px/1.231 sans-serif;
 	*font-size: small;
 	background-color: #96d1fe;
+	font-family: ÒNimbus Sans LÓ, Helvetica, Arial, Verdana, sans-serif;
 }
 
 select,input,textarea,button {
@@ -1023,17 +1024,16 @@ header {
 	font-size: 1.5em;
 	font-weight: 900;
 	color: #FFFFFF;
-	text-align: right;
+	text-align: left;
 	word-spacing: 4.5em;
 	-moz-box-shadow: 0 0 5px 3px #888;
 	-webkit-box-shadow: 0 0 5px 3px #888;
 	box-shadow: 0 0 5px 3px #888;
-	text-align: left;
 	position: fixed;
 	z-index: 1;
 	top: 0%;
 	left: 0%;
-	height: 3.5%;
+	height: 1.4em;
 	width: 100%;
 }
 
@@ -1066,12 +1066,16 @@ header a:visited {
 
 div.centercol {
 	background-color: #e4f3fe;
+	border-bottom-right-radius: 5px 5px;
+	border-bottom-left-radius: 5px 5px;
+	/**shadow**/
+	box-shadow: 0px 0px 5px 0px #888;
 }
 
 #query {
 	font-size: 39px;
 	font-weight: normal;
-	font-family: "Lucida Grande", Arial, sans-serif;
+	/* font-family: "Lucida Grande", Arial, sans-serif; */
 	text-align: center;
 }
 
@@ -1083,39 +1087,19 @@ div.centercol {
 	vertical-align: middle;
 }
 
-.bottom {
-	border-bottom-right-radius: 5px;
-	border-bottom-left-radius: 5px;
-	min-height: 10px;
-	box-shadow: 0px 0px 5px 0px #888;
-}
-
-.bottom:before {
-	content: '';
-	border-top: solid #e4f3fe 5px;
-	display: block;
-	position: relative;
-	top: -4px;
-}
-
 #lead {
 	text-align: center;
 	/* 	font-family: "Lucida Grande", Arial, sans-serif;  */
-	font-size: 39px;
+	font-size: 36px;
 	font-weight: 700;
-	letter-spacing: -0.11em;
+	letter-spacing: -0.10em;
 	word-spacing: -0.07em;
 	/* line-height: 4px; */
 	color: #000000;
 	font-weight: 700;
-	letter-spacing: -0.11em;
-	word-spacing: -0.07em;
-	/* 	line-height: 50%; */
+	padding-top: 1.5%;
+/* 	line-height: 50%; */
 	/* 	padding-left: 5px; */
-	vertical-align: bottom;
-}
-
-div.social {
 	vertical-align: bottom;
 }
 
@@ -1124,7 +1108,7 @@ div.ajaxload {
 }
 /* FB like 24 pixels high */
 #usern {
-	font-size: 30px;
+	font-size: 28px;
 	height: 30px;
 }
 
@@ -1136,49 +1120,113 @@ div.ajaxload {
 	height: 1.0em;
 }
 
-div.result_row {
-	display: table-row;
-}
-
 div.tweetbox {
 	display: table-cell;
 	float: left;
-	background-color: pink;
-	width: 43%;
-	padding: 1%;
-	margin: 2%;
+	/* 	background-color: pink; */
+	width: 48%;
+	/* 	padding: 1%; */
+	margin-top: 8px;
+	margin-bottom: 8px;
 	overflow: hidden;
-	word-wrap: breadk-word;
+	font-size: 1.20em;
 }
 
-div.namerow {
-	font-size: 1.5em;
+div.tweetbox span { /* 	font-size: 10px; */
 	font-weight: 800;
-	letter-spacing: -0.15em;
-	width: 100%;
-	display: block;
-	float: right;
-
-	display: table-row;
+	/* color: #999; */
+	margin-left: 3px;
 }
 
-div.namerow img {
+a.twitlink {
+	font-weight: 900;
+	letter-spacing: -0.11em;
+	width: 80%;
+	text-align: left;
+}
+
+div.twitprof {
 	float: left;
+	display: table-cell;
+}
+
+div.matchlead {
+	font-size: 2.3em;
+	color: black;
+	letter-spacing: 0em;
+	margin-left: 5px;
+	font-weight: 900;
+	letter-spacing: -0.11em;
+	word-spacing: -0.07em;
+}
+
+div.matchlead span {
+	font-variant: small-caps;
+	/* background-color: #ffe38f; */
 }
 
 div.tweet {
-	font-size: 1.3em;
-	margin-left: 5px;
+	font-size: 1.0em;
+	font-weight: default;
+	letter-spacing: default;
+	padding-left: 5px;
+	display: table-cell;
+	word-wrap: break-word;
 }
 
 #selector {
 	text-align: left;
 	color: black;
-	background-color: orange;
+	/* 	background-color: orange; */
 	display: table;
 }
 
 div.results {
 	display: table;
 	font-size: 0.75em;
+	height: 100%;
+	min-height: 100%;
+}
+
+#social {
+	display: table-row;
+	text-align: left;
+	margin-left: 5px;
+}
+
+#facebook {
+	display: inline;
+	padding-left: 5px;
+	padding-bottom: 5px;
+}
+
+#twitter {
+	display: inline;
+	padding-bottom: 7px;
+	z-index: 1;
+}
+
+div.row {
+	display: table-row;
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
+
+footer {
+	background-color: #e4f3fe;
+	border-radius: 5px;
+	box-shadow: 0px 0px 5px 0px #888;
+	font-size: 2.0em;
+	bottom: 0%;
+	/* 	left: 60%; */
+	right: 0%;
+	width: 550px;
+	height: 40px;
+	position: fixed;
+	line-height: 10px;
+	padding: 2px 2px 2px 2px;
+	/* font-family: "Lucida Grande", Arial, sans-serif; */
+	vertical-align: bottom;
+	width: 40%;
+	width: 550px;
 }

@@ -153,3 +153,30 @@ class TweetAdder:
         #print("token mapping query",q)
         q = q[:len(q)-1] #remove last comma
         self.sql.q(q,vals)
+
+    def fixRackSpaceDB(self):
+        q = "SELECT text, from_user, id FROM tweets";
+
+        results = self.sql.q(q)
+        failures = []
+        f = open('token_fix_failures.txt','w')
+        for result in results:
+            print("Adding tokens for tweet",result[2])
+            try:
+                self.addTokens({'text':result[0], 'from_user':result[1]})
+                self.addTokenMapping({'text':result[0], 'from_user':result[1]})
+            except:
+                failures.append(result[2])
+                print("\tAdding tokens failed!")
+                print("\tFailures so far:",len(failures))
+                f.write(result[2]+"\n")
+
+        f.close()
+
+        print(failures)
+
+
+
+
+if __name__ == '__main__':
+    TweetAdder().fixRackSpaceDB()
