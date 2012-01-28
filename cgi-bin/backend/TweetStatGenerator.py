@@ -10,6 +10,24 @@ class TweetStatGenerator:
 
         for cur in celebs:
             if cur[0] != -1:
+
+                #calculate first personality dimension based on habits
+                #get average tweet rates
+                m_thu = sum(cur[1:5])/4.0
+                fr_su = sum(cur[5:8])/3.0
+                day = sum(cur[11:14])/3.0
+                night = sum(cur[9:11],cur[14])/3.0
+
+                #avg tweet rate on time off
+                tr_weekend = (fr_su + night)/2.0
+                tr_weekday = (m_thu + day)/2.0
+
+                if tr_weekday > tr_weekend:
+                    dim_1 = A
+                else:
+                    dim_1 = E
+
+                #calculate other dimensions                
                 P_m = cur[21]
                 P_h = cur[22]
                 P_l = cur[23]
