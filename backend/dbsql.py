@@ -19,6 +19,7 @@ class SQLQuery:
                 self.cur.execute(query)
             else:
                 self.cur.execute(query,values)
+            self.conn.commit()
             return self.cur.fetchall()
         except:
             print("Query failed!")
