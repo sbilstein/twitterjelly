@@ -1,1 +1,0 @@
-﻿SELECT token, user FROM token_user_mapping as tum WHERE tum.user='Witherberry' AND tum.token IN (SELECT token FROM token_user_mapping WHERE user='King32David') ORDER BY token
