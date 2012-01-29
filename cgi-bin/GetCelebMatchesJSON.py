@@ -14,3 +14,4 @@ if "user" not in form:
     print(json.dumps({ 'status': 'error'}))
 else:
     print(json.dumps(DataGrabber().GetCelebMatchesForUser(form['user'])))
+

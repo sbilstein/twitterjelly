@@ -115,7 +115,7 @@ class DataGrabber:
                 'token_mapping':token_mapping}
 
     def GetTermIDFs(self, terms):
-        url = 'http://http://50.56.221.228/cgi-bin/idf.php?'
+        url = 'http://50.56.221.228/cgi-bin/idf.php?'
         # TODO: Unify encoding strategy.
         data = ('terms='+','.join(terms).replace("#","%23")).encode('latin1')
         print(data)
