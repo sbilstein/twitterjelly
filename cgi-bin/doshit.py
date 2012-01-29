@@ -46,7 +46,7 @@ def DoSomeOtherShit():
         vals = {'user':user}
         print(q%vals)
         userdata = sql.q(q%vals)
-        pprint.pprint(userdata)
+        debuglog.pprint_msg(userdata)
 
     def GetCelebTFIDFs(self, terms):
         q = "SELECT COUNT(DISTINCT tweets.from_user) FROM tweets";

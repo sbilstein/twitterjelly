@@ -26,7 +26,7 @@ class SQLQuery:
             print("Query:",query)
             if values is not None:
                 print("Vals:")
-                pprint.pprint(values)
+                debuglog.pprint_msg(values)
             traceback.print_exc(file=sys.stdout)
             exit
 
