@@ -14,6 +14,7 @@ import tweetadder
 import datetime
 import collections
 import celebmatcher
+import debuglog
 
 class DataGrabber:
     def __init__(self):
@@ -49,10 +50,10 @@ class DataGrabber:
                     try:
                         f.write("%s\t%s\n"%(unidecode.unidecode(d[0]), unidecode.unidecode(d[1])))
                     except:
-                        print("One tough cookie! Couldn't decode this:",d)
+                       debuglog.msg("One tough cookie! Couldn't decode this:",d)
 
         f.close()
-        print('done writing LDA data to file!')
+        debuglog.msg('done writing LDA data to file!')
 
     def GetUserTweets(self, user, canretry=True):
         userdata = None
@@ -118,7 +119,7 @@ class DataGrabber:
         url = 'http://50.56.221.228/cgi-bin/idf.php?'
         # TODO: Unify encoding strategy.
         data = ('terms='+','.join(terms).replace("#","%23")).encode('latin1')
-        print(data)
+        debuglog.msg(data)
 
         txt = urllib.request.urlopen(url,data).read().decode('latin1')
             
@@ -184,7 +185,7 @@ class DataGrabber:
         user_tfidf = self.GetUserTFIDFs(user_data)
         user_scores = user_tfidf['scores_dic']
 
-        print("top user terms are",user_tfidf['scores_list'][:15])
+        debuglog.msg("top user terms are",user_tfidf['scores_list'][:15])
 
         # GET CELEBS TFIDF
         celeb_scores = self.GetCelebTFIDFsForTerms([term[0] for term in user_tfidf['scores_list']][:15])
@@ -259,7 +260,7 @@ class DataGrabber:
 
 if __name__ == '__main__':
     #jbtweets = DataGrabber().GetTweetsForUser("justinbieber")
-    #pprint.pprint(jbtweets)
+    #debuglog.pprint_msg(jbtweets)
     #print(len(jbtweets))
     #DoSomeShit()
     #DoSomeOtherShit()
@@ -296,11 +297,11 @@ if __name__ == '__main__':
     #user with 0 tweets for testing
     #user = "Adared"
 
-    #pprint.pprint(DataGrabber().GetCelebMatchesForUser(user)[:10])
+    #debuglog.pprint_msg(DataGrabber().GetCelebMatchesForUser(user)[:10])
     pprint.pprint(DataGrabber().GetCelebMatchesForUser(user))
     
     
-    #pprint.pprint(DataGrabber().GetCelebTFIDFsForTerms(["weed"]))    
+    #debuglog.pprint_msg(DataGrabber().GetCelebTFIDFsForTerms(["weed"]))
     
 
     

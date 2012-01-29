@@ -12,7 +12,7 @@ queryurl = "http://search.twitter.com/search.json?q=%s"%twitterquery
 print(queryurl)
 data = json.loads(urllib.request.urlopen(queryurl).read().decode("ascii"))
 
-pprint.pprint(data)
+debuglog.pprint_msg(data)
 
 corpus = TfIdf()
 tweets = []                                                                                                                           
@@ -23,7 +23,7 @@ for tweet in data['results']:
     print(corpus.get_num_docs())
 
 for tweet in tweets:
-    pprint.pprint(corpus.get_doc_keywords(tweet))
+    debuglog.pprint_msg(corpus.get_doc_keywords(tweet))
 
 
     

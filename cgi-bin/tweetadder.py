@@ -5,6 +5,7 @@ import datetime
 from unidecode import unidecode
 from tfidf import TfIdf
 import time
+import debuglog
 
 def replaceMonth(datetime_str):
     month_nums = [("Jan","01"),("Feb","02"),("Mar","03"),("Apr","04"),("May","05"),("Jun","06"),("Jul","07"),("Aug","08"),("Sep","09"),("Oct","10"),("Nov","11"),("Dec","12")]
@@ -64,8 +65,8 @@ class TweetAdder:
         Tweet must be in the format provided by Search API.
         """
 
-        print("Inserting tweet", tweet['id'])
-        #pprint.pprint(tweet)
+        debuglog.msg("Inserting tweet", tweet['id'])
+        #debuglog.pprint_msg(tweet)
 
         if not created_at_is_obj:
             dt = datetime.datetime.strptime(replaceMonth(tweet['created_at'][5:25]),"%d %m %Y %H:%M:%S")
@@ -114,13 +115,13 @@ class TweetAdder:
                 succeeded = True
             except UnicodeEncodeError:
                 try:
-                    print("\tUNIDECODE ERROR, trying decode...")
+                    debuglog.msg("\tUNIDECODE ERROR, trying decode...")
                     for k in dicvals:
                         dicvals[k] = unidecode(dicvals[k])
                     self.sql.q(dicq,dicvals)
                     succeeded = True
                 except:
-                    print("\tUnidecode failed :(")
+                    debuglog.msg("\tUnidecode failed :(")
 
             
             if succeeded and tweet_table == 'tweets':
@@ -130,7 +131,7 @@ class TweetAdder:
 
             return succeeded
 
-        print("\ttweet already existed")
+        debuglog.msg("\ttweet already existed")
         return False
 
     def addTokens(self, tweet, tokens=None):
@@ -176,16 +177,16 @@ class TweetAdder:
         failures = []
         f = open('token_fix_failures.txt','w')
         for result in results:
-            print("Adding tokens for tweet",result[2])
+            debuglog.msg("Adding tokens for tweet",result[2])
             try:
                 self.addTokens({'text':result[0], 'from_user':result[1]})
                 self.addTokenMapping({'text':result[0], 'from_user':result[1]})
             except:
                 failures.append(result[2])
-                print("\tAdding tokens failed!")
-                print("\tFailures so far:",len(failures))
+                debuglog.msg("\tAdding tokens failed!")
+                debuglog.msg("\tFailures so far:",len(failures))
                 f.write(result[2]+"\n")
 
         f.close()
 
-        print(failures)
+        debuglog.msg(failures)

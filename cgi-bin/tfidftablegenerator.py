@@ -1,5 +1,6 @@
 from dbsql import *
 from decimal import *
+import debuglog
 
 class TFIDFTableGenerator:
     """ Generates table of TFIDF scores by word for each celeb """
@@ -28,13 +29,13 @@ class TFIDFTableGenerator:
         # ITERATE THROUGH TOKENS
         for token in tokens:
             if len(token) < 3:
-                print("token %s too short."%token)
+               debuglog.msg("token %s too short."%token)
                 continue
             elif token[0] == '@':
-                print("ignoring user token %s"%token)
+               debuglog.msg("ignoring user token %s"%token)
                 continue
             
-            print("Generating tfidf table for token <%s>"%token)
+           debuglog.msg("Generating tfidf table for token <%s>"%token)
             vals = { 'token':token }
             results = self.sql.q(q, vals)
 

@@ -2,6 +2,7 @@ from dbsql import *
 import pickle
 import pprint
 from unidecode import unidecode
+import debuglog
 
 sql = SQLQuery()
 
@@ -11,7 +12,7 @@ ids = [i[0] for i in ids]
 for tweetid in db:
     tweet = db[tweetid]
     print("inserting tweet:")
-    pprint.pprint(tweet)
+    debuglog.pprint_msg(tweet)
     
     dicvals = {'created_at':tweet['created_at'],
             'from_user':tweet['from_user'],
@@ -27,38 +28,6 @@ for tweetid in db:
             'to_user':tweet['to_user'],
             'to_user_id':tweet['to_user_id'],
             'to_user_name':tweet['to_user_name']}
-
-    """
-    q= \"""INSERT INTO TWEETS VALUES(%s,
-                                    %s,
-                                    %s,
-                                    %s,
-                                    %s,
-                                    %s,
-                                    %s,
-                                    %s,
-                                    %s,
-                                    %s,
-                                    %s,
-                                    %s,
-                                    %s,
-                                    %s)"""
-    """
-    vals = (tweet['created_at'],
-                 tweet['from_user'],
-                 str(tweet['from_user_id']),
-                 tweet['from_user_name'],
-                 tweet['geo'],
-                 str(tweet['id']),
-                 tweet['iso_language_code'],
-                 str(tweet['metadata']),
-                 tweet['profile_image_url'],
-                 tweet['source'],
-                 tweet['text'],
-                 tweet['to_user'],
-                 str(tweet['to_user_id']),
-                 tweet['to_user_name'])
-    """
 
                                 
     dicq= """INSERT INTO tweets VALUES(%(created_at)s,
