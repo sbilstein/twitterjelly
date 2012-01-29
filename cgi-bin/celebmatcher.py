@@ -5,6 +5,7 @@ import datetime
 import math
 import collections
 import pprint
+import random
 
 def getCelebMatches(userdata, celebstats):
     #FIRST CALCULATE BASE STATS FOR USER
@@ -201,11 +202,18 @@ def getCelebMatches(userdata, celebstats):
         dim_1 = "E"
 
     #GO THROUGH LIST OF CELEBS AGAIN AND FIND THOSE WITH SAME PERSONALITY
-    toreturn = [dim_1,dim_2,dim_3,dim_4]
+    matches = []
 
     for celeb in celebstats:
         if celeb[26]==dim_1 and celeb[27]==dim_2 and celeb[28]==dim_3 and celeb[29]==dim_4:
-            toreturn.append(celeb[20])
+            matches.append(celeb[20])
 
+    toreturn=[dim_1+dim_2+dim_3+dim_4]
+    random.shuffle(matches)
+    if len(matches) > 4:
+        toreturn.append(matches[0:4])
+    else:
+        toreturn.append(matches[0:len(matches)])
+        
     
     return toreturn

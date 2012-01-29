@@ -155,9 +155,11 @@ class DataGrabber:
                 {
                     'screen_name' : user,
                     'name' : '',
-                    'pic_url' : ''
+                    'pic_url' : '',
+                    'personality' : ''
                 },
-            'celeb_matches': []
+            'celeb_matches': [],
+            'celeb_matches_pers' : []
         }
 
         #GET USER TWEETS
@@ -169,8 +171,9 @@ class DataGrabber:
         #Pass userdata and celebstats to get celeb matches
         celebstats = self.GetCelebTweetStats() 
         celebmatches = celebmatcher.getCelebMatches(userdata, celebstats)
-        print(celebmatches)
-        
+
+        results['user']['personality']=celebmatches[0]
+        results['celeb_matches_pers']=celebmatches[1]
 
         #GET USER TFIDF
         usertfidf = self.GetUserTFIDFs(userdata)
