@@ -124,7 +124,7 @@ class TweetFetcher:
             if len(cached_tweets) > 0:
                 return [tweet[0] for tweet in cached_tweets]
         elif use_cache and use_filesystem_cache:
-            print("checking cache...")
+            print("\tchecking cache...")
             cachedlist = os.listdir('./timelines')
             #print(cachedlist)
             userjsonfilename = user.lower()+'.json'
@@ -132,7 +132,7 @@ class TweetFetcher:
                 #modtime = os.stat('./timelines/'+userjsonfilename)[ST_MTIME]
                 ##cache stays fresh for a day
                 #if ((float(time.time()) - modtime)/60)/60 <= 24:
-                print("got cache data.")
+                print("\t\tgot cache data.")
                 json_txt = open('./timelines/'+userjsonfilename,'r').read()
                 got_cache_data = True
 

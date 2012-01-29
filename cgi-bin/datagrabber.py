@@ -25,9 +25,6 @@ class DataGrabber:
         v = username
         results = self.sql.q(q,v)
         return results
-
-    def GetTopUsers(self):
-        return pickle.load(open('topusers.pkl','rb'))
         
     def GetAllText(self):
         q = "SELECT text FROM tweets"
@@ -117,8 +114,7 @@ class DataGrabber:
                 'token_mapping':token_mapping}
 
     def GetTermIDFs(self, terms):
-        
-        url = 'http://lemurturtle.com/idf.php?'
+        url = 'http://http://50.56.221.228/cgi-bin/idf.php?'
         data = ('terms='+','.join(terms).replace("#","%23")).encode('latin1')
         print(data)
 
@@ -175,7 +171,7 @@ class DataGrabber:
         results['user']['name'] = user_data['results'][0]['user']['name']
         results['user']['pic_url'] = user_data['results'][0]['user']['profile_image_url']
 
-        #Pass userdata and celebstats to get celeb matches
+        #Pass user_data and celeb_stats to get celeb matches
         celeb_stats = self.GetCelebTweetStats()
         celeb_matches = celebmatcher.getCelebMatches(user_data, celeb_stats)
 
@@ -221,7 +217,7 @@ class DataGrabber:
                     }
 
             vals = {'celeb':matches[i][0], 'tokens': ' '.join(matches[i][2])}
-            q = "SELECT text FROM tweets WHERE from_user=%(celeb)s AND MATCH(text) AGAINST(%(tokens)s)"
+            q = "SELECT text, from_user_name FROM tweets WHERE from_user=%(celeb)s AND MATCH(text) AGAINST(%(tokens)s)"
             matching_celeb_tweets = [result[0] for result in self.sql.q(q,vals)]
             matches[i] = list(matches[i])
             
