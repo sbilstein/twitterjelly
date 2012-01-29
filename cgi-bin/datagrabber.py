@@ -14,6 +14,7 @@ import tweetadder
 import datetime
 import collections
 import celebmatcher
+import debuglog
 
 class DataGrabber:
     def __init__(self):
@@ -25,9 +26,6 @@ class DataGrabber:
         v = username
         results = self.sql.q(q,v)
         return results
-
-    def GetTopUsers(self):
-        return pickle.load(open('topusers.pkl','rb'))
         
     def GetAllText(self):
         q = "SELECT text FROM tweets"
@@ -40,7 +38,8 @@ class DataGrabber:
         f = open('ldadata.tsv','w')
         q = "SELECT id, text FROM tweets"
         data = self.sql.q(q)
-        
+
+        # TODO: Unify encoding strategy.
         for d in data:
             try:
                 f.write("%s\t%s\n"%(str(d[0]), str(d[1])))
@@ -51,10 +50,10 @@ class DataGrabber:
                     try:
                         f.write("%s\t%s\n"%(unidecode.unidecode(d[0]), unidecode.unidecode(d[1])))
                     except:
-                        print("One tough cookie! Couldn't decode this:",d)
+                       debuglog.msg("One tough cookie! Couldn't decode this:",d)
 
         f.close()
-        print('done writing LDA data to file!')
+        debuglog.msg('done writing LDA data to file!')
 
     def GetUserTweets(self, user, canretry=True):
         userdata = None
@@ -117,10 +116,10 @@ class DataGrabber:
                 'token_mapping':token_mapping}
 
     def GetTermIDFs(self, terms):
-        
-        url = 'http://lemurturtle.com/idf.php?'
+        url = 'http://50.56.221.228/cgi-bin/idf.php?'
+        # TODO: Unify encoding strategy.
         data = ('terms='+','.join(terms).replace("#","%23")).encode('latin1')
-        print(data)
+        debuglog.msg(data)
 
         txt = urllib.request.urlopen(url,data).read().decode('latin1')
             
@@ -175,7 +174,7 @@ class DataGrabber:
         results['user']['name'] = user_data['results'][0]['user']['name']
         results['user']['pic_url'] = user_data['results'][0]['user']['profile_image_url']
 
-        #Pass userdata and celebstats to get celeb matches
+        #Pass user_data and celeb_stats to get celeb matches
         celeb_stats = self.GetCelebTweetStats()
         celeb_matches = celebmatcher.getCelebMatches(user_data, celeb_stats)
 
@@ -186,7 +185,7 @@ class DataGrabber:
         user_tfidf = self.GetUserTFIDFs(user_data)
         user_scores = user_tfidf['scores_dic']
 
-        print("top user terms are",user_tfidf['scores_list'][:15])
+        debuglog.msg("top user terms are",user_tfidf['scores_list'][:15])
 
         # GET CELEBS TFIDF
         celeb_scores = self.GetCelebTFIDFsForTerms([term[0] for term in user_tfidf['scores_list']][:15])
@@ -221,7 +220,7 @@ class DataGrabber:
                     }
 
             vals = {'celeb':matches[i][0], 'tokens': ' '.join(matches[i][2])}
-            q = "SELECT text FROM tweets WHERE from_user=%(celeb)s AND MATCH(text) AGAINST(%(tokens)s)"
+            q = "SELECT text, from_user_name FROM tweets WHERE from_user=%(celeb)s AND MATCH(text) AGAINST(%(tokens)s)"
             matching_celeb_tweets = [result[0] for result in self.sql.q(q,vals)]
             matches[i] = list(matches[i])
             
@@ -261,7 +260,7 @@ class DataGrabber:
 
 if __name__ == '__main__':
     #jbtweets = DataGrabber().GetTweetsForUser("justinbieber")
-    #pprint.pprint(jbtweets)
+    #debuglog.pprint_msg(jbtweets)
     #print(len(jbtweets))
     #DoSomeShit()
     #DoSomeOtherShit()
@@ -298,11 +297,11 @@ if __name__ == '__main__':
     #user with 0 tweets for testing
     #user = "Adared"
 
-    #pprint.pprint(DataGrabber().GetCelebMatchesForUser(user)[:10])
+    #debuglog.pprint_msg(DataGrabber().GetCelebMatchesForUser(user)[:10])
     pprint.pprint(DataGrabber().GetCelebMatchesForUser(user))
     
     
-    #pprint.pprint(DataGrabber().GetCelebTFIDFsForTerms(["weed"]))    
+    #debuglog.pprint_msg(DataGrabber().GetCelebTFIDFsForTerms(["weed"]))
     
 
     

@@ -10,7 +10,7 @@ for i in range(1,numpages):
     print(i)
     urls.append("http://twittercounter.com/pages/100/%s"%str(20*i))
 
-pprint.pprint(urls)
+debuglog.pprint_msg(urls)
 
 usernames = []
 for url in urls:
