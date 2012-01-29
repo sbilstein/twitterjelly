@@ -48,10 +48,7 @@
 			<div id="lead">
 				<h2>
 					<span id="lead">FIND YOUR TOP CELEB TWITTER MATCHES</span>
-					<!-- <span id="lead">find your twitter celebrity match</span>-->
-
 				</h2>
-
 			</div>
 			<div id="query">
 				<form id="querybox">
@@ -62,91 +59,82 @@
 				</form>
 			</div>
 
-			<div class="results" id="results">
-				<div class="row">
+			<div class="results_col" id="results">
+
+				<div class="row" id="algo_1">
 					<div class="matchlead">
-						SNOOP DOGG <span><em>3.45 JELLYRANK</em> </span>
-					</div>
-					<div>Y'all match on words like: weed, consecetur, beanbag  <a href="#">Show more tweets</a></div>
-					<div class="tweetbox">
-						<div class="twitprof">
-							<img src="img/dude.jpg" />
-						</div>
-						<span><a href="">Snoop Dogg</a> tweeted</span>
-						<div class="tweet">
-							Neque porro quisquam est qui dolorstrong ipsum quia dolor sit
-							amet, <strong>consectetur</strong>, adipisci velit..Neque porro
-							quisquam est qui dolorstrong ipsum quia dolor
-						</div>
+						<span class="celeb_name"></span>
 					</div>
 					<div class="tweetbox">
-						<div class="twitprof">
-							<img src="img/gaga.jpg" />
+						<div class="twitprof celeb">
+							<img src="" />
 						</div>
-						<span>You tweeted</span>
-						<div class="tweet">
-							Neque porro quisquam est qui dolorstrong ipsum quia dolor sit
-							amet, <strong>consectetur</strong>, adipisci velit..Neque porro
-							quisquam est qui dolorem ipsum quia dolor
-						</div>
-					</div>
 
-				</div>
-				<div class="row" id="social">
-					<div id="facebook">
-						<div class="fb-like" data-href="http://www.twitterjelly.com"
-							data-send="false" data-width="250" data-show-faces="false"></div>
-					</div>
-					<div id="twitter">
-						<script src="js/libs/twit.js"></script>
-						<a class="twitter-share-button" href="https://twitter.com/share"
-							data-lang="en"
-							data-text="My celeb twitter match is@ ! Find yours at http://www.twitter.jelly.com"></a>
+						<div class="tweet celeb"></div>
 
 					</div>
-					<a href="#">How do we compute jellyrank?</a>
+
+					<div class="tweetbox">
+						<div class="twitprof user">
+							<img src="" />
+						</div>
+						<div class="tweet user"></div>
+
+					</div>
+
+					<div class="row" id="social">
+						<div id="facebook">
+							<div class="fb-like" data-href="http://www.twitterjelly.com"
+								data-send="false" data-width="250" data-show-faces="false"></div>
+						</div>
+						<div id="twitter">
+							<script src="js/libs/twit.js"></script>
+							<a class="twitter-share-button" href="https://twitter.com/share"
+								data-lang="en"
+								data-text="My celeb twitter match is@ ! Find yours at http://www.twitter.jelly.com"></a>
+
+						</div>
+						<a href="#">How do we compute jellyrank?</a>
+					</div>
 				</div>
 			</div>
+
+
 		</div>
+		<!-- end of #container -->
 
-
-	</div>
-	<!-- end of #container -->
-
-	<!--  		
+		<!--  		
 	<footer> </footer>
 
 	-->
 
 
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
-	<script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+		<script>
 		!window.jQuery
 				&& document
 						.write(unescape('%3Cscript src="js/libs/jquery-1.4.2.js"%3E%3C/script%3E'))
 	</script>
+		<script src="js/libs/pure_min.js"></script>
+		<!-- TODO: Concat and minify -->
+		<script src="js/plugins.js"></script>
+		<script src="js/script.js"></script>
 
 
-	<!-- scripts concatenated and minified via ant build script-->
-	<script src="js/plugins.js"></script>
-	<script src="js/script.js"></script>
-	<!-- end concatenated and minified scripts-->
-
-
-	<!--[if lt IE 7 ]>
+		<!--[if lt IE 7 ]>
 <script src="js/libs/dd_belatedpng.js"></script>
 <script> DD_belatedPNG.fix('img, .png_bg'); </script>
 <![endif]-->
 
-	<!-- yui profiler and profileviewer - remove for production -->
-	<script src="js/profiling/yahoo-profiling.min.js"></script>
-	<script src="js/profiling/config.js"></script>
-	<!-- end profiling code -->
+		<!-- yui profiler and profileviewer - remove for production -->
+		<script src="js/profiling/yahoo-profiling.min.js"></script>
+		<script src="js/profiling/config.js"></script>
+		<!-- end profiling code -->
 
 
 
-	<!-- change the UA-XXXXX-X to be your site's ID -->
-	<script>
+		<!-- change the UA-XXXXX-X to be your site's ID -->
+		<script>
 		var _gaq = [ [ '_setAccount', 'UA-XXXXX-X' ], [ '_trackPageview' ] ];
 		(function(d, t) {
 			var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
