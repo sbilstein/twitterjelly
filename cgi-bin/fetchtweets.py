@@ -13,100 +13,117 @@ from dbsql import SQLQuery
 
 class TweetFetcher:   
     def __init__(self):
-        """{"reset_time_in_seconds":1323753236,"reset_time":"Tue Dec 13 05:13:56 +0000 2011","hourly_limit":150,"remaining_hits":143}"""
-        self.ratedata = self.fetchRateData()
-        self.tweetAdder = TweetAdder()
+        self.rate_data = self.fetchRateData()
+        self.tweet_adder = TweetAdder()
+        self.sql = SQLQuery()
 
     def fetchRateData(self):
         return json.loads(urllib.request.urlopen("https://api.twitter.com/1/account/rate_limit_status.json").read().decode("ascii"))
 
     def checkRateLimit(self):
-        pprint.pprint(self.ratedata)
-        print("REMAINING HITS:",self.ratedata['remaining_hits'])
-        if time.time() > self.ratedata['reset_time_in_seconds']:
-            self.ratedata = self.fetchRateData()
+        pprint.pprint(self.rate_data)
+        print("REMAINING HITS:",self.rate_data['remaining_hits'])
+        if time.time() > self.rate_data['reset_time_in_seconds']:
+            self.rate_data = self.fetchRateData()
 
-        if "error" in self.ratedata:
+        if "error" in self.rate_data:
             return 60*60
             
-        if self.ratedata['remaining_hits'] <= 1:
-            print("rate limit: wait",self.ratedata['reset_time_in_seconds'] - time.time() )
-            return self.ratedata['reset_time_in_seconds'] - time.time() 
+        if self.rate_data['remaining_hits'] <= 1:
+            print("rate limit: wait",self.rate_data['reset_time_in_seconds'] - time.time() )
+            return self.rate_data['reset_time_in_seconds'] - time.time()
         else:
             return 0
     
-    def fetchTopUserTweets(self, startat=None):
-        print("fetching top tweets")
-    
-        #users = pickle.load(open("topusers.pkl","rb"))
-        #users.sort(key=lambda x:random.random())
-        q = "SELECT user FROM celebs"
+    def fetchTopUserTweets(self, start_at=None):
+        print("Fetching all celebrity tweets...")
+
+        q = "SELECT DISTINCT user FROM celebs"
         results = SQLQuery().q(q)
         users = [result[0] for result in results]
         
-        if startat:
-            users = users[users.index(startat):]
+        if start_at:
+            users = users[users.index(start_at):]
             
         for user in users:
             if self.fetchUserTweets(user):
-                print("Successfully fetched tweets for @%s :)"%user)
+                print("\tSuccessfully fetched tweets for @%s :)"%user)
             else:
-                print("Failed to fetch tweets for @%s :("%user)
+                print("\tFailed to fetch tweets for @%s :("%user)
             time.sleep(1)
 
     def fetchUserTweets(self, user):
-        '''fetch and add to database'''
+        """
+        Fetch tweets for user and add to the database.
+        """
         data = self.getUserTweetsData(user)
-        #pprint.pprint(data)
         for tweet in data['results']:
-            if self.tweetAdder.add(tweet):
+            if self.tweet_adder.add(tweet):
                 print("successfully added")
             else:
                 print("failed to add :(")
         return True
 
     def getUserTweetsData(self,user):        
-        print("=====\n\ngetting data for @%s from Search API"%user)
-        twitterquery = "from:%s"%user
-        twitterquery = urllib.parse.quote(twitterquery)
-        print(twitterquery)
-        queryurl = "http://search.twitter.com/search.json?lang=en&rpp=100&q=%s"%twitterquery
-        print(queryurl)
-        data = json.loads(urllib.request.urlopen(queryurl).read().decode("ascii"))
-        print("Get %s tweets for @%s from Search API."%(str(len(data['results'])), user))
-        return data
+        print("=====\n\nGetting data for @%s from Search API..."%user)
+        try:
+            twitter_query = "from:%s"%user
+            twitter_query = urllib.parse.quote(twitter_query)
+            #print(twitter_query)
+            query_url = "http://search.twitter.com/search.json?lang=en&rpp=100&q=%s"%twitter_query
+            #print(query_url)
+            data = json.loads(urllib.request.urlopen(query_url).read().decode("ascii"))
+            print("\tGot %s tweets for @%s from Search API."%(str(len(data['results'])), user))
+            return data
+        except:
+            print("\tFailed to get data from Search API :(")
+            print("\t\tURL:\t%s"%query_url)
+            return { 'results': [] }
 
     def fetchTopUserTimelines(self):
-        #topusers = open('celebs.txt','r').readlines()
-        topusers = open('update_users.txt','r').readlines()
-        topusers = [user.replace('\n','') for user in topusers]
+        top_users = open('update_users.txt','r').readlines()
+        top_users = [user.replace('\n','') for user in top_users]
 
-        for user in topusers:
+        for user in top_users:
             print("Getting timeline for",user)
-            status='retry';
+            status='retry'
             while status == 'retry' or status=='wait':
                 print(status)
-                "Fetching timeline for @%s in %s seconds..."%(user, str(self.checkRateLimit()))
+                print("\tFetching timeline for @%s in %s seconds..."%(user, str(self.checkRateLimit())))
                 status = self.fetchUserTimeline(user)['status']
                 time.sleep(1)
                 time.sleep(self.checkRateLimit())
                 
             if status == 'success':
-                print("Got timeline for %s :)"%user)
+                print("\tGot timeline for %s :)"%user)
             elif status == '404':
-                print("User not found.")
+                print("\tUser not found.")
             else:
-                print("Unknown error prevented getting user timeline.")
+                print("\tUnknown error prevented getting user timeline.")
 
     def canFetchTimeline(self):
         return self.checkRateLimit() <= 0         
         
-    def fetchUserTimeline(self, user, usecache=True, writecache=True, format="default"):
-        print("fetching time line for",user)
-        gotcachedata = False
+    def fetchUserTimeline(self, user, format="default", use_cache=True, write_cache=True, use_filesystem_cache=False):
+        # TODO: Clean this function up, format parameter does magic it shouldn't be doing.
+        # Currently, format="default" means that we're adding celebrity timeline tweets, we never call this.
+        # If we do call with format="default" we want to add the timeline tweets to the celebrity tweets table.
+        # This is called from DataGrabber to get user timelines with format="searchapi". In this case we want to check
+        # if we have matching non-celebrity tweets, and if so return them (in future: possibly add new tweets from
+        # search api as well). If not, get tweets from the timeline api, store them in the tweets_non_celeb table,
+        # and return an object with those tweets.
+
+        print("Fetching timeline for @%s..."%user)
+        got_cache_data = False
         json_txt = "{}"
-        
-        if usecache:
+
+        if use_cache and not use_filesystem_cache:
+            q = "SELECT * FROM tweets_non_celeb WHERE from_user=%(user)s;"
+            vals = { 'user': user }
+            cached_tweets = self.sql.q(q, vals)
+            if len(cached_tweets) > 0:
+                return [tweet[0] for tweet in cached_tweets]
+        elif use_cache and use_filesystem_cache:
             print("checking cache...")
             cachedlist = os.listdir('./timelines')
             #print(cachedlist)
@@ -117,12 +134,12 @@ class TweetFetcher:
                 #if ((float(time.time()) - modtime)/60)/60 <= 24:
                 print("got cache data.")
                 json_txt = open('./timelines/'+userjsonfilename,'r').read()
-                gotcachedata = True
+                got_cache_data = True
 
-        if not gotcachedata:
-            print("no cache data, calling api...")
+        if not got_cache_data:
+            print("\tNo cache data, calling timeline api...")
             if self.checkRateLimit() > 0:
-                print("have to wait")
+                print("\t\tHave to wait.")
                 return {'status':'wait'}
             url = "https://api.twitter.com/1/statuses/user_timeline.json?&screen_name=%s&count=200"%user
             print(url)
@@ -138,18 +155,28 @@ class TweetFetcher:
                     return {'status':'error'}
                     
             json_txt = response.read().decode("ascii")
-            if writecache:
+
+            if write_cache and use_filesystem_cache:
                 open('./timelines/'+user.lower()+'.json','w').write(json_txt)
             
         data = json.loads(json_txt)
-        print("data is...",str(data)[:100])
+        print("\tdata is...",str(data)[:100])
+
         if format == "searchapi":
-            print("got %d results for %s from user timeline api"%(len(data),user))
-            return {'results':data}
-        for timelinetweet in data:
-            self.tweetAdder.addTimelineTweet(timelinetweet)
+            # For now, format="searchapi" indicates we are getting non-celebrity tweets.
+            print("\tGot %d results for %s from user timeline API."%(len(data),user))
+
+            if write_cache and not use_filesystem_cache:
+                for non_celeb_timeline_tweet in data:
+                    self.tweet_adder.addNonCelebTimelineTweet(non_celeb_timeline_tweet)
+
+            return { 'results':data }
+
+        # For now, format="default" (only way to reach here) means we are adding celebrity tweets.
+        for timeline_tweet in data:
+            self.tweet_adder.addTimelineTweet(timeline_tweet)
             
-        return {'status':'success'}
+        return { 'status':'success' }
 
 if __name__ == '__main__':
     TweetFetcher().fetchTopUserTweets()
