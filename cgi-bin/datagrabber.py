@@ -171,6 +171,11 @@ class DataGrabber:
         # GET USER TWEETS
         user_data = self.GetUserTweets(user)
 
+        # return an error if user doesn't exist/has no tweets.
+        if user_data is None or not len(user_data['results']):
+            results['status'] = 'error'
+            return results
+
         results['user']['name'] = user_data['results'][0]['user']['name']
         results['user']['pic_url'] = user_data['results'][0]['user']['profile_image_url']
 
@@ -209,51 +214,69 @@ class DataGrabber:
         matches.sort(key=lambda x: -cumulative_celeb_scores[x[0]])
 
         # FIND MATCHING TWEETS FOR TOP 10 CELEBS
-        for i in range(10):
+        for top_10_celeb_index in range(10):
             celeb_match =  {
-                        'screen_name' : matches[i][0],
+                        'screen_name' : matches[top_10_celeb_index][0],
                         'name' : '',
                         'pic_url' : '',
-                        'match_score':cumulative_celeb_scores[matches[i][0]],
-                        'top_words' : matches[i][2],
+                        'match_score':cumulative_celeb_scores[matches[top_10_celeb_index][0]],
+                        'top_words' : matches[top_10_celeb_index][2],
                         'tweets' : []
                     }
 
-            vals = {'celeb':matches[i][0], 'tokens': ' '.join(matches[i][2])}
-            q = "SELECT text, from_user_name FROM tweets WHERE from_user=%(celeb)s AND MATCH(text) AGAINST(%(tokens)s)"
-            matching_celeb_tweets = [result[0] for result in self.sql.q(q,vals)]
-            matches[i] = list(matches[i])
+            vals = {'celeb':matches[top_10_celeb_index][0], 'tokens': ' '.join(matches[top_10_celeb_index][2])}
+            q = "SELECT text, id, from_user_name, profile_image_url FROM tweets WHERE from_user=%(celeb)s AND MATCH(text) AGAINST(%(tokens)s)"
+            q_results = self.sql.q(q, vals)
+
+            # skip if we don't have any matching celeb tweets.
+            if not len(q_results):
+                continue
+
+            celeb_match['name'] = q_results[0][2]
+            celeb_match['pic_url'] = q_results[0][3]
+            matching_celeb_tweets = [{'text':result[0], 'id':result[1]} for result in q_results]
+
+            matches[top_10_celeb_index] = list(matches[top_10_celeb_index])
             
-            matching_user_tweets = [user_tfidf['tweets'][user_tfidf['token_mapping'][unidecode.unidecode(token)][0]]['text'] for token in matches[i][2]]
+            #matching_user_tweets = [user_tfidf['tweets'][user_tfidf['token_mapping'][unidecode.unidecode(token)][0]]['text']
+            #                        for token in matches[top_10_celeb_index][2]]
 
             # ADD TWEETS THAT MATCH ON TOKENS
-            sorted_tokens = [token for token in  sorted(matches[i][2].keys(), key=lambda x: -matches[i][2][x])]
+            sorted_tokens = [token for token in  sorted(matches[top_10_celeb_index][2].keys(), key=lambda x: -matches[top_10_celeb_index][2][x])]
             for token in sorted_tokens:
-                celeb_tweets_for_token = list(filter(lambda x: x.count(token) > 0, matching_celeb_tweets))
-                user_tweets_for_token = [user_tfidf['tweets'][user_tfidf['token_mapping'][token][k]] for k in range(len(user_tfidf['token_mapping'][token]))]
+                celeb_tweets_for_token = list(filter(lambda x: x['text'].count(token) > 0, matching_celeb_tweets))
+                user_tweets_for_token = [user_tfidf['tweets'][user_tfidf['token_mapping'][token][k]]
+                                         for k in range(len(user_tfidf['token_mapping'][token]))]
 
-                for j in range(min(len(celeb_tweets_for_token), len(user_tweets_for_token))):
+                for matching_tweets_for_token_index in range(min(len(celeb_tweets_for_token), len(user_tweets_for_token))):
                     celeb_match['tweets'].append(
                         {
                             'word' : token,
                             'user_tweet':
                                 {
-                                    'url': 'http://twitter.com/'+user_tweets_for_token[j]['user']['screen_name']+'/status/'+str(user_tweets_for_token[j]['id']),
-                                    'text': user_tweets_for_token[j]['text']
+                                    'url': 'http://twitter.com/' +
+                                                user_tweets_for_token[matching_tweets_for_token_index]['user']['screen_name'] +
+                                                '/status/' +
+                                                str(user_tweets_for_token[matching_tweets_for_token_index]['id']),
+                                    'text': user_tweets_for_token[matching_tweets_for_token_index]['text']
                                 },
                             'celeb_tweet':
                                 {
-                                    'url': 'http://twitter.com/'+matches[i][0],
-                                    'text': celeb_tweets_for_token[j]
+                                    'url': 'http://twitter.com/' +
+                                                celeb_match['screen_name'] +
+                                                '/status/' +
+                                                str(celeb_tweets_for_token[matching_tweets_for_token_index]['id']),
+                                    'text': celeb_tweets_for_token[matching_tweets_for_token_index]['text']
                                 }
                         })
 
 
-            matches[i].append({matches[i][0]:matching_celeb_tweets,user:matching_user_tweets})
+            #matches[top_10_celeb_index].append({matches[top_10_celeb_index][0]:matching_celeb_tweets,user:matching_user_tweets})
 
             if len(celeb_match['tweets']):
                 results['celeb_matches'].append(celeb_match)
 
+        results['status'] = 'ok'
         return results
 
         
@@ -274,7 +297,7 @@ if __name__ == '__main__':
     #user = "Live_2Belieb"
     #user = "iluvjb1518"
     #user = "Belieb_Forever"
-    user = "sbilstein"
+    #user = "sbilstein"
     #user = "boomshakanaka"
     #user = "nuqb"
     #user = "celebjelly"
@@ -290,6 +313,7 @@ if __name__ == '__main__':
 
     #user = "cooper_carter"
     #user = "ava361"
+    #user = "JonathanPezzino"
 
     #non existent user for testing
     #user = "nonexistent75756fj"
@@ -297,11 +321,10 @@ if __name__ == '__main__':
     #user with 0 tweets for testing
     #user = "Adared"
 
-    #debuglog.pprint_msg(DataGrabber().GetCelebMatchesForUser(user)[:10])
     pprint.pprint(DataGrabber().GetCelebMatchesForUser(user))
     
     
-    #debuglog.pprint_msg(DataGrabber().GetCelebTFIDFsForTerms(["weed"]))
+    #pprint.pprint(DataGrabber().GetCelebTFIDFsForTerms(["weed"]))
     
 
     
