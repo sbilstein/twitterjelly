@@ -60,7 +60,7 @@ abbr[title],dfn[title] {
 
 table {
 	border-collapse: collapse;
-	border-spacing: 0;
+	x-spacing: 0;
 }
 
 hr {
@@ -1210,6 +1210,7 @@ div.row {
 	display: table-row;
 	margin-bottom: 5px;
 	margin-top: 5px;
+	border: 10px solid black;
 }
 
 footer {

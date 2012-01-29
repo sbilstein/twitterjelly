@@ -61,80 +61,79 @@
 
 			<div class="results_col" id="results">
 
-				<div class="row" id="algo_1">
-					<div class="matchlead">
-						<span class="celeb_name"></span>
+				<div class="row">
+					<div class="matchlead"></div>
+					<div class="words">
+						<span></span>
 					</div>
-					<div class="tweetbox">
-						<div class="twitprof celeb">
-							<img src="" />
+					<div class="tweet_entry">
+						<div class="celeb tweetbox">
+							<div class="twitprof">
+								<img class="celeb" />
+							</div>
+							<div class="celeb tweet"><a></a></div>
 						</div>
-
-						<div class="tweet celeb"></div>
-
-					</div>
-
-					<div class="tweetbox">
-						<div class="twitprof user">
-							<img src="" />
+						<div class="user tweetbox">
+							<div class="twitprof">
+								<img class="user"></img>
+							</div>
+							<div class="user tweet"><a></a></div>
 						</div>
-						<div class="tweet user"></div>
-
-					</div>
-
-					<div class="row" id="social">
-						<div id="facebook">
-							<div class="fb-like" data-href="http://www.twitterjelly.com"
-								data-send="false" data-width="250" data-show-faces="false"></div>
-						</div>
-						<div id="twitter">
-							<script src="js/libs/twit.js"></script>
-							<a class="twitter-share-button" href="https://twitter.com/share"
-								data-lang="en"
-								data-text="My celeb twitter match is@ ! Find yours at http://www.twitter.jelly.com"></a>
-
-						</div>
-						<a href="#">How do we compute jellyrank?</a>
 					</div>
 				</div>
+				<div id="social">
+					<div id="facebook">
+						<div class="fb-like" data-href="http://www.twitterjelly.com"
+							data-send="false" data-width="250" data-show-faces="false"></div>
+					</div>
+					<div id="twitter">
+						<script src="js/libs/twit.js"></script>
+						<a class="twitter-share-button" href="https://twitter.com/share"
+							data-lang="en"
+							data-text="My celeb twitter match is@ ! Find yours at http://www.twitter.jelly.com"></a>
+
+					</div>
+					<a href="#">How do we compute jellyrank?</a>
+				</div>
 			</div>
-
-
 		</div>
-		<!-- end of #container -->
 
-		<!--  		
+
+	</div>
+	<!-- end of #container -->
+
+	<!--  		
 	<footer> </footer>
 
 	-->
 
 
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
-		<script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+	<script>
 		!window.jQuery
 				&& document
 						.write(unescape('%3Cscript src="js/libs/jquery-1.4.2.js"%3E%3C/script%3E'))
 	</script>
-		<script src="js/libs/pure_min.js"></script>
-		<!-- TODO: Concat and minify -->
-		<script src="js/plugins.js"></script>
-		<script src="js/script.js"></script>
+	<script src="js/libs/pure_min.js"></script>
+	<!-- TODO: Concat and minify -->
+	<script src="js/plugins.js"></script>
+	<script src="js/script.js"></script>
 
 
-		<!--[if lt IE 7 ]>
+	<!--[if lt IE 7 ]>
 <script src="js/libs/dd_belatedpng.js"></script>
 <script> DD_belatedPNG.fix('img, .png_bg'); </script>
 <![endif]-->
 
-		<!-- yui profiler and profileviewer - remove for production -->
-		<script src="js/profiling/yahoo-profiling.min.js"></script>
-		<script src="js/profiling/config.js"></script>
-		<!-- end profiling code -->
+	<!-- yui profiler and profileviewer - remove for production -->
+	<script src="js/profiling/yahoo-profiling.min.js"></script>
+	<script src="js/profiling/config.js"></script>
+	<!-- end profiling code -->
 
 
 
-		<!-- change the UA-XXXXX-X to be your site's ID -->
-		<script>
+	<!-- change the UA-XXXXX-X to be your site's ID -->
+	<script>
 		var _gaq = [ [ '_setAccount', 'UA-XXXXX-X' ], [ '_trackPageview' ] ];
 		(function(d, t) {
 			var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
