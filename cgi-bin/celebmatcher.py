@@ -6,6 +6,7 @@ import math
 import collections
 import pprint
 import random
+import debuglog
 
 def getCelebMatches(userdata, celebstats):
     #FIRST CALCULATE BASE STATS FOR USER
@@ -171,7 +172,7 @@ def getCelebMatches(userdata, celebstats):
     if P_l > float(50.0):
         dim_2 = "S"
     else:
-        print(P_l)
+        debuglog.msg(P_l)
         dim_2 = "C"
 
     if (P_m + P_um)/float(2.0) > float(50.0):
