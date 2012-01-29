@@ -159,7 +159,7 @@ class TweetFetcher:
             if write_cache and use_filesystem_cache:
                 fname = './timelines/'+user.lower()+'.json'
                 with open(fname,'wt') as f:
-                    os.chmod(fname, 777)
+                    os.chmod(fname, 0o777)
                     f.write(json_txt)
             
         data = json.loads(json_txt)
