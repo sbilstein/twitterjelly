@@ -157,7 +157,10 @@ class TweetFetcher:
             json_txt = response.read().decode("ascii")
 
             if write_cache and use_filesystem_cache:
-                open('./timelines/'+user.lower()+'.json','w').write(json_txt)
+                fname = './timelines/'+user.lower()+'.json'
+                with open(fname,'wt') as f:
+                    os.chmod(fname, 0777)
+                    f.write(json_txt)
             
         data = json.loads(json_txt)
         print("\tdata is...",str(data)[:100])
