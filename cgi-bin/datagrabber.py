@@ -37,7 +37,8 @@ class DataGrabber:
         f = open('ldadata.tsv','w')
         q = "SELECT id, text FROM tweets"
         data = self.sql.q(q)
-        
+
+        # TODO: Unify encoding strategy.
         for d in data:
             try:
                 f.write("%s\t%s\n"%(str(d[0]), str(d[1])))
@@ -115,6 +116,7 @@ class DataGrabber:
 
     def GetTermIDFs(self, terms):
         url = 'http://http://50.56.221.228/cgi-bin/idf.php?'
+        # TODO: Unify encoding strategy.
         data = ('terms='+','.join(terms).replace("#","%23")).encode('latin1')
         print(data)
 
