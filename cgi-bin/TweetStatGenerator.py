@@ -13,19 +13,19 @@ class TweetStatGenerator:
 
                 #calculate first personality dimension based on habits
                 #get average tweet rates
-                m_thu = sum(cur[1:5])/4.0
-                fr_su = sum(cur[5:8])/3.0
-                day = sum(cur[11:14])/3.0
-                night = sum(cur[9:11],cur[14])/3.0
+                m_fri = sum(cur[1:6])/5.0
+                sa_su = sum(cur[6:8])/2.0
+                day = sum(cur[10:12])/2.0
+                night = (sum(cur[8:10])+sum(cur[12:14]) )/4.0
 
                 #avg tweet rate on time off
-                tr_weekend = (fr_su + night)/2.0
-                tr_weekday = (m_thu + day)/2.0
+                tr_weekend = (sa_su + night)/2.0
+                tr_weekday = ((m_fri + day)/2.0)*1.3
 
                 if tr_weekday > tr_weekend:
-                    dim_1 = A
+                    dim_1 = "A"
                 else:
-                    dim_1 = E
+                    dim_1 = "E"
 
                 #calculate other dimensions                
                 P_m = cur[21]
@@ -35,20 +35,19 @@ class TweetStatGenerator:
                 P_uh = cur[25]
 
                 if P_l > float(50.0):
-                    dim_1 = "S"
+                    dim_2 = "S"
                 else:
-                    print(P_l)
-                    dim_1 = "C"
+                    dim_2 = "C"
 
                 if (P_m + P_um)/float(2.0) > float(50.0):
-                    dim_2 = "W"
+                    dim_3 = "W"
                 else:
-                    dim_2 = "T"
+                    dim_3 = "T"
 
                 if (P_h + P_uh)/float(2.0) > float(50.0):
-                    dim_3 = "J"
+                    dim_4 = "J"
                 else:
-                    dim_3 = "M"
+                    dim_4 = "M"
 
                 print("inserting personality dimensions user ",cur[20])
 
@@ -56,11 +55,13 @@ class TweetStatGenerator:
                 dicvals = { "dim_1": dim_1,
                             "dim_2": dim_2,
                             "dim_3": dim_3,
+                            "dim_4": dim_4,
                             "user": cur[20]}
                                         
                 dicq= """UPDATE celeb_stats SET dim_1 = %(dim_1)s,
                                                 dim_2 = %(dim_2)s,
-                                                dim_3 = %(dim_3)s
+                                                dim_3 = %(dim_3)s,
+                                                dim_4 = %(dim_4)s
                                             WHERE user = %(user)s """
 
                 
