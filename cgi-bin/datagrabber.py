@@ -34,7 +34,9 @@ class DataGrabber:
         return self.sql.q(q)
 
     def GenerateLDAData(self):
-        '''Output tab-separated file to be consumed by LDA.'''
+        """
+        Output tab-separated file to be consumed by LDA.
+        """
         f = open('ldadata.tsv','w')
         q = "SELECT id, text FROM tweets"
         data = self.sql.q(q)
@@ -124,7 +126,7 @@ class DataGrabber:
             
         txt = txt.replace(",null:",',"null":') #workaround
         data = json.loads(txt)
-        return data;
+        return data
 
 
     def GetCelebTFIDFsForTerms(self, terms):
@@ -174,11 +176,11 @@ class DataGrabber:
         results['user']['pic_url'] = user_data['results'][0]['user']['profile_image_url']
 
         #Pass userdata and celebstats to get celeb matches
-        celebstats = self.GetCelebTweetStats() 
-        celebmatches = celebmatcher.getCelebMatches(userdata, celebstats)
+        celeb_stats = self.GetCelebTweetStats()
+        celeb_matches = celebmatcher.getCelebMatches(user_data, celeb_stats)
 
-        results['user']['personality']=celebmatches[0]
-        results['celeb_matches_pers']=celebmatches[1]
+        results['user']['personality'] = celeb_matches[0]
+        results['celeb_matches_pers'] = celeb_matches[1]
 
         # GET USER TFIDF
         user_tfidf = self.GetUserTFIDFs(user_data)
