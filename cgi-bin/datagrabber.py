@@ -14,6 +14,7 @@ import tweetadder
 import datetime
 import collections
 import celebmatcher
+import debuglog
 
 class DataGrabber:
     def __init__(self):
@@ -25,20 +26,20 @@ class DataGrabber:
         v = username
         results = self.sql.q(q,v)
         return results
-
-    def GetTopUsers(self):
-        return pickle.load(open('topusers.pkl','rb'))
         
     def GetAllText(self):
         q = "SELECT text FROM tweets"
         return self.sql.q(q)
 
     def GenerateLDAData(self):
-        '''Output tab-separated file to be consumed by LDA.'''
+        """
+        Output tab-separated file to be consumed by LDA.
+        """
         f = open('ldadata.tsv','w')
         q = "SELECT id, text FROM tweets"
         data = self.sql.q(q)
-        
+
+        # TODO: Unify encoding strategy.
         for d in data:
             try:
                 f.write("%s\t%s\n"%(str(d[0]), str(d[1])))
@@ -49,15 +50,15 @@ class DataGrabber:
                     try:
                         f.write("%s\t%s\n"%(unidecode.unidecode(d[0]), unidecode.unidecode(d[1])))
                     except:
-                        print("One tough cookie! Couldn't decode this:",d)
+                       debuglog.msg("One tough cookie! Couldn't decode this:",d)
 
         f.close()
-        print('done writing LDA data to file!')
+        debuglog.msg('done writing LDA data to file!')
 
-    def GetUserTweets(self,user,canretry=True):
+    def GetUserTweets(self, user, canretry=True):
         userdata = None
         if self.tf.canFetchTimeline():
-            userdata = self.tf.fetchUserTimeline(user, format="searchapi")
+            userdata = self.tf.fetchUserTimeline(user, format="searchapi", use_filesystem_cache=True)
         else:
             userdata = self.tf.getUserTweetsData(user)
 
@@ -73,7 +74,7 @@ class DataGrabber:
     def GetUserTFIDFs(self, userdata):
         tfidfobj = TfIdf()
 
-        #GET TERM COUNTS AND BUILD DICS
+        # GET TERM COUNTS AND BUILD DICS
         terms = {}
         token_mapping = {}
         user_tweets = {}
@@ -115,16 +116,16 @@ class DataGrabber:
                 'token_mapping':token_mapping}
 
     def GetTermIDFs(self, terms):
-        
-        url = 'http://lemurturtle.com/idf.php?'
+        url = 'http://50.56.221.228/cgi-bin/idf.php?'
+        # TODO: Unify encoding strategy.
         data = ('terms='+','.join(terms).replace("#","%23")).encode('latin1')
-        print(data)
+        debuglog.msg(data)
 
         txt = urllib.request.urlopen(url,data).read().decode('latin1')
             
         txt = txt.replace(",null:",',"null":') #workaround
         data = json.loads(txt)
-        return data;
+        return data
 
 
     def GetCelebTFIDFsForTerms(self, terms):
@@ -150,6 +151,11 @@ class DataGrabber:
         return results
 
     def GetCelebMatchesForUser(self, user):
+        """
+        Generate object with information about user and matches with celeb (including matching tweets) to pass to the
+        UI.
+        """
+        
         results = {
             'user':
                 {
@@ -162,105 +168,122 @@ class DataGrabber:
             'celeb_matches_pers' : []
         }
 
-        #GET USER TWEETS
-        userdata = self.GetUserTweets(user)
+        # GET USER TWEETS
+        user_data = self.GetUserTweets(user)
 
-        results['user']['name'] = userdata['results'][0]['user']['name']
-        results['user']['pic_url'] = userdata['results'][0]['user']['profile_image_url']
+        # return an error if user doesn't exist/has no tweets.
+        if user_data is None or not len(user_data['results']):
+            results['status'] = 'error'
+            return results
 
-        #Pass userdata and celebstats to get celeb matches
-        celebstats = self.GetCelebTweetStats() 
-        celebmatches = celebmatcher.getCelebMatches(userdata, celebstats)
+        results['user']['name'] = user_data['results'][0]['user']['name']
+        results['user']['pic_url'] = user_data['results'][0]['user']['profile_image_url']
 
-        results['user']['personality']=celebmatches[0]
-        results['celeb_matches_pers']=celebmatches[1]
+        #Pass user_data and celeb_stats to get celeb matches
+        celeb_stats = self.GetCelebTweetStats()
+        celeb_matches = celebmatcher.getCelebMatches(user_data, celeb_stats)
 
-        #GET USER TFIDF
-        usertfidf = self.GetUserTFIDFs(userdata)
-        userscores = usertfidf['scores_dic']
+        results['user']['personality'] = celeb_matches[0]
+        results['celeb_matches_pers'] = celeb_matches[1]
 
-        print("top user terms are",usertfidf['scores_list'][:15])
+        # GET USER TFIDF
+        user_tfidf = self.GetUserTFIDFs(user_data)
+        user_scores = user_tfidf['scores_dic']
 
-        #GET CELEBS TFIDF
-        celebscores = self.GetCelebTFIDFsForTerms([term[0] for term in usertfidf['scores_list']][:15])
+        debuglog.msg("top user terms are",user_tfidf['scores_list'][:15])
 
-        #CALCULATE MATCH SCORES
+        # GET CELEBS TFIDF
+        celeb_scores = self.GetCelebTFIDFsForTerms([term[0] for term in user_tfidf['scores_list']][:15])
 
-        cumcelebscores = {}
-        celebwords = {}
-        for entry in celebscores:
+        # CALCULATE MATCH SCORES
+        cumulative_celeb_scores = {}
+        celeb_words = {}
+        for entry in celeb_scores:
             celeb = entry[0]
             token = unidecode.unidecode(entry[1])
             score = float(entry[2])
 
-            if celeb in cumcelebscores:
-                celebwords[celeb][token] = score
-                cumcelebscores[celeb] += userscores[token] * score
+            if celeb in cumulative_celeb_scores:
+                celeb_words[celeb][token] = score
+                cumulative_celeb_scores[celeb] += user_scores[token] * score
             else:
-                celebwords[celeb] = {token:score}
-                cumcelebscores[celeb] = userscores[token] * score
+                celeb_words[celeb] = { token:score }
+                cumulative_celeb_scores[celeb] = user_scores[token] * score
 
-        matches = [(celeb, cumcelebscores[celeb], celebwords[celeb]) for celeb in cumcelebscores]
-        matches.sort(key=lambda x: -cumcelebscores[x[0]])
+        matches = [(celeb, cumulative_celeb_scores[celeb], celeb_words[celeb]) for celeb in cumulative_celeb_scores]
+        matches.sort(key=lambda x: -cumulative_celeb_scores[x[0]])
 
-        #FIND MATCHING TWEETS FOR TOP 10 CELEBS
-        for i in range(10):
+        # FIND MATCHING TWEETS FOR TOP 10 CELEBS
+        for top_10_celeb_index in range(10):
             celeb_match =  {
-                        'screen_name' : matches[i][0],
+                        'screen_name' : matches[top_10_celeb_index][0],
                         'name' : '',
                         'pic_url' : '',
-                        'match_score':cumcelebscores[matches[i][0]],
-                        'top_words' : matches[i][2],
+                        'match_score':cumulative_celeb_scores[matches[top_10_celeb_index][0]],
+                        'top_words' : matches[top_10_celeb_index][2],
                         'tweets' : []
                     }
 
-            vals = {'celeb':matches[i][0], 'tokens': ' '.join(matches[i][2])}
-            q = "SELECT text FROM tweets WHERE from_user=%(celeb)s AND MATCH(text) AGAINST(%(tokens)s)"
-            matching_celeb_tweets = [result[0] for result in self.sql.q(q,vals)]
-            #pprint.pprint(results)
-            matches[i] = list(matches[i])
+            vals = {'celeb':matches[top_10_celeb_index][0], 'tokens': ' '.join(matches[top_10_celeb_index][2])}
+            q = "SELECT text, id, from_user_name, profile_image_url FROM tweets WHERE from_user=%(celeb)s AND MATCH(text) AGAINST(%(tokens)s)"
+            q_results = self.sql.q(q, vals)
+
+            # skip if we don't have any matching celeb tweets.
+            if not len(q_results):
+                continue
+
+            celeb_match['name'] = q_results[0][2]
+            celeb_match['pic_url'] = q_results[0][3]
+            matching_celeb_tweets = [{'text':result[0], 'id':result[1]} for result in q_results]
+
+            matches[top_10_celeb_index] = list(matches[top_10_celeb_index])
             
-            matching_user_tweets = [usertfidf['tweets'][usertfidf['token_mapping'][unidecode.unidecode(token)][0]]['text'] for token in matches[i][2]]
+            #matching_user_tweets = [user_tfidf['tweets'][user_tfidf['token_mapping'][unidecode.unidecode(token)][0]]['text']
+            #                        for token in matches[top_10_celeb_index][2]]
 
-            #ADD TWEETS THAT MATCH ON TOKENS
-            sorted_tokens = [token for token in  sorted(matches[i][2].keys(), key=lambda x: -matches[i][2][x])]
-            #for token in matches[i][2]:
+            # ADD TWEETS THAT MATCH ON TOKENS
+            sorted_tokens = [token for token in  sorted(matches[top_10_celeb_index][2].keys(), key=lambda x: -matches[top_10_celeb_index][2][x])]
             for token in sorted_tokens:
-                celeb_tweets_for_token = list(filter(lambda x: x.count(token) > 0, matching_celeb_tweets))
-                user_tweets_for_token = [usertfidf['tweets'][usertfidf['token_mapping'][token][k]] for k in range(len(usertfidf['token_mapping'][token]))]
+                celeb_tweets_for_token = list(filter(lambda x: x['text'].count(token) > 0, matching_celeb_tweets))
+                user_tweets_for_token = [user_tfidf['tweets'][user_tfidf['token_mapping'][token][k]]
+                                         for k in range(len(user_tfidf['token_mapping'][token]))]
 
-                for j in range(min(len(celeb_tweets_for_token), len(user_tweets_for_token))):
+                for matching_tweets_for_token_index in range(min(len(celeb_tweets_for_token), len(user_tweets_for_token))):
                     celeb_match['tweets'].append(
                         {
                             'word' : token,
                             'user_tweet':
                                 {
-                                    'url': 'http://twitter.com/'+user_tweets_for_token[j]['user']['screen_name']+'/status/'+str(user_tweets_for_token[j]['id']),
-                                    'text': user_tweets_for_token[j]['text']
+                                    'url': 'http://twitter.com/' +
+                                                user_tweets_for_token[matching_tweets_for_token_index]['user']['screen_name'] +
+                                                '/status/' +
+                                                str(user_tweets_for_token[matching_tweets_for_token_index]['id']),
+                                    'text': user_tweets_for_token[matching_tweets_for_token_index]['text']
                                 },
                             'celeb_tweet':
                                 {
-                                    'url': 'http://twitter.com/'+matches[i][0],
-                                    'text': celeb_tweets_for_token[j]
+                                    'url': 'http://twitter.com/' +
+                                                celeb_match['screen_name'] +
+                                                '/status/' +
+                                                str(celeb_tweets_for_token[matching_tweets_for_token_index]['id']),
+                                    'text': celeb_tweets_for_token[matching_tweets_for_token_index]['text']
                                 }
                         })
 
 
-            matches[i].append({matches[i][0]:matching_celeb_tweets,user:matching_user_tweets})
+            #matches[top_10_celeb_index].append({matches[top_10_celeb_index][0]:matching_celeb_tweets,user:matching_user_tweets})
 
-            if len(celeb_match['tweets']) != 0:
+            if len(celeb_match['tweets']):
                 results['celeb_matches'].append(celeb_match)
 
-
-
-        #return matches
+        results['status'] = 'ok'
         return results
 
         
 
 if __name__ == '__main__':
     #jbtweets = DataGrabber().GetTweetsForUser("justinbieber")
-    #pprint.pprint(jbtweets)
+    #debuglog.pprint_msg(jbtweets)
     #print(len(jbtweets))
     #DoSomeShit()
     #DoSomeOtherShit()
@@ -268,13 +291,13 @@ if __name__ == '__main__':
     #DataGrabber().GetTfIdfScores()
 
     #user = "KingGails"
-    #user = "King32David"
+    user = "King32David"
     #user = "joshrweinstein"
     #user = "simplycary"
     #user = "Live_2Belieb"
     #user = "iluvjb1518"
     #user = "Belieb_Forever"
-    user = "sbilstein"
+    #user = "sbilstein"
     #user = "boomshakanaka"
     #user = "nuqb"
     #user = "celebjelly"
@@ -290,6 +313,7 @@ if __name__ == '__main__':
 
     #user = "cooper_carter"
     #user = "ava361"
+    #user = "JonathanPezzino"
 
     #non existent user for testing
     #user = "nonexistent75756fj"
@@ -297,11 +321,10 @@ if __name__ == '__main__':
     #user with 0 tweets for testing
     #user = "Adared"
 
-    #pprint.pprint(DataGrabber().GetCelebMatchesForUser(user)[:10])
     pprint.pprint(DataGrabber().GetCelebMatchesForUser(user))
     
     
-    #pprint.pprint(DataGrabber().GetCelebTFIDFsForTerms(["weed"]))    
+    #pprint.pprint(DataGrabber().GetCelebTFIDFsForTerms(["weed"]))
     
 
     

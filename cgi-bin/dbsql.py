@@ -2,6 +2,7 @@ import pymysql
 import pprint
 import traceback
 import sys
+import debuglog
 
 class SQLQuery:
     def __init__(self):
@@ -26,7 +27,7 @@ class SQLQuery:
             print("Query:",query)
             if values is not None:
                 print("Vals:")
-                pprint.pprint(values)
+                debuglog.pprint_msg(values)
             traceback.print_exc(file=sys.stdout)
             exit
 

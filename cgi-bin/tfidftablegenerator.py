@@ -1,7 +1,9 @@
 from dbsql import *
+from decimal import *
+import debuglog
 
 class TFIDFTableGenerator:
-    '''Generates table of TFIDF scores by word for each celeb'''
+    """ Generates table of TFIDF scores by word for each celeb """
 
     def __init__(self):
         self.sql = SQLQuery()
@@ -24,33 +26,34 @@ class TFIDFTableGenerator:
                         ORDER BY t.user) as token_counts, token_user_mapping
                   WHERE token_user_mapping.user = token_counts.user GROUP BY token_user_mapping.user"""
 
-        #ITERATE THROUGH TOKENS
+        # ITERATE THROUGH TOKENS
         for token in tokens:
             if len(token) < 3:
-                print("token %s too short."%token)
-                continue;
+                debuglog.msg("token %s too short."%token)
+                continue
             elif token[0] == '@':
-                print("ignoring user token %s"%token)
-                continue;
+                debuglog.msg("ignoring user token %s"%token)
+                continue
             
-            print("Generating tfidf table for token <%s>"%token)
-            vals = {'token':token}
+            debuglog.msg("Generating tfidf table for token <%s>"%token)
+            vals = { 'token':token }
             results = self.sql.q(q, vals)
 
             if results is None:
-                continue;
+                continue
             
-            #CALCULATE SCORES
+            # CALCULATE SCORES
             celebs_with_term = len(results)
             celeb_scores = {}
             for result in results:
                 celeb = result[0]
                 term_count_for_celeb = result[1]
                 total_tokens_for_celeb = result[2]
-                celeb_tfidf_for_term = float(term_count_for_celeb) / float(total_tokens_for_celeb) * float(celeb_count)/float(celebs_with_term)
+                celeb_tfidf_for_term = float((Decimal(term_count_for_celeb) / Decimal(total_tokens_for_celeb)) * \
+                                       (Decimal(celeb_count) / Decimal(celebs_with_term)))
                 celeb_scores[celeb] = (celeb_tfidf_for_term, term_count_for_celeb)
 
-            #GENERATE QUERY
+            # GENERATE QUERY
             insert_q = "INSERT INTO celeb_tfidf (user, token, score, count) VALUES"
 
             count = 0
@@ -63,23 +66,22 @@ class TFIDFTableGenerator:
                 insert_q+= "(%(celeb"+str(count)+")s, %(token)s, %(score"+str(count)+")s, %(count"+str(count)+")s),"
                 count += 1
 
-            #remove last comma and encode
-            insert_q = insert_q[:len(insert_q)-1]
+            # Remove last comma and add rule for duplicate keys.
+            insert_q = insert_q[:len(insert_q)-1] + " ON DUPLICATE KEY UPDATE score=VALUES(score), count=VALUES(count);"
 
-            #pprint.pprint(vals)
-            
-            #EXECUTE QUERY
-            self.sql.q(insert_q,vals)     
-
-            
+            # EXECUTE QUERY
+            self.sql.q(insert_q,vals)
 
     def GenerateDocFreqsTable(self):
-        '''to do: just update the frequencies as data is read in instead of generating this table.'''
-        q = "DROP TABLE doc_freqs;"
+        # TODO: just update the frequencies as data is read in instead of generating this table (low priority).
 
+        q = "CREATE TEMPORARY TABLE IF NOT EXISTS doc_freqs_temp LIKE doc_freqs;"
         self.sql.q(q)
 
-        q = """CREATE TABLE doc_freqs
+        q = "DELETE FROM doc_freqs_temp;"
+        self.sql.q(q)
+
+        q = """INSERT INTO doc_freqs_temp
                   SELECT num_users_with_term.token, COUNT(*) as c
                     FROM
                       (SELECT DISTINCT token, user
@@ -89,20 +91,24 @@ class TFIDFTableGenerator:
                     ORDER BY c DESC;"""
         self.sql.q(q)
 
-    def GetCelebCount(self):
-        q = "SELECT COUNT(DISTINCT tweets.from_user) FROM tweets";
-        result = self.sql.q(q)
-        totalcelebs = result[0][0]
+        q = "INSERT INTO doc_freqs (SELECT * FROM doc_freqs_temp) ON DUPLICATE KEY UPDATE c=VALUES(c);"
+        self.sql.q(q)
 
-        return totalcelebs
+    def GetCelebCount(self):
+        q = "SELECT COUNT(DISTINCT tweets.from_user) FROM tweets"
+        result = self.sql.q(q)
+        total_celebs = result[0][0]
+
+        return total_celebs
 
     def GetTokens(self):
-        celeb_count = self.GetCelebCount();
-        q = "SELECT token FROM tokens WHERE tokens.type != 'user'"
+        celeb_count = self.GetCelebCount()
+        q = "SELECT DISTINCT token FROM tokens WHERE tokens.type != 'user'"
         tokens = self.sql.q(q)
         return [t[0] for t in tokens]
 
 if __name__ == '__main__':
     TFIDFTableGenerator().Generate()
+
             
         

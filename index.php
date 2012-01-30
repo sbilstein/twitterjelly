@@ -48,10 +48,7 @@
 			<div id="lead">
 				<h2>
 					<span id="lead">FIND YOUR TOP CELEB TWITTER MATCHES</span>
-					<!-- <span id="lead">find your twitter celebrity match</span>-->
-
 				</h2>
-
 			</div>
 			<div id="query">
 				<form id="querybox">
@@ -62,37 +59,29 @@
 				</form>
 			</div>
 
-			<div class="results" id="results">
-				<div class="row">
-					<div class="matchlead">
-						SNOOP DOGG <span><em>3.45 JELLYRANK</em> </span>
-					</div>
-					<div>Y'all match on words like: weed, consecetur, beanbag  <a href="#">Show more tweets</a></div>
-					<div class="tweetbox">
-						<div class="twitprof">
-							<img src="img/dude.jpg" />
-						</div>
-						<span><a href="">Snoop Dogg</a> tweeted</span>
-						<div class="tweet">
-							Neque porro quisquam est qui dolorstrong ipsum quia dolor sit
-							amet, <strong>consectetur</strong>, adipisci velit..Neque porro
-							quisquam est qui dolorstrong ipsum quia dolor
-						</div>
-					</div>
-					<div class="tweetbox">
-						<div class="twitprof">
-							<img src="img/gaga.jpg" />
-						</div>
-						<span>You tweeted</span>
-						<div class="tweet">
-							Neque porro quisquam est qui dolorstrong ipsum quia dolor sit
-							amet, <strong>consectetur</strong>, adipisci velit..Neque porro
-							quisquam est qui dolorem ipsum quia dolor
-						</div>
-					</div>
+			<div class="results_col" id="results">
 
+				<div class="row">
+					<div class="matchlead"></div>
+					<div class="words">
+						<span></span>
+					</div>
+					<div class="tweet_entry">
+						<div class="celeb tweetbox">
+							<div class="twitprof">
+								<img class="celeb" />
+							</div>
+							<div class="celeb tweet"><a></a></div>
+						</div>
+						<div class="user tweetbox">
+							<div class="twitprof">
+								<img class="user"></img>
+							</div>
+							<div class="user tweet"><a></a></div>
+						</div>
+					</div>
 				</div>
-				<div class="row" id="social">
+				<div id="social">
 					<div id="facebook">
 						<div class="fb-like" data-href="http://www.twitterjelly.com"
 							data-send="false" data-width="250" data-show-faces="false"></div>
@@ -125,12 +114,10 @@
 				&& document
 						.write(unescape('%3Cscript src="js/libs/jquery-1.4.2.js"%3E%3C/script%3E'))
 	</script>
-
-
-	<!-- scripts concatenated and minified via ant build script-->
+	<script src="js/libs/pure_min.js"></script>
+	<!-- TODO: Concat and minify -->
 	<script src="js/plugins.js"></script>
 	<script src="js/script.js"></script>
-	<!-- end concatenated and minified scripts-->
 
 
 	<!--[if lt IE 7 ]>
