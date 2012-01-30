@@ -40,7 +40,7 @@
 
 	<div id="container" class="container_16">
 
-	<?php include("header.html"); ?>
+	<?php include("header.html"); ?>tw
 
 		<div class="grid_2 spacer"></div>
 		<div id="main" class="grid_12 main centercol">
@@ -64,26 +64,27 @@
 				<div class="row">
 					<div class="matchlead"></div>
 					<div class="words">
-						<span></span>
+						
 					</div>
 					<div class="tweet_entry">
 						<div class="celeb tweetbox">
 							<div class="twitprof">
-								<img class="celeb" /> <a class="celeb twitlink"></a>
+								<img class="celeb" /><br> <a class="celeb twitlink"></a>
 							</div>
-							<span><a></a> </span>
+							<span><a class="leadname"></a> </span>
 							<div class="celeb tweet">
 								<a class="twitlink"></a>
 							</div>
 						</div>
 						<div class="user tweetbox">
 							<div class="twitprof">
-								<img class="user"></img> <a class="user twitlink"></a>
+								<img class="user"></img><br> <a class="user twitlink"></a>
 							</div>
 							<span><a></a> </span>
 							<div class="user tweet"></div>
 						</div>
 					</div>
+
 				</div>
 				<div id="social">
 					<div id="facebook">
