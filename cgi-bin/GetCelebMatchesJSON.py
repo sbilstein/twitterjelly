@@ -14,5 +14,9 @@ form = cgi.FieldStorage()
 if "user" not in form:
     print(json.dumps({ 'status': 'error'}))
 else:
-    print(json.dumps(DataGrabber().GetCelebMatchesForUser(form['user'].value)))
+    user = form['user'].value
+    if user is None or not len(user) or len(user) > 20 or user.count(' '):
+        print(json.dumps({ 'status': 'error'}))
+    else:
+        print(json.dumps(DataGrabber().GetCelebMatchesForUser(user)))
 
