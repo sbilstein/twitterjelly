@@ -69,15 +69,19 @@
 					<div class="tweet_entry">
 						<div class="celeb tweetbox">
 							<div class="twitprof">
-								<img class="celeb" />
+								<img class="celeb" /> <a class="celeb twitlink"></a>
 							</div>
-							<div class="celeb tweet"><a></a></div>
+							<span><a></a> </span>
+							<div class="celeb tweet">
+								<a class="twitlink"></a>
+							</div>
 						</div>
 						<div class="user tweetbox">
 							<div class="twitprof">
-								<img class="user"></img>
+								<img class="user"></img> <a class="user twitlink"></a>
 							</div>
-							<div class="user tweet"><a></a></div>
+							<span><a></a> </span>
+							<div class="user tweet"></div>
 						</div>
 					</div>
 				</div>

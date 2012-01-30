@@ -1098,7 +1098,7 @@ div.centercol {
 	color: #000000;
 	font-weight: 700;
 	padding-top: 1.5%;
-/* 	line-height: 50%; */
+	/* 	line-height: 50%; */
 	/* 	padding-left: 5px; */
 	vertical-align: bottom;
 }
@@ -1124,17 +1124,15 @@ div.tweetbox {
 	display: table-cell;
 	float: left;
 	/* 	background-color: pink; */
-	width: 48%;
+	width: 45%;
 	/* 	padding: 1%; */
 	margin-top: 8px;
 	margin-bottom: 8px;
-	overflow: hidden;
 	font-size: 1.20em;
 }
 
-div.tweetbox span { /* 	font-size: 10px; */
+div.tweetbox span {
 	font-weight: 800;
-	/* color: #999; */
 	margin-left: 3px;
 }
 
@@ -1174,13 +1172,6 @@ div.tweet {
 	word-wrap: break-word;
 }
 
-#selector {
-	text-align: left;
-	color: black;
-	/* 	background-color: orange; */
-	display: table;
-}
-
 div.results_col {
 	display: table;
 	font-size: 0.75em;
@@ -1208,26 +1199,5 @@ div.results_col {
 
 div.row {
 	display: table-row;
-	margin-bottom: 5px;
-	margin-top: 5px;
 	border: 10px solid black;
-}
-
-footer {
-	background-color: #e4f3fe;
-	border-radius: 5px;
-	box-shadow: 0px 0px 5px 0px #888;
-	font-size: 2.0em;
-	bottom: 0%;
-	/* 	left: 60%; */
-	right: 0%;
-	width: 550px;
-	height: 40px;
-	position: fixed;
-	line-height: 10px;
-	padding: 2px 2px 2px 2px;
-	/* font-family: "Lucida Grande", Arial, sans-serif; */
-	vertical-align: bottom;
-	width: 40%;
-	width: 550px;
 }

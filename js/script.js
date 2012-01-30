@@ -125,7 +125,7 @@ var directive = {
 		'match<-celeb_matches' : {
 			'.matchlead' : function(arg) {
 				return arg.item.screen_name.toUpperCase();
-			
+
 			},
 			'.words span' : {
 				'word<-match.top_words' : {
@@ -135,17 +135,37 @@ var directive = {
 			'div.tweet_entry' : {
 				'tweet<-match.tweets' : {
 					'+.celeb.tweet' : 'tweet.celeb_tweet.text',
-					'.celeb.tweet a@href' : 'tweet.celeb_tweet.url',
-					'.celeb.tweet a' : function(arg) {
+					'a.celeb.twitlink@href' : 'tweet.celeb_tweet.url',
+					'a.user.twitlink' : function(arg) {
 						return 'link';
 					},
 					'+.user.tweet' : 'tweet.user_tweet.text',
-					'.user.tweet a@href' : 'tweet.user_tweet.url',
-					'.user.tweet a' : function(arg) {
+					'a.user.twitlink@href' : 'tweet.user_tweet.url',
+					'a.user.twitlink' : function(arg) {
 						return 'link';
 					},
 					'img.user@src' : 'user.pic_url',
-					'img.celeb@src' : 'match.pic_url'
+					'img.celeb@src' : 'match.pic_url',
+					'.user.tweetbox span a' : function(arg) {
+						return arg.context.user.screen_name;
+					},
+					'.user.tweetbox span a@href' : function(arg) {
+						return 'http://www.twitter.com/'
+								+ arg.context.user.screen_name;
+					},
+					'.user.tweetbox span+' : function(arg) {
+						return ' tweeted ';
+					},
+					'.celeb.tweetbox span a' : function(arg) {
+						return arg.context.user.screen_name;
+					},
+					'.celeb.tweetbox span a@href' : function(arg) {
+						return 'http://www.twitter.com/'
+								+ arg.context.user.screen_name;
+					},
+					'.celeb.tweetbox span+' : function(arg) {
+						return ' tweeted ';
+					}
 
 				}
 			}
