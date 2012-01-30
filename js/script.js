@@ -478,15 +478,16 @@ var directive = {
 				// return "you and " + arg.item.name.toUpperCase() + ' <em>98%
 				// MATCH</em>';
 				return "<span><em>" + arg.item.name.toUpperCase()
-						+ '</em></span> and you matched on';
+						+ '</em></span>';
 
 			},
 			'.words' : function(arg) {
-				var str = "";
+				var str = "matched on ";
+				
 				for ( var key in arg.item.top_words) {
-					str += " " + key.toUpperCase();
+					str += " " + key.toUpperCase() + " |";
 				}
-				return str;
+				return str.slice(0, str.length-2);
 
 			}
 

@@ -92,7 +92,7 @@ pre,code,kbd,samp {
 }
 
 body,select,input,textarea {
-	color: #444;
+	color: black;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -1168,11 +1168,12 @@ div.matchlead span {
 }
 
 div.words {
-	font-variant: small-caps;
+	/* font-variant: small-caps; */
 	font-size: 18px;
 	margin-left: 2%;
-	word-spacing: 2.0em;
+/* 	word-spacing: 2.0em; */
 	font-weight: 800;
+	word-spacing: default;
 }
 
 div.tweet {
@@ -1184,9 +1185,14 @@ div.tweet {
 	word-wrap: break-word;
 }
 
+div.tweet_entry {
+	display: table-row;
+	border-bottom: 1px solid #D0D0D0;
+	}
 div.tweet_entry span {
 	margin-left: 6px;
 	}
+	
 
 div.results_col {
 	font-size: 0.75em;
@@ -1213,7 +1219,7 @@ div.results_col {
 }
 
 div.row {
-	border-bottom: 1px solid #D0D0D0;
+/* 	border-bottom: 1px solid #D0D0D0; */
 	/* 	border-bottom: 1px solid #96d1fe; */
 	display: table-row;
 	margin-bottom: 5px;
