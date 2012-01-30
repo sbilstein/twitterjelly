@@ -29,13 +29,13 @@ class TFIDFTableGenerator:
         # ITERATE THROUGH TOKENS
         for token in tokens:
             if len(token) < 3:
-               debuglog.msg("token %s too short."%token)
+                debuglog.msg("token %s too short."%token)
                 continue
             elif token[0] == '@':
-               debuglog.msg("ignoring user token %s"%token)
+                debuglog.msg("ignoring user token %s"%token)
                 continue
             
-           debuglog.msg("Generating tfidf table for token <%s>"%token)
+            debuglog.msg("Generating tfidf table for token <%s>"%token)
             vals = { 'token':token }
             results = self.sql.q(q, vals)
 
