@@ -4,7 +4,8 @@
 
 	$terms = implode('","',explode(",",$_POST['terms']));
 
-	$sql = "SELECT COUNT(DISTINCT tweets.from_user) FROM tweets";
+	//$sql = "SELECT COUNT(DISTINCT tweets.from_user) FROM tweets";
+	$sql = "SELECT COUNT(*) FROM (SELECT DISTINCT from_user FROM tweets) as t";
 	$results = mysql_query($sql);
 	$numusers = 0;
 	while($row = mysql_fetch_array($results))

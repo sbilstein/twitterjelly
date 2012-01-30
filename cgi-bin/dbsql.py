@@ -2,6 +2,7 @@ import pymysql
 import pprint
 import traceback
 import sys
+import debuglog
 
 class SQLQuery:
     def __init__(self):
