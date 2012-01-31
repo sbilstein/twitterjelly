@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import struct
 import re
 
 try:
@@ -96,10 +95,7 @@ class Cursor(object):
             query = query % conn.escape(args)
 
         if isinstance(query, str):
-            try:
-                query = query.encode(charset)
-            except:
-                query = query.encode('utf-8')
+            query = query.encode(charset)
 
         result = 0
         try:

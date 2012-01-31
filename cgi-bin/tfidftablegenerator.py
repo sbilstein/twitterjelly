@@ -66,11 +66,12 @@ class TFIDFTableGenerator:
                 insert_q+= "(%(celeb"+str(count)+")s, %(token)s, %(score"+str(count)+")s, %(count"+str(count)+")s),"
                 count += 1
 
-            # Remove last comma and add rule for duplicate keys.
-            insert_q = insert_q[:len(insert_q)-1] + " ON DUPLICATE KEY UPDATE score=VALUES(score), count=VALUES(count);"
+            if len(vals.keys()) >= 4:
+                # Remove last comma and add rule for duplicate keys.
+                insert_q = insert_q[:len(insert_q)-1] + " ON DUPLICATE KEY UPDATE score=VALUES(score), count=VALUES(count);"
 
-            # EXECUTE QUERY
-            self.sql.q(insert_q,vals)
+                # EXECUTE QUERY
+                self.sql.q(insert_q,vals)
 
     def GenerateDocFreqsTable(self):
         # TODO: just update the frequencies as data is read in instead of generating this table (low priority).

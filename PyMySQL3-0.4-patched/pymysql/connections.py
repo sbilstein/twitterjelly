@@ -27,7 +27,7 @@ except ImportError:
 
 from .charset import MBLENGTH, charset_by_name, charset_by_id
 from .cursors import Cursor
-from .constants import FIELD_TYPE, FLAG
+from .constants import FIELD_TYPE
 from .constants import SERVER_STATUS
 from .constants.CLIENT import *
 from .constants.COMMAND import *
@@ -152,19 +152,30 @@ def unpack_uint16(n):
 
 # TODO: stop using bit-shifting in these functions...
 # TODO: rename to "uint" to make it clear they're unsigned...
+# Patch applied from http://code.google.com/p/pymysql/issues/detail?id=55
 def unpack_int24(n):
-    return struct.unpack('B',n[0])[0] + (struct.unpack('B', n[1])[0] << 8) +\
-        (struct.unpack('B',n[2])[0] << 16)
+    try:
+        return struct.unpack('B',n[0])[0] + (struct.unpack('B', n[1])[0] << 8) +\
+            (struct.unpack('B',n[2])[0] << 16)
+    except TypeError:
+        return n[0]+(n[1]<<8)+(n[2]<<16)
 
 def unpack_int32(n):
-    return struct.unpack('B',n[0])[0] + (struct.unpack('B', n[1])[0] << 8) +\
-        (struct.unpack('B',n[2])[0] << 16) + (struct.unpack('B', n[3])[0] << 24)
+    try:
+        return struct.unpack('B',n[0])[0] + (struct.unpack('B', n[1])[0] << 8) +\
+            (struct.unpack('B',n[2])[0] << 16) + (struct.unpack('B', n[3])[0] << 24)
+    except TypeError:
+        return n[0]+(n[1]<<8)+(n[2]<<16)+(n[3]<<24)
 
 def unpack_int64(n):
-    return struct.unpack('B',n[0])[0] + (struct.unpack('B', n[1])[0]<<8) +\
-    (struct.unpack('B',n[2])[0] << 16) + (struct.unpack('B',n[3])[0]<<24)+\
-    (struct.unpack('B',n[4])[0] << 32) + (struct.unpack('B',n[5])[0]<<40)+\
-    (struct.unpack('B',n[6])[0] << 48) + (struct.unpack('B',n[7])[0]<<56)
+    try:
+        return struct.unpack('B',n[0])[0] + (struct.unpack('B', n[1])[0]<<8) +\
+        (struct.unpack('B',n[2])[0] << 16) + (struct.unpack('B',n[3])[0]<<24)+\
+        (struct.unpack('B',n[4])[0] << 32) + (struct.unpack('B',n[5])[0]<<40)+\
+        (struct.unpack('B',n[6])[0] << 48) + (struct.unpack('B',n[7])[0]<<56)
+    except TypeError:
+        return n[0]+(n[1]<<8)+(n[2]<<16)+(n[3]<<24) \
+              +(n[4]<<32)+(n[5]<<40)+(n[6]<<48)+(n[7]<<56)
 
 def defaulterrorhandler(connection, cursor, errorclass, errorvalue):
     err = errorclass, errorvalue

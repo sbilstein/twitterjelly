@@ -1,8 +1,6 @@
 <?
 	include('sanitize.php'); 
 	include('db.php');
-	//$con = mysql_connect('localhost', 'sbilstei_default','db$wag');
-	//mysql_select_db("sbilstei_twitter",$con);
 
 	$user = $_GET['user'];
 	$sql = "SELECT tfidf_scores.* FROM tokens,";
