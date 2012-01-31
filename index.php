@@ -47,15 +47,16 @@
 		<div id="main" class="grid_12 main centercol">
 			<div class="vert-spacer"></div>
 			<div id="lead">
-				<h2>
-					<span id="lead">FIND YOUR TOP CELEB TWITTER MATCHES</span>
-				</h2>
+				<h1 class="lead">
+					FIND YOUR TOP CELEB TWITTER MATCHES
+					</h2>
+			
 			</div>
-			<div id="query">
+			<div class="query-box">
 
 				<input type="search" size="26"
 					placeholder="Enter your twitter username..." id="usern" /> <input
-					type="button" id="go" value="GO" />
+					type="button" id="go" class="submit" value="GO" />
 
 			</div>
 
@@ -64,7 +65,7 @@
 				<div class="row">
 					<div class="matchlead"></div>
 					<div class="words"></div>
-					<div class="tweet_entry">
+					<div class="tweet_entry visuallyhidden top-border">
 						<div class="celeb tweetbox">
 							<div class="twitprof">
 								<img class="celeb" /><br> <a class="celeb twitlink"></a>

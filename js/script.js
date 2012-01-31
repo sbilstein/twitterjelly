@@ -477,8 +477,8 @@ var directive = {
 				curr_celeb = arg.item.screen_name;
 				// return "you and " + arg.item.name.toUpperCase() + ' <span>98%
 				// MATCH</span>';
-				return "<span><em>" + arg.item.name.toUpperCase()
-						+ '</em></span>';
+				return '<span class="celeb-name">' + arg.item.name.toUpperCase()
+						+ '</span>';
 
 			},
 			'.words' : function(arg) {
@@ -503,10 +503,10 @@ var directive = {
 
 						while ((pos = text.toLowerCase().search(word_match)) > -1) {
 							new_str += text.slice(0, pos);
-							console.log("Found match");
+							//console.log('Found match');
 							// check for spaces on either side
-							new_str += '<strong>' + text.slice(pos, pos + len)
-									+ '</strong>';
+							new_str += '<span class="matched-word">' + text.slice(pos, pos + len)
+									+ '</span>';
 							text = text.slice(pos + len);
 						}
 						new_str += text;
@@ -524,9 +524,9 @@ var directive = {
 
 						while ((pos = text.toLowerCase().search(word)) > -1) {
 							new_str += text.slice(0, pos);
-							new_str += '<strong>'
+							new_str += '<span class="matched-word">'
 									+ text.slice(pos, pos + word.length)
-									+ '</strong>';
+									+ '</span>';
 							text = text.slice(pos + word.length);
 						}
 						new_str += text;
