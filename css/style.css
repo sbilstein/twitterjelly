@@ -1013,51 +1013,38 @@ input:invalid,textarea:invalid {
 
 /**
 Insert elements here I guess **/
-div { /* border: 1px solid grey;
-	margin: -1px -1px -1px -1px;
-	padding: -1px -1px -1px -1px; */
-	
+.vert-spacer {
+	min-height: 30px;
+}
+
+.spacer {
+	height: 1.0em;
 }
 
 header {
 	background-color: #000000;
+	box-shadow: 0 0 5px 3px #888;
+	color: #FFFFFF;
 	font-size: 1.5em;
 	font-weight: 900;
-	color: #FFFFFF;
-	text-align: left;
-	word-spacing: 4.5em;
-	-moz-box-shadow: 0 0 5px 3px #888;
-	-webkit-box-shadow: 0 0 5px 3px #888;
-	box-shadow: 0 0 5px 3px #888;
-	position: fixed;
-	z-index: 1;
-	top: 0%;
-	left: 0%;
 	height: 1.4em;
+	left: 0%;
+	position: fixed;
+	text-align: left;
+	top: 0%;
+	top: 0%;
 	width: 100%;
+	word-spacing: 4.5em;
+	z-index: 1;
 }
 
-header a {
+header a,a:visited,a:hover {
 	color: white;
 	text-decoration: none;
-}
-
-header a {
-	text-decoration: none;
-	color: white;
 }
 
 header a:hover {
-	color: white;
-}
-
-header a:visited {
-	text-decoration: none;
-	color: white;
-}
-
-#container {
-	
+	text-decoration: underline;
 }
 
 .main {
@@ -1071,51 +1058,32 @@ div.centercol {
 	/**shadow**/
 	box-shadow: 0px 0px 5px 0px #888;
 }
-
-#query {
-	font-size: 39px;
-	font-weight: normal;
-	/* font-family: "Lucida Grande", Arial, sans-serif; */
-	text-align: center;
-}
-
-#go {
-	font-size: 29px;
-	background-color: #FFCF90;
-	vertical-align: middle;
-}
-
-#lead {
-	text-align: center;
-	/* 	font-family: "Lucida Grande", Arial, sans-serif;  */
+/**Title up top**/
+.lead {
+	color: #000000;
 	font-size: 36px;
 	font-weight: 700;
 	letter-spacing: -0.10em;
-	word-spacing: -0.07em;
-	/* line-height: 4px; */
-	color: #000000;
-	font-weight: 700;
 	padding-top: 1.5%;
-	/* 	line-height: 50%; */
-	/* 	padding-left: 5px; */
+	text-align: center;
 	vertical-align: bottom;
+	word-spacing: -0.07em;
+}
+
+.query-box {
+	font-size: 29px;
+	font-weight: normal;
+	text-align: center;
+}
+
+.submit {
+	background-color: #FFCF90;
+	font-size: 29px;
+	padding: 2px 2px 2px 2px;
 }
 
 div.ajaxload {
 	text-align: center;
-}
-/* FB like 24 pixels high */
-#usern {
-	font-size: 28px;
-	height: 30px;
-}
-
-.vert-spacer {
-	min-height: 30px;
-}
-
-.spacer {
-	height: 1.0em;
 }
 
 div.tweetbox {
@@ -1136,7 +1104,6 @@ div.tweetbox span {
 a.twitlink {
 	font-weight: 900;
 	letter-spacing: -0.11em;
-	width: 80%;
 	text-align: left;
 }
 
@@ -1165,11 +1132,18 @@ div.matchlead span {
 	/* background-color: #ffe38f; */
 }
 
-div.words { /* font-variant: small-caps; */
+div.words {
 	font-size: 18px;
 	margin-left: 2%;
-	/* 	word-spacing: 2.0em; */
-	font-weight: 800;
+	margin-bottom: 5px;
+	/* 	font-weight: 900; */
+	display: inline-block;
+}
+
+.word { /* 	background-color: silver; */
+	background-color: #FFCF90;
+	padding: 2px 2px 2px 2px;
+	
 }
 
 div.tweet {
@@ -1181,7 +1155,6 @@ div.tweet {
 
 div.tweet_entry {
 	display: table-row;
-	border-bottom: 1px solid #D0D0D0;
 }
 
 div.tweet_entry span {
@@ -1212,8 +1185,21 @@ div.results_col {
 	z-index: 1;
 }
 
-div.row { /* 	border-bottom: 1px solid #D0D0D0; */
-	/* 	border-bottom: 1px solid #96d1fe; */
+.celeb-name {
+	font-style: italic;
+	text-transform: uppercase;
+}
+
+.matched-word {
+	background-color: yellow;
+	font-weight: 800;
+}
+
+.top-border {
+	border-top: 1px solid #D0D0D0;
+}
+
+div.row {
 	display: table-row;
 	margin-bottom: 5px;
 	margin-top: 5px;
