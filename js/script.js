@@ -3,7 +3,7 @@
 // */
 var tweet_text = '...';
 var cur_celeb;
-var data = {
+var data_sample = {
 	"status" : "ok",
 	"celeb_matches" : [
 			{
@@ -483,11 +483,11 @@ var directive = {
 			},
 			'.words' : function(arg) {
 				var str = "matched on ";
-				
+
 				for ( var key in arg.item.top_words) {
 					str += " " + key.toUpperCase() + " |";
 				}
-				return str.slice(0, str.length-2);
+				return str.slice(0, str.length - 2);
 
 			}
 
@@ -569,7 +569,15 @@ var directive = {
 };
 
 $("#querybox").submit(function() {
-	$('#results').render(data, directive);
-	console.log("Mapped!");
+	// TODO validate arg first
+	var arg = $('#usern').val();
+	console.log('arg: ' + arg);
+	$.get('cgi-bin/GetCelebMatchesJSON.py', arg, ajax_ret);
+	console.log('txed request');
 	return false;
 });
+
+function ajax_ret(data) {
+	console.log('rxed response');
+	$('#results').render(data, directive);
+}
