@@ -572,12 +572,13 @@ $("#querybox").submit(function() {
 	// TODO validate arg first
 	var arg = $('#usern').val();
 	console.log('arg: ' + arg);
-	$.get('cgi-bin/GetCelebMatchesJSON.py', arg, ajax_ret);
+	$.get('cgi-bin/GetCelebMatchesJSON.py',{ 'user' : arg } , ajax_ret);
 	console.log('txed request');
 	return false;
 });
 
 function ajax_ret(data) {
 	console.log('rxed response');
+	console.log(data);
 	$('#results').render(data, directive);
 }
