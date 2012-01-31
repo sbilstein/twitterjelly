@@ -92,7 +92,7 @@ pre,code,kbd,samp {
 }
 
 body,select,input,textarea {
-	color: #444;
+	color: black;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -1098,7 +1098,7 @@ div.centercol {
 	color: #000000;
 	font-weight: 700;
 	padding-top: 1.5%;
-/* 	line-height: 50%; */
+	/* 	line-height: 50%; */
 	/* 	padding-left: 5px; */
 	vertical-align: bottom;
 }
@@ -1124,18 +1124,15 @@ div.tweetbox {
 	display: table-cell;
 	float: left;
 	/* 	background-color: pink; */
-	width: 48%;
+	width: 45%;
 	/* 	padding: 1%; */
 	margin-top: 8px;
-	margin-bottom: 8px;
-	overflow: hidden;
 	font-size: 1.20em;
+	margin-left: 10px;
 }
 
-div.tweetbox span { /* 	font-size: 10px; */
+div.tweetbox span {
 	font-weight: 800;
-	/* color: #999; */
-	margin-left: 3px;
 }
 
 a.twitlink {
@@ -1150,42 +1147,56 @@ div.twitprof {
 	display: table-cell;
 }
 
+div.twitprof img {
+	float: top;
+	border: 1px solid black;
+}
+
 div.matchlead {
-	font-size: 2.3em;
+	font-size: 28px;
 	color: black;
 	letter-spacing: 0em;
 	margin-left: 5px;
 	font-weight: 900;
 	letter-spacing: -0.11em;
-	word-spacing: -0.07em;
+	word-spacing: -0.00em;
 }
 
 div.matchlead span {
-	font-variant: small-caps;
+	font-size: 36px;
 	/* background-color: #ffe38f; */
+}
+
+div.words { /* font-variant: small-caps; */
+	font-size: 18px;
+	margin-left: 2%;
+	/* 	word-spacing: 2.0em; */
+	font-weight: 800;
+	word-spacing: default;
 }
 
 div.tweet {
 	font-size: 1.0em;
 	font-weight: default;
 	letter-spacing: default;
-	padding-left: 5px;
+	padding-left: 8px;
 	display: table-cell;
 	word-wrap: break-word;
 }
 
-#selector {
-	text-align: left;
-	color: black;
-	/* 	background-color: orange; */
-	display: table;
+div.tweet_entry {
+	display: table-row;
+	border-bottom: 1px solid #D0D0D0;
+}
+
+div.tweet_entry span {
+	margin-left: 6px;
 }
 
 div.results_col {
-	display: table;
 	font-size: 0.75em;
-	height: 100%;
-	min-height: 100%;
+	display: table;
+	border-collapse: collapse;
 }
 
 #social {
@@ -1206,11 +1217,11 @@ div.results_col {
 	z-index: 1;
 }
 
-div.row {
+div.row { /* 	border-bottom: 1px solid #D0D0D0; */
+	/* 	border-bottom: 1px solid #96d1fe; */
 	display: table-row;
 	margin-bottom: 5px;
 	margin-top: 5px;
-	border: 10px solid black;
 }
 
 footer {
