@@ -41,6 +41,7 @@
 	<div id="container" class="container_16">
 
 	<?php include("header.html"); ?>
+		tw
 
 		<div class="grid_2 spacer"></div>
 		<div id="main" class="grid_12 main centercol">
@@ -51,35 +52,37 @@
 				</h2>
 			</div>
 			<div id="query">
-				<form id="querybox">
-					<input type="search" size="26"
-						placeholder="Enter your twitter username..." id="usern" /> <input
-						type="submit" id="go" value="GO" />
 
-				</form>
+				<input type="search" size="26"
+					placeholder="Enter your twitter username..." id="usern" /> <input
+					type="button" id="go" value="GO" />
+
 			</div>
 
 			<div class="results_col" id="results">
 
 				<div class="row">
 					<div class="matchlead"></div>
-					<div class="words">
-						<span></span>
-					</div>
+					<div class="words"></div>
 					<div class="tweet_entry">
 						<div class="celeb tweetbox">
 							<div class="twitprof">
-								<img class="celeb" />
+								<img class="celeb" /><br> <a class="celeb twitlink"></a>
 							</div>
-							<div class="celeb tweet"><a></a></div>
+							<span><a class="leadname"></a> </span>
+							<div class="celeb tweet">
+								<a class="twitlink"></a>
+							</div>
 						</div>
 						<div class="user tweetbox">
 							<div class="twitprof">
-								<img class="user"></img>
+								<img class="user"></img><br> <a class="user twitlink"></a>
 							</div>
-							<div class="user tweet"><a></a></div>
+							<span><a></a> </span>
+							<div class="user tweet"></div>
 						</div>
 					</div>
+
 				</div>
 				<div id="social">
 					<div id="facebook">
