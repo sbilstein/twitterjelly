@@ -78,9 +78,9 @@ input,select {
 
 body {
 	font: 13px/1.231 sans-serif;
-	*font-size: small;
+	font-size: small;
 	background-color: #96d1fe;
-	font-family: ÒNimbus Sans LÓ, Helvetica, Arial, Verdana, sans-serif;
+	font-family: "Nimbus Sans L", Helvetica, Arial, Verdana, sans-serif;
 }
 
 select,input,textarea,button {
@@ -1080,9 +1080,7 @@ div.centercol {
 }
 
 #go {
-	-webkit-border-radius: 4px;
 	font-size: 29px;
-	padding: -5px -5px -5px -5px;
 	background-color: #FFCF90;
 	vertical-align: middle;
 }
@@ -1172,13 +1170,10 @@ div.words { /* font-variant: small-caps; */
 	margin-left: 2%;
 	/* 	word-spacing: 2.0em; */
 	font-weight: 800;
-	word-spacing: default;
 }
 
 div.tweet {
 	font-size: 1.0em;
-	font-weight: default;
-	letter-spacing: default;
 	padding-left: 8px;
 	display: table-cell;
 	word-wrap: break-word;
@@ -1222,23 +1217,4 @@ div.row { /* 	border-bottom: 1px solid #D0D0D0; */
 	display: table-row;
 	margin-bottom: 5px;
 	margin-top: 5px;
-}
-
-footer {
-	background-color: #e4f3fe;
-	border-radius: 5px;
-	box-shadow: 0px 0px 5px 0px #888;
-	font-size: 2.0em;
-	bottom: 0%;
-	/* 	left: 60%; */
-	right: 0%;
-	width: 550px;
-	height: 40px;
-	position: fixed;
-	line-height: 10px;
-	padding: 2px 2px 2px 2px;
-	/* font-family: "Lucida Grande", Arial, sans-serif; */
-	vertical-align: bottom;
-	width: 40%;
-	width: 550px;
 }

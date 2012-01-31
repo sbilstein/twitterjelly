@@ -40,7 +40,8 @@
 
 	<div id="container" class="container_16">
 
-	<?php include("header.html"); ?>tw
+	<?php include("header.html"); ?>
+		tw
 
 		<div class="grid_2 spacer"></div>
 		<div id="main" class="grid_12 main centercol">
@@ -51,21 +52,18 @@
 				</h2>
 			</div>
 			<div id="query">
-				<form id="querybox">
-					<input type="search" size="26"
-						placeholder="Enter your twitter username..." id="usern" /> <input
-						type="submit" id="go" value="GO" />
 
-				</form>
+				<input type="search" size="26"
+					placeholder="Enter your twitter username..." id="usern" /> <input
+					type="button" id="go" value="GO" />
+
 			</div>
 
 			<div class="results_col" id="results">
 
 				<div class="row">
 					<div class="matchlead"></div>
-					<div class="words">
-						
-					</div>
+					<div class="words"></div>
 					<div class="tweet_entry">
 						<div class="celeb tweetbox">
 							<div class="twitprof">
