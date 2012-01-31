@@ -572,7 +572,9 @@ $("#querybox").submit(function() {
 	// TODO validate arg first
 	var arg = $('#usern').val();
 	console.log('arg: ' + arg);
-	$.get('cgi-bin/GetCelebMatchesJSON.py',{ 'user' : arg } , ajax_ret);
+	var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py',
+		{ 'user' : arg } , 
+		ajax_ret);
 	console.log('txed request');
 	return false;
 });
@@ -580,5 +582,25 @@ $("#querybox").submit(function() {
 function ajax_ret(data) {
 	console.log('rxed response');
 	console.log(data);
+	if(data == null) {
+		ret_error('data returned is NULL');
+		return;
+	} else if(data['status'] == 'error') {
+		ret_error('Data has status = error'); 
+		return;
+	}
+	console.log("Successful response");
 	$('#results').render(data, directive);
 }
+
+function ajax_error() {
+	console.log("Request error");	
+}
+function ret_error(log){
+	console.log(log);
+}
+$("body").ajaxError(
+	(function(e, jqxhr, settings, exception) {
+		console.log("AJAX ERROR");		
+		})
+	);
