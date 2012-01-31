@@ -1,6 +1,13 @@
 ///* Author: Siegfried Bilstein
 //
 // */
+
+if (!console) {
+	console = {
+		log : function() {
+		}
+	};
+}
 var tweet_text = '...';
 var cur_celeb;
 var directive = {
@@ -10,21 +17,23 @@ var directive = {
 				curr_celeb = arg.item.screen_name;
 				// return "you and " + arg.item.name.toUpperCase() + ' <span>98%
 				// MATCH</span>';
-				return '<span class="celeb-name">'
-						+ arg.item.name + '</span> match on';
-
+				// return 'you and <span class="celeb-name">'
+				// + arg.item.name + '</span> tweet about';
+				return '<span class="celeb-name">' + arg.item.name + '</span>';
 			},
-			'div.words' : {
-				"word<-match.top_words" : {
-					'input.word@value' : 'word.pos'
-				}
-			// function(arg) {
-			// var str = "matched on ";
-			//
-			// for ( var key in arg.item.top_words) {
-			// str += " " + key.toUpperCase() + " |";
+			'div.words' :
+			// "word<-match.top_words" : {
+			// 'input.word@value' : 'word.pos'
 			// }
-			// return str.slice(0, str.length - 2);
+			function(arg) {
+				var str = "<span class=\"list-lead\">you both tweet about</span>";
+
+				for ( var key in arg.item.top_words) {
+					str += '<input class="word" type="button" value="'
+							+ key + '"></input>';
+					// str += "test";
+				}
+				return str.slice(0, str.length - 2);
 
 			},
 			'div.tweet_entry' : {
@@ -33,7 +42,7 @@ var directive = {
 						var len = arg.item.word.length;
 						var word_match = new RegExp(arg.item.word);
 						// workaround in case first word is match.
-						var text = " " + arg.item.celeb_tweet.text;
+						var text = "" + arg.item.celeb_tweet.text;
 						var new_str = '';
 
 						while ((pos = text.toLowerCase().search(word_match)) > -1) {
@@ -47,6 +56,12 @@ var directive = {
 						new_str += text;
 						// Trim out first additional space.
 						return new_str.slice(1);
+					},
+					'@class+' : function(arg) {
+						if (arg.pos > 2) {
+							return ' visuallyhidden';
+						}
+						return '';
 					},
 					'a.celeb.twitlink@href' : 'tweet.celeb_tweet.url',
 					'a.celeb.twitlink' : function(arg) {
