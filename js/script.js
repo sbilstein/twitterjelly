@@ -568,7 +568,7 @@ var directive = {
 	}
 };
 
-$("#querybox").submit(function() {
+$("#go").click(function() {
 	// TODO validate arg first
 	var arg = $('#usern').val();
 	console.log('arg: ' + arg);
