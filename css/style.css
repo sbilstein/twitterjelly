@@ -1135,7 +1135,15 @@ div.matchlead span {
 div.words {
 	font-size: 18px;
 	margin-left: 2%;
+	margin-bottom: 5px;
 	/* 	font-weight: 900; */
+	display: inline-block;
+}
+
+.word { /* 	background-color: silver; */
+	background-color: #FFCF90;
+	padding: 2px 2px 2px 2px;
+	
 }
 
 div.tweet {
@@ -1178,12 +1186,13 @@ div.results_col {
 }
 
 .celeb-name {
-	font-style:italic;
+	font-style: italic;
+	text-transform: uppercase;
 }
 
 .matched-word {
 	background-color: yellow;
-	font-weight: 800;	
+	font-weight: 800;
 }
 
 .top-border {

@@ -64,8 +64,8 @@
 
 				<div class="row">
 					<div class="matchlead"></div>
-					<div class="words"></div>
-					<div class="tweet_entry visuallyhidden top-border">
+					<div class="words"><input type="button" class="word"></input></div>
+					<div class="tweet_entry top-border">
 						<div class="celeb tweetbox">
 							<div class="twitprof">
 								<img class="celeb" /><br> <a class="celeb twitlink"></a>
