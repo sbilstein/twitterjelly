@@ -27,6 +27,6 @@
 		$idfs[$row['token']] = log((1+$num_users)/(1+intval($row['c'])));
 	}
 	
-	echo json_encode(Array("idfs"=>$idfs));
+	echo json_encode(utf8_encode(Array("idfs"=>$idfs)));
 	
 ?>
