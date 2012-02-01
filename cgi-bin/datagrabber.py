@@ -280,7 +280,6 @@ class DataGrabber:
         self.sql.q(q, vals)
         return hash
 
-
 if __name__ == '__main__':
     #jbtweets = DataGrabber().GetTweetsForUser("justinbieber")
     #debuglog.pprint_msg(jbtweets)
