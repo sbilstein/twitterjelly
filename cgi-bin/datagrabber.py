@@ -13,6 +13,7 @@ from fetchtweets import TweetFetcher
 import tweetadder
 import datetime
 import collections
+import hashlib
 import celebmatcher
 import debuglog
 from dammit import UnicodeDammit
@@ -266,9 +267,18 @@ class DataGrabber:
                 results['celeb_matches'].append(celeb_match)
 
         results['status'] = 'ok'
+        results['permalink_id'] = self.StorePermalink(results)
         return results
 
-        
+    def StorePermalink(self, results_obj):
+
+        json_txt = json.dumps(results_obj)
+        hash = hashlib.md5(json_txt.encode('utf-8')).hexdigest()
+        q  = "INSERT INTO stored_matches_json (hash, user, json) VALUES(%(hash)s, %(user)s, %(json)s);"
+        vals = {'user' : results_obj['user']['screen_name'], 'json':json_txt, 'hash':hash}
+
+        self.sql.q(q, vals)
+        return hash
 
 if __name__ == '__main__':
     #jbtweets = DataGrabber().GetTweetsForUser("justinbieber")
@@ -279,7 +289,7 @@ if __name__ == '__main__':
     #DataGrabber().GenerateLDAData()
     #DataGrabber().GetTfIdfScores()
 
-    user = "liltunechi"
+    #user = "liltunechi"
     #user = "KingGails"
     #user = "King32David"
     #user = "joshrweinstein"
@@ -287,7 +297,7 @@ if __name__ == '__main__':
     #user = "Live_2Belieb"
     #user = "iluvjb1518"
     #user = "Belieb_Forever"
-    #user = "sbilstein"
+    user = "sbilstein"
     #user = "boomshakanaka"
     #user = "nuqb"
     #user = "celebjelly"
