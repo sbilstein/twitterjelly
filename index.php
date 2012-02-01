@@ -20,6 +20,7 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 <link rel="stylesheet" href="css/style.css?v=2">
+<link rel="stylesheet" href="css/custom.css">
 <script src="js/libs/modernizr-1.6.min.js"></script>
 
 </head>
@@ -41,16 +42,12 @@
 	<div id="container" class="container_16">
 
 	<?php include("header.html"); ?>
-		tw
-
 		<div class="grid_2 spacer"></div>
 		<div id="main" class="grid_12 main centercol">
 			<div class="vert-spacer"></div>
 			<div id="lead">
-				<h1 class="lead">
-					FIND YOUR TOP CELEB TWITTER MATCHES
-					</h2>
-			
+				<h1 class="lead">FIND YOUR TOP CELEB TWITTER MATCHES</h1>
+
 			</div>
 			<div class="query-box">
 
@@ -64,11 +61,12 @@
 
 				<div class="row">
 					<div class="matchlead"></div>
-					<div class="words"><input type="button" class="word"></input></div>
+					<div class="words"></div>
 					<div class="tweet_entry top-border">
 						<div class="celeb tweetbox">
 							<div class="twitprof">
-								<img class="celeb" /><br> <a class="celeb twitlink"></a>
+								<img class="celeb" src=""/><br /> <a
+									class="celeb twitlink visuallyhidden"></a>
 							</div>
 							<span><a class="leadname"></a> </span>
 							<div class="celeb tweet">
@@ -77,33 +75,33 @@
 						</div>
 						<div class="user tweetbox">
 							<div class="twitprof">
-								<img class="user"></img><br> <a class="user twitlink"></a>
+								<img class="user" src=""/><br /> <a
+									class="user twitlink visuallyhidden"></a>
 							</div>
 							<span><a></a> </span>
 							<div class="user tweet"></div>
 						</div>
 					</div>
+				</div>
+
+			</div>
+			<div id="social">
+				<div id="facebook">
+					<div class="fb-like" data-href="http://www.twitterjelly.com"
+						data-send="false" data-width="250" data-show-faces="false"></div>
+				</div>
+				<div id="twitter">
+					<script src="js/libs/twit.js"></script>
+					<a class="twitter-share-button" href="https://twitter.com/share"
+						data-lang="en"
+						data-text="My celeb twitter match is@ ! Find yours at http://www.twitter.jelly.com"></a>
 
 				</div>
-				<div id="social">
-					<div id="facebook">
-						<div class="fb-like" data-href="http://www.twitterjelly.com"
-							data-send="false" data-width="250" data-show-faces="false"></div>
-					</div>
-					<div id="twitter">
-						<script src="js/libs/twit.js"></script>
-						<a class="twitter-share-button" href="https://twitter.com/share"
-							data-lang="en"
-							data-text="My celeb twitter match is@ ! Find yours at http://www.twitter.jelly.com"></a>
-
-					</div>
-					<a href="#">How do we compute jellyrank?</a>
-				</div>
+				<a href="#">How do we compute jellyrank?</a>
 			</div>
 		</div>
-
-
 	</div>
+
 	<!-- end of #container -->
 
 	<!--  		

@@ -1,0 +1,207 @@
+.vert-spacer {
+	min-height: 30px;
+}
+
+.spacer {
+	height: 1.0em;
+}
+
+header {
+	background-color: #000000;
+	box-shadow: 0 0 5px 3px #888;
+	color: #FFFFFF;
+	font-size: 1.5em;
+	font-weight: 900;
+	height: 1.4em;
+	left: 0%;
+	position: fixed;
+	text-align: left;
+	top: 0%;
+	top: 0%;
+	width: 100%;
+	word-spacing: 4.5em;
+	z-index: 1;
+}
+
+header a,a:visited,a:hover {
+	color: white;
+	text-decoration: none;
+}
+
+header a:hover {
+	text-decoration: underline;
+}
+
+.main {
+	box-shadow: 0px -2.5px 5px 0px #888;
+}
+
+div.centercol {
+	background-color: #e4f3fe;
+	border-bottom-right-radius: 5px 5px;
+	border-bottom-left-radius: 5px 5px;
+	/**shadow**/
+	box-shadow: 0px 0px 5px 0px #888;
+}
+/**Title up top**/
+.lead {
+	color: #000000;
+	font-size: 36px;
+	font-weight: 700;
+	letter-spacing: -0.10em;
+	padding-top: 1.5%;
+	text-align: center;
+	vertical-align: bottom;
+	word-spacing: -0.07em;
+}
+
+.query-box {
+	font-size: 29px;
+	font-weight: normal;
+	text-align: center;
+}
+
+.submit {
+	background-color: #FFCF90;
+	font-size: 29px;
+	padding: 2px 2px 2px 2px;
+}
+
+div.ajaxload {
+	text-align: center;
+}
+
+div.tweetbox {
+	display: table-cell;
+	float: left;
+	/* 	background-color: pink; */
+	width: 45%;
+	/* 	padding: 1%; */
+	margin-top: 8px;
+	font-size: 1.20em;
+	margin-left: 10px;
+}
+
+div.tweetbox span {
+	font-weight: 800;
+}
+
+a.twitlink {
+	font-weight: 900;
+	letter-spacing: -0.11em;
+	text-align: left;
+}
+
+div.twitprof {
+	float: left;
+	display: table-cell;
+}
+
+div.twitprof img {
+	float: top;
+	border: 1px solid black;
+}
+
+div.matchlead {
+	font-size: 28px;
+	color: black;
+	letter-spacing: 0em;
+	margin-left: 10px;
+	font-weight: 900;
+	letter-spacing: -0.11em;
+	word-spacing: -0.00em;
+	padding-top: 15px;
+}
+
+.list-lead {
+	font-size: 28px;
+	color: black;
+	letter-spacing: 0em;
+	margin-left: 50px;
+	font-weight: 600;
+	letter-spacing: -0.10em;
+	word-spacing: -0.00em;
+}
+
+div.matchlead span {
+	font-size: 36px;
+	/* background-color: #ffe38f; */
+}
+
+div.words {
+	font-size: 24px;
+	margin-bottom: 5px;
+	/* 	font-weight: 900; */
+	display: inline-block;
+	/* //width: 100%; */
+	text-align: left;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.word { /* 	background-color: silver; */
+	background-color: #FFCF90;
+	padding: 2px 2px 2px 2px;
+	margin-left: 10px;
+}
+
+div.tweet {
+	padding-left: 8px;
+	display: table-cell;
+	word-wrap: break-word;
+}
+
+div.tweet_entry {
+	text-align: left;
+	font-size: .4em;
+	display: table-row;
+}
+
+div.tweet_entry span {
+	margin-left: 6px;
+}
+
+div.results_col {
+	font-size: 0.75em;
+	display: table;
+	border-collapse: collapse;
+}
+
+#social {
+	display: table-row;
+	text-align: left;
+	margin-left: 5px;
+}
+
+#facebook {
+	display: inline;
+	padding-left: 5px;
+	padding-bottom: 5px;
+}
+
+#twitter {
+	display: inline;
+	padding-bottom: 7px;
+	z-index: 1;
+}
+
+.celeb-name {
+	font-style: italic;
+	text-transform: uppercase;
+}
+
+.matched-word {
+	background-color: #FFF9AD;
+	font-weight: 800;
+	margin-left: 0px !important;
+}
+
+.top-border {
+	border-top: 1px solid #D0D0D0;
+}
+
+div.row {
+	display: table-row;
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
