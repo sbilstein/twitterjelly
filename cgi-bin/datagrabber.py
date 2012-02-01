@@ -188,6 +188,10 @@ class DataGrabber:
         celeb_words = {}
         for entry in celeb_scores:
             celeb = entry[0]
+
+            if celeb.lower() == user.lower():
+                continue
+
             token = unidecode.unidecode(entry[1])
             score = float(entry[2])
 
@@ -275,7 +279,8 @@ if __name__ == '__main__':
     #DataGrabber().GenerateLDAData()
     #DataGrabber().GetTfIdfScores()
 
-    user = "KingGails"
+    user = "liltunechi"
+    #user = "KingGails"
     #user = "King32David"
     #user = "joshrweinstein"
     #user = "simplycary"
