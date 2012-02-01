@@ -1,9 +1,0 @@
-what,kind,bundleId,bundleVersion,description,time
-executed,command,org.eclipse.ui,3.6.0.I20100603-1100,"org.eclipse.ui.edit.paste",1324537297870
-executed,command,org.eclipse.ui,3.6.0.I20100603-1100,"org.eclipse.ui.file.save",1324537300952
-executed,command,org.eclipse.ui,3.6.0.I20100603-1100,"org.eclipse.ui.file.save",1324537333165
-deactivated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1324537384531
-error,log,,,"Server returned HTTP response code: 500 for URL: https://ping.aptana.com/ping.php",1324613486316
-activated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1324675634614
-started,bundle,org.eclipse.epp.usagedata.ui,1.3.1.R201102081640,"org.eclipse.epp.usagedata.ui",1324675637737
-deactivated,workbench,org.eclipse.ui.workbench,3.6.0.I20100603-1100,"",1324675641982

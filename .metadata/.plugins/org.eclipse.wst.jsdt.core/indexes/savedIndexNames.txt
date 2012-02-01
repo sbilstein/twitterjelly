@@ -1,1 +1,0 @@
-INDEX VERSION 1.122+/Library/WebServer/Documents/lemurturtle/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
