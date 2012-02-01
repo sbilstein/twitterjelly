@@ -271,9 +271,10 @@ class DataGrabber:
         return results
 
     def StorePermalink(self, results_obj):
-        q  = "INSERT INTO stored_matches_json (user, json) VALUES(%(user)s, %(json)s);"
+
         json_txt = json.dumps(results_obj)
         hash = hashlib.md5(json_txt.encode('utf-8')).hexdigest()
+        q  = "INSERT INTO stored_matches_json (hash, user, json) VALUES(%(hash)s, %(user)s, %(json)s);"
         vals = {'user' : results_obj['user']['screen_name'], 'json':json_txt, 'hash':hash}
 
         self.sql.q(q, vals)
