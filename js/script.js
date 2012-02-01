@@ -11,6 +11,7 @@ if (!console) {
 var tweet_text = '...';
 var cur_celeb;
 var template = null;
+var in_request = false;
 var directive = {
 	'div.row' : {
 		'match<-celeb_matches' : {
@@ -115,9 +116,15 @@ var directive = {
 	}
 };
 
-$("#go").click(function() {
+$("#go").click(getMatches);
+
+function getMatches() {
 	// TODO validate arg first
 	// Erase previous data
+	// do not continue if in request
+	if (in_request == true) {
+		return false;
+	}
 	if (template == null) {
 		template = $('#row-template').clone();
 		console.log(template);
@@ -128,22 +135,26 @@ $("#go").click(function() {
 	}
 	$("#ajax-load").removeClass('visuallyhidden');
 	var arg = $('#usern').val();
-	console.log('arg: ' + arg);
-	// TODO disable enter button once pressed.
-	// var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', {
-	// 'user' : arg
-	// }, ajax_ret);
+	// console.log('arg: ' + arg);
+	$('#go').attr('disabled', true);
+	in_request = true;
 
-	var jqxhr = $.get('mock.json', {
+	var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', {
 		'user' : arg
 	}, ajax_ret);
+
+	// var jqxhr = $.get('mock.json', {
+	// 'user' : arg
+	// }, ajax_ret);
 	console.log('txed request');
 	return false;
-});
+}
 
 function ajax_ret(data) {
 	console.log('rxed response');
 	console.log(data);
+	$('#go').attr('disabled', false);
+	in_request = false;
 	if (data == null) {
 		ret_error('data returned is NULL');
 		return;
@@ -163,3 +174,11 @@ function ret_error(log) {
 $("body").ajaxError((function(e, jqxhr, settings, exception) {
 	console.log("AJAX ERROR");
 }));
+
+$('#usern').keyup(function(e) {
+	e.preventDefault();
+	console.log("pressed a key");
+	if (e.which == 13) {
+		getMatches();
+	}
+});

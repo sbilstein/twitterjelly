@@ -61,6 +61,14 @@
 			<div id="ajax-load" class="visuallyhidden">
 				<img src="img/loader.gif"></img>
 			</div>
+			<div class="error-pic visuallyhidden">
+				<img src="img/protected.jpg"></img>
+				<div>
+					<h3>TwitterJelly can't access your tweets if they are protected.
+						Try using another twitter account or unprotect your tweets if
+						you'd like.</h3>
+				</div>
+			</div>
 			<div class="results_col" id="results">
 				<div id="row-container">
 					<div class="row visuallyhidden" id="row-template">

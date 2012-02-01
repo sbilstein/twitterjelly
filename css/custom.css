@@ -208,6 +208,21 @@ div.row {
 	margin-top: 5px;
 }
 
+.error-pic {
+	padding: 10px;
+	text-align: center;
+}
+
+.error-pic img {
+	border: 1px solid black;
+}
+
+.error-pic div {
+	width: 75%;
+	margin: auto;
+	word-wrap: break-word;
+}
+
 #ajax-load {
 	text-align: center;
 	padding-top: 15px;
