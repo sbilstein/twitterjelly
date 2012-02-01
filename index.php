@@ -20,6 +20,7 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 <link rel="stylesheet" href="css/style.css?v=2">
+<link rel="stylesheet" href="css/custom.css">
 <script src="js/libs/modernizr-1.6.min.js"></script>
 
 </head>
