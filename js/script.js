@@ -29,8 +29,8 @@ var directive = {
 				var str = "<span class=\"list-lead\">you both tweet about</span>";
 
 				for ( var key in arg.item.top_words) {
-					str += '<input class="word" type="button" value="'
-							+ key + '"></input>';
+					str += '<input class="word" type="button" value="' + key
+							+ '"/>';
 					// str += "test";
 				}
 				return str.slice(0, str.length - 2);

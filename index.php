@@ -41,8 +41,6 @@
 	<div id="container" class="container_16">
 
 	<?php include("header.html"); ?>
-		tw
-
 		<div class="grid_2 spacer"></div>
 		<div id="main" class="grid_12 main centercol">
 			<div class="vert-spacer"></div>
@@ -66,8 +64,8 @@
 					<div class="tweet_entry top-border">
 						<div class="celeb tweetbox">
 							<div class="twitprof">
-								<img class="celeb" /><br /> <a
-									class="celeb twitlink  visuallyhidden"></a>
+								<img class="celeb" src=""/><br /> <a
+									class="celeb twitlink visuallyhidden"></a>
 							</div>
 							<span><a class="leadname"></a> </span>
 							<div class="celeb tweet">
@@ -76,7 +74,7 @@
 						</div>
 						<div class="user tweetbox">
 							<div class="twitprof">
-								<img class="user" /><br /> <a
+								<img class="user" src=""/><br /> <a
 									class="user twitlink visuallyhidden"></a>
 							</div>
 							<span><a></a> </span>
@@ -103,8 +101,6 @@
 		</div>
 	</div>
 
-
-	</div>
 	<!-- end of #container -->
 
 	<!--  		
