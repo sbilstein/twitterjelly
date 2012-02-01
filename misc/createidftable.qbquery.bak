@@ -1,4 +1,0 @@
-﻿DROP TABLE doc_freqs;
-CREATE TABLE doc_freqs SELECT num_users_with_term.token, COUNT(*) as c FROM (SELECT DISTINCT token, user FROM token_user_mapping as users_with_term ORDER BY token) as num_users_with_term
-GROUP BY num_users_with_term.token
-ORDER BY c DESC

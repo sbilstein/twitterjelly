@@ -1,5 +1,0 @@
-﻿SELECT token_counts.*, COUNT(token_user_mapping.user) as total_user_tokens FROM (SELECT t.c, t.user
-                FROM (SELECT user, COUNT(*) as c
-                    FROM token_user_mapping WHERE token='the' GROUP BY user) as t
-                WHERE t.c > 1 ORDER BY t.user) as token_counts, token_user_mapping
-WHERE token_user_mapping.user = token_counts.user GROUP BY token_user_mapping.user

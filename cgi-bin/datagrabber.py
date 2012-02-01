@@ -15,6 +15,8 @@ import datetime
 import collections
 import celebmatcher
 import debuglog
+from dammit import UnicodeDammit
+from decimal import *
 
 class DataGrabber:
     def __init__(self):
@@ -31,57 +33,39 @@ class DataGrabber:
         q = "SELECT text FROM tweets"
         return self.sql.q(q)
 
-    def GenerateLDAData(self):
-        """
-        Output tab-separated file to be consumed by LDA.
-        """
-        f = open('ldadata.tsv','w')
-        q = "SELECT id, text FROM tweets"
-        data = self.sql.q(q)
-
-        # TODO: Unify encoding strategy.
-        for d in data:
-            try:
-                f.write("%s\t%s\n"%(str(d[0]), str(d[1])))
-            except UnicodeEncodeError:
-                try:
-                    f.write("%s\t%s\n"%(str(d[0]).encode("latin1"), str(d[1]).encode("latin1")))
-                except:
-                    try:
-                        f.write("%s\t%s\n"%(unidecode.unidecode(d[0]), unidecode.unidecode(d[1])))
-                    except:
-                       debuglog.msg("One tough cookie! Couldn't decode this:",d)
-
-        f.close()
-        debuglog.msg('done writing LDA data to file!')
-
-    def GetUserTweets(self, user, canretry=True):
-        userdata = None
+    def GetUserTweets(self, user, can_retry=True):
+        user_data = None
         if self.tf.canFetchTimeline():
-            userdata = self.tf.fetchUserTimeline(user, format="searchapi", use_filesystem_cache=True)
+            user_data = self.tf.fetchUserTimeline(user, format="searchapi", use_filesystem_cache=True)
         else:
-            userdata = self.tf.getUserTweetsData(user)
+            user_data = self.tf.getUserTweetsData(user)
 
-        if 'results' not in userdata:
-            if canretry:
-                return self.GetUserTweets(user, canretry=False)
+        if 'results' not in user_data:
+            if can_retry:
+                return self.GetUserTweets(user, can_retry=False)
             else:
-                userdata = self.tf.getUserTweetsData(user)
+                user_data = self.tf.getUserTweetsData(user)
 
-        return userdata
+        return user_data
 
     
-    def GetUserTFIDFs(self, userdata):
-        tfidfobj = TfIdf()
+    def GetUserTFIDFs(self, user_data):
+        tfidf_obj = TfIdf()
 
-        # GET TERM COUNTS AND BUILD DICS
+        # GET TERM COUNTS AND BUILD DICTS
         terms = {}
         token_mapping = {}
         user_tweets = {}
         
-        for tweet in userdata['results']:
+        for tweet in user_data['results']:
             user_tweets[tweet['id']] = tweet
-            tokens = [unidecode.unidecode(t) for t in tfidfobj.get_tokens(tweet['text'],tagtypes=False,wordsonly=True,excludeUrls=True,minLength=3)]
+#            tokens = [UnicodeDammit(t).unicode_markup
+#                      for t in tfidf_obj.get_tokens(tweet['text'],
+#                                                    tagtypes=False, wordsonly=True, excludeUrls=True, minLength=3)]
+
+            tokens = [t for t in tfidf_obj.get_tokens(tweet['text'],
+                                                      tagtypes=False, wordsonly=True, excludeUrls=True, minLength=3)]
+
             for token in tokens:
                 if token in terms:
                     terms[token] += 1
@@ -99,32 +83,36 @@ class DataGrabber:
     
         for term in terms.keys():
             if term in idfs['idfs']: 
-                tf = float(terms[term]) / len(tokens)
-                thistfidf = tf * float(idfs['idfs'][term])
-                scores[term] = thistfidf
+                tf = Decimal(terms[term]) / Decimal(len(tokens))
+                this_tfidf = Decimal(tf) * Decimal(idfs['idfs'][term])
+                scores[term] = float(this_tfidf)
 
-        dscores = [(term, scores[term]) for term in scores.keys()]
-        dscores.sort(key=lambda x:-1*x[1])
+        sorted_scores = [(term, scores[term]) for term in scores.keys()]
+        sorted_scores.sort(key=lambda x:-1*x[1])
 
         user_scores = {}
-        for score in dscores:
+        for score in sorted_scores:
             user_scores[score[0]] = score[1]
 
         return {'scores_dic':user_scores,
-                'scores_list':dscores,
+                'scores_list':sorted_scores,
                 'tweets':user_tweets,
                 'token_mapping':token_mapping}
 
     def GetTermIDFs(self, terms):
+        if not terms or not len(terms):
+            return json.loads({"idfs":[]})
+
         url = 'http://50.56.221.228/cgi-bin/idf.php?'
-        # TODO: Unify encoding strategy.
-        data = ('terms='+','.join(terms).replace("#","%23")).encode('latin1')
+        # TODO: HTML entity encoding (?)
+        # TODO: Enhanced encoding detection - first term's encoding may not be always appropriate.
+        data = ('terms='+','.join(terms).replace("#","%23")).encode("latin1")
         debuglog.msg(data)
 
-        txt = urllib.request.urlopen(url,data).read().decode('latin1')
-            
+        txt_unicode = UnicodeDammit(urllib.request.urlopen(url,data).read())
+        txt = txt_unicode.unicode_markup
         txt = txt.replace(",null:",',"null":') #workaround
-        data = json.loads(txt)
+        data = json.loads(txt, encoding=txt_unicode.original_encoding)
         return data
 
 
@@ -200,6 +188,10 @@ class DataGrabber:
         celeb_words = {}
         for entry in celeb_scores:
             celeb = entry[0]
+
+            if celeb.lower() == user.lower():
+                continue
+
             token = unidecode.unidecode(entry[1])
             score = float(entry[2])
 
@@ -237,9 +229,6 @@ class DataGrabber:
             matching_celeb_tweets = [{'text':result[0], 'id':result[1]} for result in q_results]
 
             matches[top_10_celeb_index] = list(matches[top_10_celeb_index])
-            
-            #matching_user_tweets = [user_tfidf['tweets'][user_tfidf['token_mapping'][unidecode.unidecode(token)][0]]['text']
-            #                        for token in matches[top_10_celeb_index][2]]
 
             # ADD TWEETS THAT MATCH ON TOKENS
             sorted_tokens = [token for token in  sorted(matches[top_10_celeb_index][2].keys(), key=lambda x: -matches[top_10_celeb_index][2][x])]
@@ -290,8 +279,9 @@ if __name__ == '__main__':
     #DataGrabber().GenerateLDAData()
     #DataGrabber().GetTfIdfScores()
 
+    user = "liltunechi"
     #user = "KingGails"
-    user = "King32David"
+    #user = "King32David"
     #user = "joshrweinstein"
     #user = "simplycary"
     #user = "Live_2Belieb"

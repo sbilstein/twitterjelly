@@ -1,18 +1,21 @@
-import pickle
+# basics
+import os
+import json
 import time
+
+# urllib
 import urllib.request
 import urllib.parse
 import urllib.error
-import json
-import pprint
-import random
-from tweetadder import TweetAdder
-import os, sys
-from stat import *
-from dbsql import SQLQuery
-import debuglog
 
-class TweetFetcher:   
+# local libraries
+import debuglog
+from dbsql import SQLQuery
+from tweetadder import TweetAdder
+from dammit import UnicodeDammit
+
+
+class TweetFetcher:
     def __init__(self):
         self.rate_data = self.fetchRateData()
         self.tweet_adder = TweetAdder()
@@ -37,7 +40,7 @@ class TweetFetcher:
             return 0
     
     def fetchTopUserTweets(self, start_at=None):
-        debuglog.msg("Fetching all celebrity tweets...", mode="debug")
+        debuglog.msg("Fetching all celebrity tweets...")
 
         q = "SELECT DISTINCT user FROM celebs"
         results = SQLQuery().q(q)
@@ -48,9 +51,9 @@ class TweetFetcher:
             
         for user in users:
             if self.fetchUserTweets(user):
-                 debuglog.msg("\tSuccessfully fetched tweets for @%s :)"%user, mode="debug")
+                 debuglog.msg("\tSuccessfully fetched tweets for @%s :)"%user)
             else:
-                 debuglog.msg("\tFailed to fetch tweets for @%s :("%user, mode="debug")
+                 debuglog.msg("\tFailed to fetch tweets for @%s :("%user)
             time.sleep(1)
 
     def fetchUserTweets(self, user):
@@ -60,9 +63,9 @@ class TweetFetcher:
         data = self.getUserTweetsData(user)
         for tweet in data['results']:
             if self.tweet_adder.add(tweet):
-               debuglog.msg("successfully added", mode="debug")
+               debuglog.msg("successfully added")
             else:
-               debuglog.msg("failed to add :(", mode="debug")
+               debuglog.msg("failed to add :(")
         return True
 
     def getUserTweetsData(self,user):        
@@ -70,10 +73,12 @@ class TweetFetcher:
         try:
             twitter_query = "from:%s"%user
             twitter_query = urllib.parse.quote(twitter_query)
-            #print(twitter_query)
+
             query_url = "http://search.twitter.com/search.json?lang=en&rpp=100&q=%s"%twitter_query
-            #print(query_url)
-            data = json.loads(urllib.request.urlopen(query_url).read().decode("ascii"))
+
+            response_unicode = UnicodeDammit(urllib.request.urlopen(query_url).read())
+            data = json.loads(response_unicode.unicode_markup,
+                encoding=response_unicode.original_encoding if response_unicode.original_encoding else "utf-8")
             debuglog.msg("\tGot %s tweets for @%s from Search API."%(str(len(data['results'])), user))
             return data
         except:
@@ -117,6 +122,7 @@ class TweetFetcher:
         debuglog.msg("Fetching timeline for @%s..."%user)
         got_cache_data = False
         json_txt = "{}"
+        json_encoding = "utf-8"
 
         if use_cache and not use_filesystem_cache:
             q = "SELECT * FROM tweets_non_celeb WHERE from_user=%(user)s;"
@@ -126,10 +132,9 @@ class TweetFetcher:
                 return [tweet[0] for tweet in cached_tweets]
         elif use_cache and use_filesystem_cache:
             debuglog.msg("\tchecking cache...")
-            cachedlist = os.listdir('./timelines')
-            #print(cachedlist)
+            cached_list = os.listdir('./timelines')
             userjsonfilename = user.lower()+'.json'
-            if userjsonfilename in cachedlist:
+            if userjsonfilename in cached_list:
                 #modtime = os.stat('./timelines/'+userjsonfilename)[ST_MTIME]
                 ##cache stays fresh for a day
                 #if ((float(time.time()) - modtime)/60)/60 <= 24:
@@ -154,8 +159,11 @@ class TweetFetcher:
                     return {'status':'retry'}
                 else:
                     return {'status':'error'}
-                    
-            json_txt = response.read().decode("ascii")
+
+            json_unicode = UnicodeDammit(response.read())
+            json_txt = json_unicode.unicode_markup
+            if json_unicode.original_encoding:
+                json_encoding = json_unicode.original_encoding
 
             if write_cache and use_filesystem_cache:
                 fname = './timelines/'+user.lower()+'.json'
@@ -163,7 +171,7 @@ class TweetFetcher:
                     os.chmod(fname, 0o777)
                     f.write(json_txt)
             
-        data = json.loads(json_txt)
+        data = json.loads(json_txt, encoding=json_encoding)
         debuglog.msg("\tdata is...",str(data)[:100])
 
         if format == "searchapi":
@@ -180,7 +188,7 @@ class TweetFetcher:
         for timeline_tweet in data:
             self.tweet_adder.addTimelineTweet(timeline_tweet)
             
-        return { 'status':'success' }
+        return {'status':'success'}
 
 if __name__ == '__main__':
     TweetFetcher().fetchTopUserTweets()
