@@ -2,12 +2,13 @@
 	include('sanitize.php'); 
 	include('db.php');
 
-	if (!isset($_POST['terms']) || empty($_POST['terms']))
+	if (!isset($GLOBALS['terms']) || empty($GLOBALS['terms']))
 	{
 	    echo json_encode(Array("idfs"=>Array()));
+            die();
 	}
 
-	$terms = implode('","',explode(",",$_POST['terms']));
+	$terms = implode('","',explode(",",$GLOBALS['terms']));
 
 	//$sql = "SELECT COUNT(DISTINCT tweets.from_user) FROM tweets";
 	$sql = "SELECT COUNT(*) FROM (SELECT DISTINCT from_user FROM tweets) as t";
@@ -24,9 +25,8 @@
 	$idfs = Array();
 	while($row = mysql_fetch_array($results))
 	{
-		$idfs[$row['token']] = log((1+$num_users)/(1+intval($row['c'])));
+		$idfs[utf8_encode($row['token'])] = log((1+$num_users)/(1+intval($row['c'])));
 	}
 	
-	echo json_encode(utf8_encode(Array("idfs"=>$idfs)));
-	
+	echo json_encode(Array("idfs"=>$idfs));
 ?>
