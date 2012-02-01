@@ -122,13 +122,13 @@ $("#go").click(function() {
 	// TODO validate arg first
 	var arg = $('#usern').val();
 	console.log('arg: ' + arg);
-
-	// var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', {
-	// 'user' : arg
-	// }, ajax_ret);
-	var jqxhr = $.get('mock.json', {
-		'user' : arg
+	
+	var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', {
+	 'user' : arg
 	}, ajax_ret);
+//	var jqxhr = $.get('mock.json', {
+//		'user' : arg
+//	}, ajax_ret);
 	console.log('txed request');
 	return false;
 });
