@@ -19,7 +19,7 @@ header {
 	top: 0%;
 	top: 0%;
 	width: 100%;
-	word-spacing: 4.5em;
+	word-spacing: 2.75em;
 	z-index: 1;
 }
 
@@ -103,13 +103,12 @@ div.twitprof img {
 }
 
 div.matchlead {
-	font-size: 28px;
 	color: black;
 	letter-spacing: 0em;
 	margin-left: 10px;
 	font-weight: 900;
 	letter-spacing: -0.11em;
-	padding-top: 15px;
+	padding-top: 5px;
 }
 
 .list-lead {
@@ -121,8 +120,8 @@ div.matchlead {
 	letter-spacing: -0.11em;
 }
 
-div.matchlead span {
-	font-size: 36px;
+span.celeb-name {
+	font-size: 28px;
 	/* background-color: #ffe38f; */
 }
 
@@ -162,13 +161,18 @@ div.results_col {
 	font-size: 0.75em;
 	display: table;
 	border-collapse: collapse;
+	height: 20px;
 }
 
 #social {
 	display: table-row;
-	text-align: left;
+	text-align: right;
 	margin-left: 5px;
 	padding: 5px 0px 5px 0px;
+	position: fixed;
+	top: -5px;
+	z-index: 2;
+	right: 0px;
 }
 
 #facebook {
@@ -179,7 +183,7 @@ div.results_col {
 
 #twitter {
 	display: inline;
-	padding-bottom: 7px;
+	/* 	padding-bottom: 7px; */
 	z-index: 1;
 }
 
@@ -202,4 +206,9 @@ div.row {
 	display: table-row;
 	margin-bottom: 5px;
 	margin-top: 5px;
+}
+
+#ajax-load {
+	text-align: center;
+	padding-top: 15px;
 }

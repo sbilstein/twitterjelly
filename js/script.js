@@ -25,8 +25,6 @@ var directive = {
 			'div.words+' : function(arg) {
 				var str = "";
 
-					
-
 				for ( var key in arg.item.top_words) {
 					str += "<input class=\"word\" type=\"button\" value=\""
 							+ key + "\" >";
@@ -128,12 +126,14 @@ $("#go").click(function() {
 		$('#row-container').empty();
 		$('#row-container').html(template);
 	}
+	$("#ajax-load").removeClass('visuallyhidden');
 	var arg = $('#usern').val();
 	console.log('arg: ' + arg);
 	// TODO disable enter button once pressed.
 	// var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', {
 	// 'user' : arg
 	// }, ajax_ret);
+
 	var jqxhr = $.get('mock.json', {
 		'user' : arg
 	}, ajax_ret);
@@ -153,6 +153,7 @@ function ajax_ret(data) {
 	}
 	console.log("Successful response");
 	$('#results').render(data, directive);
+	$("#ajax-load").addClass('visually hidden');
 	$('.row').removeClass('visuallyhidden');
 }
 
