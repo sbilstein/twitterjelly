@@ -13,7 +13,7 @@ from fetchtweets import TweetFetcher
 import tweetadder
 import datetime
 import collections
-from hashlib import md5
+import hashlib
 import celebmatcher
 import debuglog
 from dammit import UnicodeDammit
@@ -273,7 +273,7 @@ class DataGrabber:
     def StorePermalink(self, results_obj):
         q  = "INSERT INTO stored_matches_json (user, json) VALUES(%(user)s, %(json)s);"
         json_txt = json.dumps(results_obj)
-        hash = md5.new(json_txt).hexdigest()
+        hash = hashlib.md5(json_txt.encode('utf-8')).hexdigest()
         vals = {'user' : results_obj['user']['screen_name'], 'json':json_txt, 'hash':hash}
 
         self.sql.q(q, vals)
@@ -321,8 +321,7 @@ if __name__ == '__main__':
     #user with 0 tweets for testing
     #user = "Adared"
 
-    #pprint.pprint(DataGrabber().GetCelebMatchesForUser(user))
-    DataGrabber().StorePermalink({'user':{'screen_name':'foo'}})
+    pprint.pprint(DataGrabber().GetCelebMatchesForUser(user))
     
     
     #pprint.pprint(DataGrabber().GetCelebTFIDFsForTerms(["weed"]))
