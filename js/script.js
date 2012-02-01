@@ -10,6 +10,7 @@ if (!console) {
 }
 var tweet_text = '...';
 var cur_celeb;
+var template = null;
 var directive = {
 	'div.row' : {
 		'match<-celeb_matches' : {
@@ -21,19 +22,17 @@ var directive = {
 				// + arg.item.name + '</span> tweet about';
 				return '<span class="celeb-name">' + arg.item.name + '</span>';
 			},
-			'div.words' :
-			// "word<-match.top_words" : {
-			// 'input.word@value' : 'word.pos'
-			// }
-			function(arg) {
-				var str = "<span class=\"list-lead\">you both tweet about</span>";
+			'div.words+' : function(arg) {
+				var str = "";
+
+					
 
 				for ( var key in arg.item.top_words) {
-					str += '<input class="word" type="button" value="' + key
-							+ '"/>';
+					str += "<input class=\"word\" type=\"button\" value=\""
+							+ key + "\" >";
 					// str += "test";
 				}
-				return str.slice(0, str.length - 2);
+				return str;
 
 			},
 			'div.tweet_entry' : {
@@ -120,15 +119,24 @@ var directive = {
 
 $("#go").click(function() {
 	// TODO validate arg first
+	// Erase previous data
+	if (template == null) {
+		template = $('#row-template').clone();
+		console.log(template);
+	} else {
+		console.log('removing container');
+		$('#row-container').empty();
+		$('#row-container').html(template);
+	}
 	var arg = $('#usern').val();
 	console.log('arg: ' + arg);
-	
-	 var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', {
-	 'user' : arg
-	}, ajax_ret);
-	// var jqxhr = $.get('mock.json', {
+	// TODO disable enter button once pressed.
+	// var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', {
 	// 'user' : arg
 	// }, ajax_ret);
+	var jqxhr = $.get('mock.json', {
+		'user' : arg
+	}, ajax_ret);
 	console.log('txed request');
 	return false;
 });
@@ -145,6 +153,7 @@ function ajax_ret(data) {
 	}
 	console.log("Successful response");
 	$('#results').render(data, directive);
+	$('.row').removeClass('visuallyhidden');
 }
 
 function ret_error(log) {

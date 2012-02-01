@@ -48,7 +48,7 @@ div.centercol {
 	color: #000000;
 	font-size: 36px;
 	font-weight: 700;
-	letter-spacing: -0.10em;
+	letter-spacing: -0.11em;
 	padding-top: 1.5%;
 	text-align: center;
 	vertical-align: bottom;
@@ -109,7 +109,6 @@ div.matchlead {
 	margin-left: 10px;
 	font-weight: 900;
 	letter-spacing: -0.11em;
-	word-spacing: -0.00em;
 	padding-top: 15px;
 }
 
@@ -119,8 +118,7 @@ div.matchlead {
 	letter-spacing: 0em;
 	margin-left: 50px;
 	font-weight: 600;
-	letter-spacing: -0.10em;
-	word-spacing: -0.00em;
+	letter-spacing: -0.11em;
 }
 
 div.matchlead span {
@@ -132,7 +130,6 @@ div.words {
 	font-size: 24px;
 	margin-bottom: 5px;
 	/* 	font-weight: 900; */
-	display: inline-block;
 	/* //width: 100%; */
 	text-align: left;
 	vertical-align: middle;
@@ -153,7 +150,7 @@ div.tweet {
 
 div.tweet_entry {
 	text-align: left;
-	font-size: .4em;
+	font-size: 11px;
 	display: table-row;
 }
 
@@ -171,6 +168,7 @@ div.results_col {
 	display: table-row;
 	text-align: left;
 	margin-left: 5px;
+	padding: 5px 0px 5px 0px;
 }
 
 #facebook {
