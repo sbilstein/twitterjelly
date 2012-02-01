@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path=".metadata/.plugins/org.eclipse.wst.jsdt.core/libraries"/>
+	<classpathentry excluding="profiling/|libs/" kind="src" path="js"/>
+	<classpathentry kind="src" path="js/libs"/>
+	<classpathentry kind="src" path="js/profiling"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path=""/>
+</classpath>

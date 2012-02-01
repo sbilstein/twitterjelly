@@ -1,0 +1,14 @@
+<header> <a href="index.php">TwitterJelly</a> <a href="#">About</a>
+<a href="#">Contact</a> <span id="social">
+	<div id="facebook">
+		<div class="fb-like" data-href="http://www.twitterjelly.com"
+			data-send="false" data-width="225" data-show-faces="false"
+			data-colorscheme="dark"></div>
+
+	</div>
+	<div id="twitter">
+		<script src="js/libs/twit.js"></script>
+		<a class="twitter-share-button" href="https://twitter.com/share"
+			data-lang="en"
+			data-text="My celeb twitter match is@ ! Find yours at http://www.twitter.jelly.com"></a>
+	</div></header>
