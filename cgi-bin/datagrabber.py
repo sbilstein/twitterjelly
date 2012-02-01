@@ -13,6 +13,7 @@ from fetchtweets import TweetFetcher
 import tweetadder
 import datetime
 import collections
+from hashlib import md5
 import celebmatcher
 import debuglog
 from dammit import UnicodeDammit
@@ -266,9 +267,18 @@ class DataGrabber:
                 results['celeb_matches'].append(celeb_match)
 
         results['status'] = 'ok'
+        results['permalink_id'] = self.StorePermalink(results)
         return results
 
-        
+    def StorePermalink(self, results_obj):
+        q  = "INSERT INTO stored_matches_json (user, json) VALUES(%(user)s, %(json)s);"
+        json_txt = json.dumps(results_obj)
+        hash = md5.new(json_txt).hexdigest()
+        vals = {'user' : results_obj['user']['screen_name'], 'json':json_txt, 'hash':hash}
+
+        self.sql.q(q, vals)
+        return hash
+
 
 if __name__ == '__main__':
     #jbtweets = DataGrabber().GetTweetsForUser("justinbieber")
@@ -279,7 +289,7 @@ if __name__ == '__main__':
     #DataGrabber().GenerateLDAData()
     #DataGrabber().GetTfIdfScores()
 
-    user = "liltunechi"
+    #user = "liltunechi"
     #user = "KingGails"
     #user = "King32David"
     #user = "joshrweinstein"
@@ -287,7 +297,7 @@ if __name__ == '__main__':
     #user = "Live_2Belieb"
     #user = "iluvjb1518"
     #user = "Belieb_Forever"
-    #user = "sbilstein"
+    user = "sbilstein"
     #user = "boomshakanaka"
     #user = "nuqb"
     #user = "celebjelly"
@@ -311,7 +321,8 @@ if __name__ == '__main__':
     #user with 0 tweets for testing
     #user = "Adared"
 
-    pprint.pprint(DataGrabber().GetCelebMatchesForUser(user))
+    #pprint.pprint(DataGrabber().GetCelebMatchesForUser(user))
+    DataGrabber().StorePermalink({'user':{'screen_name':'foo'}})
     
     
     #pprint.pprint(DataGrabber().GetCelebTFIDFsForTerms(["weed"]))

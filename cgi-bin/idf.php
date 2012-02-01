@@ -5,7 +5,7 @@
 	if (!isset($GLOBALS['terms']) || empty($GLOBALS['terms']))
 	{
 	    echo json_encode(Array("idfs"=>Array()));
-            die();
+        die();
 	}
 
 	$terms = implode('","',explode(",",$GLOBALS['terms']));
