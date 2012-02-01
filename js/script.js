@@ -56,10 +56,11 @@ var directive = {
 						return new_str.slice(1);
 					},
 					'@class+' : function(arg) {
+						var word_class = ' word-' + arg.item.word;
 						if (arg.pos > 2) {
-							return ' visuallyhidden';
+							return ' visuallyhidden' + word_class;
 						}
-						return '';
+						return word_class;
 					},
 					'a.celeb.twitlink@href' : 'tweet.celeb_tweet.url',
 					'a.celeb.twitlink' : function(arg) {
@@ -139,13 +140,13 @@ function getMatches() {
 	$('#go').attr('disabled', true);
 	in_request = true;
 
-	var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', {
-		'user' : arg
-	}, ajax_ret);
-
-	// var jqxhr = $.get('mock.json', {
+	// var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', {
 	// 'user' : arg
 	// }, ajax_ret);
+
+	var jqxhr = $.get('mock.json', {
+		'user' : arg
+	}, ajax_ret);
 	console.log('txed request');
 	return false;
 }
@@ -165,6 +166,16 @@ function ajax_ret(data) {
 	console.log("Successful response");
 	$('#results').render(data, directive);
 	$("#ajax-load").addClass('visually hidden');
+	/**
+	 * Bind all the buttons to the correct event
+	 */
+	$('.word').click(
+			function(arg) {
+				$(this).parent().siblings('.tweet_entry').addClass(
+						'visuallyhidden');
+				$(this).parent().siblings('.word-' + this.value).removeClass(
+						'visuallyhidden');
+			});
 	$('.row').removeClass('visuallyhidden');
 }
 
