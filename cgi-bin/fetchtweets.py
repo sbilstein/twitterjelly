@@ -40,7 +40,7 @@ class TweetFetcher:
             return 0
     
     def fetchTopUserTweets(self, start_at=None):
-        debuglog.msg("Fetching all celebrity tweets...", mode="debug")
+        debuglog.msg("Fetching all celebrity tweets...")
 
         q = "SELECT DISTINCT user FROM celebs"
         results = SQLQuery().q(q)
@@ -51,9 +51,9 @@ class TweetFetcher:
             
         for user in users:
             if self.fetchUserTweets(user):
-                 debuglog.msg("\tSuccessfully fetched tweets for @%s :)"%user, mode="debug")
+                 debuglog.msg("\tSuccessfully fetched tweets for @%s :)"%user)
             else:
-                 debuglog.msg("\tFailed to fetch tweets for @%s :("%user, mode="debug")
+                 debuglog.msg("\tFailed to fetch tweets for @%s :("%user)
             time.sleep(1)
 
     def fetchUserTweets(self, user):
@@ -63,9 +63,9 @@ class TweetFetcher:
         data = self.getUserTweetsData(user)
         for tweet in data['results']:
             if self.tweet_adder.add(tweet):
-               debuglog.msg("successfully added", mode="debug")
+               debuglog.msg("successfully added")
             else:
-               debuglog.msg("failed to add :(", mode="debug")
+               debuglog.msg("failed to add :(")
         return True
 
     def getUserTweetsData(self,user):        
