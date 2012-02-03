@@ -67,6 +67,7 @@ div.centercol {
 	padding: 2px 2px 2px 2px;
 }
 
+
 div.ajaxload {
 	text-align: center;
 }
@@ -136,6 +137,12 @@ div.words {
 }
 
 .word { /* 	background-color: silver; */
+	background-color: #FFCF90;
+	padding: 2px 2px 2px 2px;
+	margin-left: 10px;
+}
+
+.show-all { /* 	background-color: silver; */
 	background-color: #FFCF90;
 	padding: 2px 2px 2px 2px;
 	margin-left: 10px;
@@ -227,3 +234,5 @@ div.row {
 	text-align: center;
 	padding-top: 15px;
 }
+
+

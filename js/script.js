@@ -27,11 +27,11 @@ var directive = {
 				var str = "";
 
 				for ( var key in arg.item.top_words) {
-					str += "<input class=\"word\" type=\"button\" value=\""
+					str += "<input class=\"word\" title=\"Filter by " + key + " \" type=\"button\" value=\""
 							+ key + "\" >";
 					// str += "test";
 				}
-				str += "<input class=\"show-all\" type=\"button\" value=\"show all\"/>";
+				str += "<input class=\"show-all\" type=\"button\" value=\"...\"/>";
                 
 				return str;
 
@@ -143,15 +143,17 @@ function getMatches() {
 	// console.log('arg: ' + arg);
 	$('#go').attr('disabled', true);
 	in_request = true;
-/**
+
 	 var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', {
 	 'user' : arg
 	 }, ajax_ret);
-**/
+
+/**
 	 var jqxhr = $.get('mock.json', {
      'user' : arg
 	 }, ajax_ret);
-	console.log('txed request');
+**/
+console.log('txed request');
 	return false;
 }
 
