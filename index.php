@@ -62,7 +62,7 @@
 				<img src="img/loader.gif"></img>
 			</div>
 			<div class="error-pic visuallyhidden">
-				<img src="img/protected.jpg"></img>
+				<img src="img/protected.jpg "></img>
 				<div>
 					<h3>TwitterJelly can't access your tweets if they are protected.
 						Try using another twitter account or unprotect your tweets if

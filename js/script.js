@@ -134,19 +134,21 @@ function getMatches() {
 		$('#row-container').empty();
 		$('#row-container').html(template);
 	}
+    //TODO check for error flag
+    $('.error-pic').addClass('visuallyhidden');
 	$("#ajax-load").removeClass('visuallyhidden');
 	var arg = $('#usern').val();
 	// console.log('arg: ' + arg);
 	$('#go').attr('disabled', true);
 	in_request = true;
-
+/**
 	 var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', {
 	 'user' : arg
 	 }, ajax_ret);
-
-	// var jqxhr = $.get('mock.json', {
-	// 'user' : arg
-	// }, ajax_ret);
+**/
+	 var jqxhr = $.get('mock.json', {
+     'user' : arg
+	 }, ajax_ret);
 	console.log('txed request');
 	return false;
 }
@@ -157,10 +159,14 @@ function ajax_ret(data) {
 	$('#go').attr('disabled', false);
 	in_request = false;
 	if (data == null) {
-		ret_error('data returned is NULL');
+        //add pic 
+        //$('error-pic img').attr
+		dispError('null');
+        ret_error('data returned is NULL');
 		return;
 	} else if (data['status'] == 'error') {
-		ret_error('Data has status = error');
+        dispError('data');
+        ret_error('Data has status = error');
 		return;
 	}
 	console.log("Successful response");
@@ -183,7 +189,9 @@ function ret_error(log) {
 	console.log(log);
 }
 $("body").ajaxError((function(e, jqxhr, settings, exception) {
-	console.log("AJAX ERROR");
+	
+    dispError('ajax');
+    console.log("AJAX ERROR");
 }));
 
 $('#usern').keyup(function(e) {
@@ -193,3 +201,12 @@ $('#usern').keyup(function(e) {
 		getMatches();
 	}
 });
+
+
+function dispError(type)
+{
+    //TODO create images for each error type
+    //switch on error type and inject data
+	$("#ajax-load").addClass('visuallyhidden');
+    $('.error-pic').removeClass('visuallyhidden');
+}
