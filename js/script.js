@@ -31,6 +31,8 @@ var directive = {
 							+ key + "\" >";
 					// str += "test";
 				}
+				str += "<input class=\"show-all\" type=\"button\" value=\"show all\"/>";
+                
 				return str;
 
 			},
@@ -182,6 +184,12 @@ function ajax_ret(data) {
 				$(this).parent().siblings('.word-' + this.value).removeClass(
 						'visuallyhidden');
 			});
+
+    $('.show-all').click( 
+        function(arg) {
+            $(this).parent().siblings('.tweet_entry').removeClass('visuallyhidden');
+            return;
+        });
 	$('.row').removeClass('visuallyhidden');
 }
 
