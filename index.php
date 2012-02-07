@@ -50,18 +50,32 @@
 
 			</div>
 			<div class="query-box">
-
+				<!--[if IE]>
+					MAKE SURE THIS SHIT SAYS THE RIGHT THING
+				<![endif]-->
 				<input type="search" size="26"
 					placeholder="Enter your twitter username..." id="usern" /> <input
 					type="button" id="go" class="submit" value="GO" />
 
 			</div>
-
+			<div id="ajax-load" class="visuallyhidden">
+				<img src="img/loader.gif"></img>
+			</div>
+			<div class="error-pic visuallyhidden">
+				<img src="img/protected.jpg "></img>
+				<div>
+					<h3>TwitterJelly can't access your tweets if they are protected.
+						Try using another twitter account or unprotect your tweets if
+						you'd like.</h3>
+				</div>
+			</div>
 			<div class="results_col" id="results">
 				<div id="row-container">
 					<div class="row visuallyhidden" id="row-template">
 						<div class="matchlead"></div>
-						<div class="words"><span class="list-lead">you both tweet about</span></div>
+						<div class="words">
+							<span class="list-lead">you both tweet about</span>
+						</div>
 						<div class="tweet_entry top-border">
 							<div class="celeb tweetbox">
 								<div class="twitprof">
@@ -82,23 +96,14 @@
 								<div class="user tweet"></div>
 							</div>
 						</div>
+						<div class="show-more">
+							<input type="button" value="SHOW MORE"></input>
+						</div>
+
 					</div>
 				</div>
 
-				<div id="social">
-					<div id="facebook">
-						<div class="fb-like" data-href="http://www.twitterjelly.com"
-							data-send="false" data-width="250" data-show-faces="false"></div>
-					</div>
-					<div id="twitter">
-						<script src="js/libs/twit.js"></script>
-						<a class="twitter-share-button" href="https://twitter.com/share"
-							data-lang="en"
-							data-text="My celeb twitter match is@ ! Find yours at http://www.twitter.jelly.com"></a>
 
-					</div>
-					<a href="#">How do we compute jellyrank?</a>
-				</div>
 			</div>
 		</div>
 	</div>

@@ -11,6 +11,7 @@ if (!console) {
 var tweet_text = '...';
 var cur_celeb;
 var template = null;
+var in_request = false;
 var directive = {
 	'div.row' : {
 		'match<-celeb_matches' : {
@@ -25,13 +26,14 @@ var directive = {
 			'div.words+' : function(arg) {
 				var str = "";
 
-					
-
 				for ( var key in arg.item.top_words) {
-					str += "<input class=\"word\" type=\"button\" value=\""
-							+ key + "\" >";
+					str += "<input class=\"word\" title=\"Filter by " + key
+							+ " \" type=\"button\" value=\"" + key + "\" >";
 					// str += "test";
 				}
+				// str += "<input class=\"show-all\" type=\"button\"
+				// value=\"+\"/>";
+
 				return str;
 
 			},
@@ -57,10 +59,11 @@ var directive = {
 						return new_str.slice(1);
 					},
 					'@class+' : function(arg) {
+						var word_class = ' word-' + arg.item.word;
 						if (arg.pos > 2) {
-							return ' visuallyhidden';
+							return ' visuallyhidden' + word_class;
 						}
-						return '';
+						return word_class;
 					},
 					'a.celeb.twitlink@href' : 'tweet.celeb_tweet.url',
 					'a.celeb.twitlink' : function(arg) {
@@ -117,42 +120,87 @@ var directive = {
 	}
 };
 
-$("#go").click(function() {
+$("#go").click(getMatches);
+
+function getMatches() {
 	// TODO validate arg first
 	// Erase previous data
+	// do not continue if in request
+	if (in_request == true) {
+		return false;
+	}
 	if (template == null) {
 		template = $('#row-template').clone();
-		console.log(template);
 	} else {
 		console.log('removing container');
 		$('#row-container').empty();
 		$('#row-container').html(template);
 	}
+	// TODO check for error flag
+	$('.error-pic').addClass('visuallyhidden');
+	$("#ajax-load").removeClass('visuallyhidden');
 	var arg = $('#usern').val();
-	console.log('arg: ' + arg);
-	// TODO disable enter button once pressed.
-	// var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', {
-	// 'user' : arg
-	// }, ajax_ret);
+	// console.log('arg: ' + arg);
+	$('#go').attr('disabled', true);
+	in_request = true;
+	/**
+	 * var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', { 'user' : arg },
+	 * ajax_ret);
+	 * 
+	 */
 	var jqxhr = $.get('mock.json', {
 		'user' : arg
 	}, ajax_ret);
+
 	console.log('txed request');
 	return false;
-});
+}
 
 function ajax_ret(data) {
 	console.log('rxed response');
 	console.log(data);
+	$('#go').attr('disabled', false);
+	in_request = false;
 	if (data == null) {
+		// add pic
+		// $('error-pic img').attr
+		dispError('null');
 		ret_error('data returned is NULL');
 		return;
 	} else if (data['status'] == 'error') {
+		dispError('data');
 		ret_error('Data has status = error');
 		return;
 	}
 	console.log("Successful response");
 	$('#results').render(data, directive);
+	$("#ajax-load").addClass('visually hidden');
+	/**
+	 * Bind all the buttons to the correct event
+	 */
+	$('.word').click(
+			function(arg) {
+				if (deselectFilter(this)) {
+					return false;
+				}
+
+				$(this).parent().siblings('.tweet_entry').addClass(
+						'visuallyhidden');
+				$(this).parent().siblings('.word-' + this.value).removeClass(
+						'visuallyhidden');
+				$(this).siblings().removeClass('pressed');
+				$(this).addClass('pressed');
+
+			});
+
+	$('.show-all').click(
+			function(arg) {
+				$(this).parent().siblings('.tweet_entry').removeClass(
+						'visuallyhidden');
+				$(this).siblings('.word').removeClass('pressed');
+				$(this).addClass('pressed');
+				return;
+			});
 	$('.row').removeClass('visuallyhidden');
 }
 
@@ -160,5 +208,32 @@ function ret_error(log) {
 	console.log(log);
 }
 $("body").ajaxError((function(e, jqxhr, settings, exception) {
+
+	dispError('ajax');
 	console.log("AJAX ERROR");
 }));
+
+$('#usern').keyup(function(e) {
+	e.preventDefault();
+	if (e.which == 13) {
+		getMatches();
+	}
+});
+
+function deselectFilter(selector) {
+
+	if ($(selector).hasClass('pressed')) {
+		$(selector).removeClass('pressed');
+		$(selector).parent().siblings('.tweet_entry').removeClass(
+				'visuallyhidden');
+		return true;
+	}
+	console.log('not selected');
+	return false;
+}
+function dispError(type) {
+	// TODO create images for each error type
+	// switch on error type and inject data
+	$("#ajax-load").addClass('visuallyhidden');
+	$('.error-pic').removeClass('visuallyhidden');
+}
