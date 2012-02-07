@@ -180,7 +180,7 @@ function ajax_ret(data) {
 	 */
 	$('.word').click(
 			function(arg) {
-				// never touch if expanded is associated with show-more
+
 				if (deselectFilter(this)) {
 					return false;
 				}
@@ -188,24 +188,16 @@ function ajax_ret(data) {
 				$(this).parent().siblings('.tweet_entry').addClass(
 						'visuallyhidden');
 
-				// if show-more has been pressed already for this word, show all
-				// of them
-				if ($(this).hasClass('expanded')) {
-					$(this).parent().siblings('.word-' + this.value)
-							.removeClass('visuallyhidden');
-					$(this).parent().siblings('.show-more').children('input')
-							.val('SHOW LESS');
-				} else {
-					// only show the top entries otherwise
-					$(this).parent().siblings('.word-' + this.value).each(
-							function(index) {
-								if (index < 3) {
-									$(this).removeClass('visuallyhidden');
-								}
-							});
-					$(this).parent().siblings('.show-more').children('input')
-							.val('SHOW MORE');
-				}
+				// show the top entries otherwise
+				$(this).parent().siblings('.word-' + this.value).each(
+						function(index) {
+							if (index < 3) {
+								$(this).removeClass('visuallyhidden');
+							}
+						});
+				$(this).parent().siblings('.show-more').children('input').val(
+						'SHOW MORE');
+
 				$(this).siblings().removeClass('pressed');
 				$(this).addClass('pressed');
 
