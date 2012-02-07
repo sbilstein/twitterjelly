@@ -19,9 +19,6 @@ class SQLQuery:
             if not values:
                 self.cur.execute(query)
             else:
-                if auto_str:
-                    for key in values:
-                        values[key] = str(key)
                 self.cur.execute(query, values)
             self.conn.commit()
             return self.cur.fetchall()
