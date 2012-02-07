@@ -143,16 +143,16 @@ function getMatches() {
 	// console.log('arg: ' + arg);
 	$('#go').attr('disabled', true);
 	in_request = true;
-
+/**
 	 var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', {
 	 'user' : arg
 	 }, ajax_ret);
 
-/**
+**/
 	 var jqxhr = $.get('mock.json', {
      'user' : arg
 	 }, ajax_ret);
-**/
+
 console.log('txed request');
 	return false;
 }
