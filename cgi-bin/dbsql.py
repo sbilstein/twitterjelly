@@ -14,12 +14,12 @@ class SQLQuery:
         self.cur.close()
         self.conn.close()
 
-    def q(self, query, values=None):
+    def q(self, query, values=None, auto_str=True):
         try:
             if not values:
                 self.cur.execute(query)
             else:
-                self.cur.execute(query,values)
+                self.cur.execute(query, values)
             self.conn.commit()
             return self.cur.fetchall()
         except:

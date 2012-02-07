@@ -1,0 +1,2 @@
+python fetchtweets.py
+python tfidftablegenerator.py
