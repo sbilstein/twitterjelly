@@ -105,10 +105,11 @@ div.twitprof img {
 div.matchlead {
 	color: black;
 	letter-spacing: 0em;
-	margin-left: 10px;
+	padding-left: 10px;
 	font-weight: 900;
 	letter-spacing: -0.11em;
 	padding-top: 5px;
+	background-color: #FAFAFA;
 }
 
 .list-lead {

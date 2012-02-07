@@ -61,7 +61,7 @@ var directive = {
 					'@class+' : function(arg) {
 						var word_class = ' word-' + arg.item.word;
 						if (arg.pos > 2) {
-							return ' visuallyhidden' + word_class;
+							return ' visuallyhidden ' + word_class;
 						}
 						return word_class;
 					},
@@ -174,7 +174,7 @@ function ajax_ret(data) {
 	}
 	console.log("Successful response");
 	$('#results').render(data, directive);
-	$("#ajax-load").addClass('visually hidden');
+	$("#ajax-load").addClass('visuallyhidden');
 	/**
 	 * Bind all the buttons to the correct event
 	 */
@@ -183,22 +183,76 @@ function ajax_ret(data) {
 				if (deselectFilter(this)) {
 					return false;
 				}
-
+				// hide all of them
 				$(this).parent().siblings('.tweet_entry').addClass(
 						'visuallyhidden');
-				$(this).parent().siblings('.word-' + this.value).removeClass(
-						'visuallyhidden');
+				// if show-more has been pressed already for this word, show all
+				// of then
+				if ($(this).hasClass('expanded')) {
+					$(this).parent().siblings('.word-' + this.value)
+							.removeClass('visuallyhidden');
+				} else {
+					// only show the top entries otherwise
+					$(this).parent().siblings('.word-' + this.value).each(
+							function(index) {
+								if (index < 3) {
+									$(this).removeClass('visuallyhidden');
+								}
+							}
+
+					);
+
+				}
 				$(this).siblings().removeClass('pressed');
 				$(this).addClass('pressed');
 
 			});
 
-	$('.show-all').click(
+	$('.show-more input').click(
+
 			function(arg) {
-				$(this).parent().siblings('.tweet_entry').removeClass(
-						'visuallyhidden');
-				$(this).siblings('.word').removeClass('pressed');
-				$(this).addClass('pressed');
+				// check for pressed filter
+				var button_node;
+				var button_pressed = false;
+				if ((button_node = $(this).parent().siblings('.words')
+						.children('.pressed')).length == 1) {
+					console.log("filter " + button_node.val() + " selected");
+					button_pressed = true;
+				}
+
+				if ($(this).hasClass('expanded')) {
+					$(this).removeClass('expanded');
+					$(this).val('SHOW MORE');
+					if (button_pressed) {
+						// hide extra tweets for button
+						$(button_pressed).removeClass('expanded');
+
+					} else {
+						// hide extra tweets for all
+						$(this).parent().siblings('.tweet_entry').each(
+								function(index) {
+									if (index > 2) {
+										$(this).addClass('visuallyhidden');
+									}
+								});
+
+					}
+
+				} else {
+					$(this).addClass('expanded');
+					$(this).val('SHOW LESS');
+					if (button_pressed) {
+						// show extra tweets for word
+						// $(this).parent().siblings('.tweet_entry').addClass('visuallyhidden');
+
+					} else {
+						// show extra tweets for all
+						$(this).parent().siblings('.tweet_entry').removeClass(
+								'visuallyhidden');
+					}
+
+				}
+
 				return;
 			});
 	$('.row').removeClass('visuallyhidden');
@@ -228,7 +282,7 @@ function deselectFilter(selector) {
 				'visuallyhidden');
 		return true;
 	}
-	console.log('not selected');
+	// console.log('not selected');
 	return false;
 }
 function dispError(type) {

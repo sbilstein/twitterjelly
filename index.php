@@ -77,6 +77,14 @@
 							<span class="list-lead">you both tweet about</span>
 						</div>
 						<div class="tweet_entry top-border">
+							<div class="user tweetbox">
+								<div class="twitprof">
+									<img class="user" src="" /><br /> <a
+										class="user twitlink visuallyhidden"></a>
+								</div>
+								<span><a></a> </span>
+								<div class="user tweet"></div>
+							</div>
 							<div class="celeb tweetbox">
 								<div class="twitprof">
 									<img class="celeb" src="" /><br /> <a
@@ -87,14 +95,7 @@
 									<a class="twitlink"></a>
 								</div>
 							</div>
-							<div class="user tweetbox">
-								<div class="twitprof">
-									<img class="user" src="" /><br /> <a
-										class="user twitlink visuallyhidden"></a>
-								</div>
-								<span><a></a> </span>
-								<div class="user tweet"></div>
-							</div>
+
 						</div>
 						<div class="show-more">
 							<input type="button" value="SHOW MORE"></input>
