@@ -31,7 +31,8 @@ var directive = {
 							+ " \" type=\"button\" value=\"" + key + "\" >";
 					// str += "test";
 				}
-				str += "<input class=\"show-all\" type=\"button\" value=\"...\"/>";
+				// str += "<input class=\"show-all\" type=\"button\"
+				// value=\"+\"/>";
 
 				return str;
 
@@ -130,7 +131,6 @@ function getMatches() {
 	}
 	if (template == null) {
 		template = $('#row-template').clone();
-		console.log(template);
 	} else {
 		console.log('removing container');
 		$('#row-container').empty();
@@ -180,6 +180,10 @@ function ajax_ret(data) {
 	 */
 	$('.word').click(
 			function(arg) {
+				if (deselectFilter(this)) {
+					return false;
+				}
+
 				$(this).parent().siblings('.tweet_entry').addClass(
 						'visuallyhidden');
 				$(this).parent().siblings('.word-' + this.value).removeClass(
@@ -211,12 +215,22 @@ $("body").ajaxError((function(e, jqxhr, settings, exception) {
 
 $('#usern').keyup(function(e) {
 	e.preventDefault();
-	console.log("pressed a key");
 	if (e.which == 13) {
 		getMatches();
 	}
 });
 
+function deselectFilter(selector) {
+
+	if ($(selector).hasClass('pressed')) {
+		$(selector).removeClass('pressed');
+		$(selector).parent().siblings('.tweet_entry').removeClass(
+				'visuallyhidden');
+		return true;
+	}
+	console.log('not selected');
+	return false;
+}
 function dispError(type) {
 	// TODO create images for each error type
 	// switch on error type and inject data

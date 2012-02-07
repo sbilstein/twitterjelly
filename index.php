@@ -96,6 +96,10 @@
 								<div class="user tweet"></div>
 							</div>
 						</div>
+						<div class="show-more">
+							<input type="button" value="SHOW MORE"></input>
+						</div>
+
 					</div>
 				</div>
 
