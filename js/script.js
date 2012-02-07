@@ -27,12 +27,12 @@ var directive = {
 				var str = "";
 
 				for ( var key in arg.item.top_words) {
-					str += "<input class=\"word\" title=\"Filter by " + key + " \" type=\"button\" value=\""
-							+ key + "\" >";
+					str += "<input class=\"word\" title=\"Filter by " + key
+							+ " \" type=\"button\" value=\"" + key + "\" >";
 					// str += "test";
 				}
 				str += "<input class=\"show-all\" type=\"button\" value=\"...\"/>";
-                
+
 				return str;
 
 			},
@@ -136,24 +136,23 @@ function getMatches() {
 		$('#row-container').empty();
 		$('#row-container').html(template);
 	}
-    //TODO check for error flag
-    $('.error-pic').addClass('visuallyhidden');
+	// TODO check for error flag
+	$('.error-pic').addClass('visuallyhidden');
 	$("#ajax-load").removeClass('visuallyhidden');
 	var arg = $('#usern').val();
 	// console.log('arg: ' + arg);
 	$('#go').attr('disabled', true);
 	in_request = true;
-/**
-	 var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', {
-	 'user' : arg
-	 }, ajax_ret);
+	/**
+	 * var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', { 'user' : arg },
+	 * ajax_ret);
+	 * 
+	 */
+	var jqxhr = $.get('mock.json', {
+		'user' : arg
+	}, ajax_ret);
 
-**/
-	 var jqxhr = $.get('mock.json', {
-     'user' : arg
-	 }, ajax_ret);
-
-console.log('txed request');
+	console.log('txed request');
 	return false;
 }
 
@@ -163,14 +162,14 @@ function ajax_ret(data) {
 	$('#go').attr('disabled', false);
 	in_request = false;
 	if (data == null) {
-        //add pic 
-        //$('error-pic img').attr
+		// add pic
+		// $('error-pic img').attr
 		dispError('null');
-        ret_error('data returned is NULL');
+		ret_error('data returned is NULL');
 		return;
 	} else if (data['status'] == 'error') {
-        dispError('data');
-        ret_error('Data has status = error');
+		dispError('data');
+		ret_error('Data has status = error');
 		return;
 	}
 	console.log("Successful response");
@@ -185,13 +184,19 @@ function ajax_ret(data) {
 						'visuallyhidden');
 				$(this).parent().siblings('.word-' + this.value).removeClass(
 						'visuallyhidden');
+				$(this).siblings().removeClass('pressed');
+				$(this).addClass('pressed');
+
 			});
 
-    $('.show-all').click( 
-        function(arg) {
-            $(this).parent().siblings('.tweet_entry').removeClass('visuallyhidden');
-            return;
-        });
+	$('.show-all').click(
+			function(arg) {
+				$(this).parent().siblings('.tweet_entry').removeClass(
+						'visuallyhidden');
+				$(this).siblings('.word').removeClass('pressed');
+				$(this).addClass('pressed');
+				return;
+			});
 	$('.row').removeClass('visuallyhidden');
 }
 
@@ -199,9 +204,9 @@ function ret_error(log) {
 	console.log(log);
 }
 $("body").ajaxError((function(e, jqxhr, settings, exception) {
-	
-    dispError('ajax');
-    console.log("AJAX ERROR");
+
+	dispError('ajax');
+	console.log("AJAX ERROR");
 }));
 
 $('#usern').keyup(function(e) {
@@ -212,11 +217,9 @@ $('#usern').keyup(function(e) {
 	}
 });
 
-
-function dispError(type)
-{
-    //TODO create images for each error type
-    //switch on error type and inject data
+function dispError(type) {
+	// TODO create images for each error type
+	// switch on error type and inject data
 	$("#ajax-load").addClass('visuallyhidden');
-    $('.error-pic').removeClass('visuallyhidden');
+	$('.error-pic').removeClass('visuallyhidden');
 }

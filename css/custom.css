@@ -67,7 +67,6 @@ div.centercol {
 	padding: 2px 2px 2px 2px;
 }
 
-
 div.ajaxload {
 	text-align: center;
 }
@@ -235,4 +234,9 @@ div.row {
 	padding-top: 15px;
 }
 
-
+.pressed {
+	border-left: 2px solid grey;
+	border-top: 2px solid grey;
+	border-bottom: 2px solid silver;
+	border-right: 2px solid silver;
+}
