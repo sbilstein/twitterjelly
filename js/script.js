@@ -180,17 +180,21 @@ function ajax_ret(data) {
 	 */
 	$('.word').click(
 			function(arg) {
+				// never touch if expanded is associated with show-more
 				if (deselectFilter(this)) {
 					return false;
 				}
 				// hide all of them
 				$(this).parent().siblings('.tweet_entry').addClass(
 						'visuallyhidden');
+
 				// if show-more has been pressed already for this word, show all
-				// of then
+				// of them
 				if ($(this).hasClass('expanded')) {
 					$(this).parent().siblings('.word-' + this.value)
 							.removeClass('visuallyhidden');
+					$(this).parent().siblings('.show-more').children('input')
+							.val('SHOW LESS');
 				} else {
 					// only show the top entries otherwise
 					$(this).parent().siblings('.word-' + this.value).each(
@@ -198,10 +202,9 @@ function ajax_ret(data) {
 								if (index < 3) {
 									$(this).removeClass('visuallyhidden');
 								}
-							}
-
-					);
-
+							});
+					$(this).parent().siblings('.show-more').children('input')
+							.val('SHOW MORE');
 				}
 				$(this).siblings().removeClass('pressed');
 				$(this).addClass('pressed');
@@ -226,6 +229,12 @@ function ajax_ret(data) {
 					if (button_pressed) {
 						// hide extra tweets for button
 						$(button_pressed).removeClass('expanded');
+						$(this).parent().siblings('.word-' + button_node.val())
+								.each(function(index) {
+									if (index > 2) {
+										$(this).addClass('visuallyhidden');
+									}
+								});
 
 					} else {
 						// hide extra tweets for all
@@ -243,7 +252,8 @@ function ajax_ret(data) {
 					$(this).val('SHOW LESS');
 					if (button_pressed) {
 						// show extra tweets for word
-						// $(this).parent().siblings('.tweet_entry').addClass('visuallyhidden');
+						$(this).parent().siblings('.word-' + button_node.val())
+								.removeClass('visuallyhidden');
 
 					} else {
 						// show extra tweets for all
@@ -275,14 +285,29 @@ $('#usern').keyup(function(e) {
 });
 
 function deselectFilter(selector) {
-
+	// .word class
 	if ($(selector).hasClass('pressed')) {
+
+		// deselect filter
+		// give indicator
+		$(this).parent().siblings('.show-more').children('input').val(
+				"SHOW MORE");
+
 		$(selector).removeClass('pressed');
-		$(selector).parent().siblings('.tweet_entry').removeClass(
-				'visuallyhidden');
+		// hide all tweets again
+		$(selector).parent().siblings('.tweet_entry')
+				.addClass('visuallyhidden');
+
+		// show three tweets
+		$(selector).parent().siblings('.tweet_entry').each(function(index) {
+			if (index < 3) {
+				$(this).removeClass('visuallyhidden');
+			}
+		});
+
 		return true;
 	}
-	// console.log('not selected');
+
 	return false;
 }
 function dispError(type) {
