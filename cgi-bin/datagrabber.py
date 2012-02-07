@@ -42,10 +42,18 @@ class DataGrabber:
             user_data = self.tf.getUserTweetsData(user)
 
         if 'results' not in user_data:
+            if 'error' in user_data:
+                ret = {'status':'error'}
+                if user_data['error'] == 'Not authorized':
+                    ret['error'] = 'protected'
+                return ret
             if can_retry:
                 return self.GetUserTweets(user, can_retry=False)
             else:
                 user_data = self.tf.getUserTweetsData(user)
+        elif not len(user_data['results']):
+            ret = {'status':'error', 'error':'no_tweets'}
+            return ret
 
         return user_data
 
@@ -234,7 +242,7 @@ class DataGrabber:
             # ADD TWEETS THAT MATCH ON TOKENS
             sorted_tokens = [token for token in  sorted(matches[top_10_celeb_index][2].keys(), key=lambda x: -matches[top_10_celeb_index][2][x])]
             for token in sorted_tokens:
-                celeb_tweets_for_token = list(filter(lambda x: x['text'].count(token) > 0, matching_celeb_tweets))
+                celeb_tweets_for_token = list(filter(lambda x: x['text'].lower().count(token.lower()) > 0, matching_celeb_tweets))
                 user_tweets_for_token = [user_tfidf['tweets'][user_tfidf['token_mapping'][token][k]]
                                          for k in range(len(user_tfidf['token_mapping'][token]))]
 
@@ -271,7 +279,6 @@ class DataGrabber:
         return results
 
     def StorePermalink(self, results_obj):
-
         json_txt = json.dumps(results_obj)
         hash = hashlib.md5(json_txt.encode('utf-8')).hexdigest()
         q  = "INSERT INTO stored_matches_json (hash, user, json) VALUES(%(hash)s, %(user)s, %(json)s);"
@@ -297,7 +304,7 @@ if __name__ == '__main__':
     #user = "Live_2Belieb"
     #user = "iluvjb1518"
     #user = "Belieb_Forever"
-    user = "sbilstein"
+    #user = "sbilstein"
     #user = "boomshakanaka"
     #user = "nuqb"
     #user = "celebjelly"
@@ -307,6 +314,7 @@ if __name__ == '__main__':
     #user = "james_quinlan"
     #user = "ggrenley"
     #user = "Suciaaaaa"
+    user = "tjfaust"
 
     #user = "dulcineadelech"
     #user = "pr0crastin8r"
