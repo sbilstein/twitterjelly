@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!C:/Python32/python.exe
 __author__ = 'jonathan'
 
 import cgi
@@ -22,5 +22,5 @@ if "id" in form and len(form["id"].value) == 32 and not form["id"].value.count('
     else:
         print(json.dumps({'status':'error'}))
 else:
-    print(json.dumps({'status':'error'}))
+    print(json.dumps({'status':'error', 'error':'invalid_permalink'}))
 

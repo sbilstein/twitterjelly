@@ -224,19 +224,24 @@ div.row {
 	margin-top: 5px;
 }
 
-.error-pic {
+.error{
 	padding: 10px;
 	text-align: center;
 }
 
-.error-pic img {
+.error img {
 	border: 1px solid black;
 }
 
-.error-pic div {
+.error div {
 	width: 75%;
 	margin: auto;
 	word-wrap: break-word;
+}
+
+.error .errormsg {
+	font-weight:bold;
+	font-size:16px;
 }
 
 #ajax-load {

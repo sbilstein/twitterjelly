@@ -4,7 +4,7 @@
 
 if (!console) {
 	console = {
-		log : function() {
+			log : function() {
 		}
 	};
 }
@@ -120,7 +120,17 @@ var directive = {
 	}
 };
 
+// DOING STUFF (should probably be $(document).ready()) ===================================================================
+
 $("#go").click(getMatches);
+
+if (getParameterByName('permalink'))
+{
+	// TODO check in_request and other shit
+	$.getJSON('cgi-bin/GetStoredResult.py', {'id':getParameterByName('permalink')}, populateFromStoredResult);
+}
+
+// END OF DOING STUFF =====================================================================================================
 
 function getMatches() {
 	// TODO validate arg first
@@ -137,7 +147,7 @@ function getMatches() {
 		$('#row-container').html(template);
 	}
 	// TODO check for error flag
-	$('.error-pic').addClass('visuallyhidden');
+	$('.error').addClass('visuallyhidden');
 	$("#ajax-load").removeClass('visuallyhidden');
 	var arg = $('#usern').val();
 	// console.log('arg: ' + arg);
@@ -145,33 +155,24 @@ function getMatches() {
 	in_request = true;
 	/*
 	 var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', { 'user' : arg },
-	 ajax_ret);
+	 populateMatches);
 	  */
 	 
 	var jqxhr = $.get('mock.json', {
 		'user' : arg
-	}, ajax_ret);
+	}, populateMatches);
 	
 	console.log('txed request');
 	return false;
 }
 
-function ajax_ret(data) {
+function populateMatches(data) {
 	console.log('rxed response');
 	console.log(data);
 	$('#go').attr('disabled', false);
 	in_request = false;
-	if (data == null) {
-		// add pic
-		// $('error-pic img').attr
-		dispError('null');
-		ret_error('data returned is NULL');
+	if (!validateData(data))
 		return;
-	} else if (data['status'] == 'error') {
-		dispError('data');
-		ret_error('Data has status = error');
-		return;
-	}
 	console.log("Successful response");
 	$('#results').render(data, directive);
 	$("#ajax-load").addClass('visuallyhidden');
@@ -260,6 +261,38 @@ function ajax_ret(data) {
 	$('.row').removeClass('visuallyhidden');
 }
 
+function populateFromStoredResult(data) {
+	if (!validateData(data)) {
+		return;
+	}
+	
+	$("#usern").val(data['user']['screen_name'])
+	populateMatches(data);
+}
+
+function validateData(data) {
+	if (data == null) {
+		// add pic
+		// $('error-pic img').attr
+		dispError('null');
+		ret_error('data returned is NULL');
+		return false;
+	} else if (data['status'] == 'error') {
+		if ("error" in data)
+		{
+			dispError(data['error'])
+		}
+		else
+		{
+			dispError('data');
+		}
+		ret_error('Data has status = error');
+		return false;
+	}
+	
+	return true;
+}
+
 function ret_error(log) {
 	console.log(log);
 }
@@ -306,5 +339,28 @@ function dispError(type) {
 	// TODO create images for each error type
 	// switch on error type and inject data
 	$("#ajax-load").addClass('visuallyhidden');
-	$('.error-pic').removeClass('visuallyhidden');
+	if (type == "protected")
+	{
+		$('.protected').removeClass('visuallyhidden');
+	}
+	else if (type == "no_tweets")
+	{
+		$('.no_tweets').removeClass('visuallyhidden');
+	} 
+	else 
+	{
+		$('.null').removeClass('visuallyhidden');
+	}
+}
+
+function getParameterByName(name)
+{
+  name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+  var regexS = "[\\?&]" + name + "=([^&#]*)";
+  var regex = new RegExp(regexS);
+  var results = regex.exec(window.location.search);
+  if(results == null)
+    return "";
+  else
+    return decodeURIComponent(results[1].replace(/\+/g, " "));
 }
