@@ -173,7 +173,7 @@ function populateMatchesFromFreshResult(data) {
 	if (!validateData(data))
 		return;
 	console.log("Successful response");
-	permalink_url = window.location.origin+window.location.pathname+"?permalink="+data["permalink"]
+	permalink_url = window.location.origin+window.location.pathname+"?permalink="+data["permalink_id"]
 	console.log(permalink_url)
 	
 	populateMatches(data);
