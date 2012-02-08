@@ -83,6 +83,7 @@
 					<img src="img/sadguy.png" />
 				</div>
 			</div>
+			<div id="permalink_container"></div>
 			<div class="results_col" id="results">
 				<div id="row-container">
 					<div class="row visuallyhidden" id="row-template">

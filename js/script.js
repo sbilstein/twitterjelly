@@ -155,25 +155,39 @@ function getMatches() {
 	in_request = true;
 	/*
 	 var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', { 'user' : arg },
-	 populateMatches);
+	 populateMatchesFromFreshResult);
 	  */
 	 
 	var jqxhr = $.get('mock.json', {
 		'user' : arg
-	}, populateMatches);
+	}, populateMatchesFromFreshResult);
 	
 	console.log('txed request');
 	return false;
 }
 
-function populateMatches(data) {
+function populateMatchesFromFreshResult(data) {
 	console.log('rxed response');
 	console.log(data);
-	$('#go').attr('disabled', false);
 	in_request = false;
 	if (!validateData(data))
 		return;
 	console.log("Successful response");
+	permalink_url = window.location.origin+window.location.pathname+"?permalink="+data["permalink"]
+	console.log(permalink_url)
+	
+	populateMatches(data);
+	
+	$("#permalink_container").append(
+			$("<span>Got your results!&nbsp;</span>")
+		).append(
+			$("<a>Share this link with your friends to make them jelly!</span>").attr("href",permalink_url)
+		)
+}
+
+function populateMatches(data) {
+	$('#go').attr('disabled', false);
+	
 	$('#results').render(data, directive);
 	$("#ajax-load").addClass('visuallyhidden');
 	/**
