@@ -7,7 +7,7 @@ import pickle
 import unidecode
 import urllib.request
 import json
-from doshit import * #random funtions, forgot what they do.
+from util import *
 import hashlib
 from fetchtweets import TweetFetcher
 import tweetadder
@@ -20,20 +20,12 @@ from dammit import UnicodeDammit
 from decimal import *
 
 class DataGrabber:
+    @perftest
     def __init__(self):
         self.sql = SQLQuery()
         self.tf = TweetFetcher()
 
-    def GetTweetsForUser(self, username):
-        q = "SELECT (text) FROM tweets WHERE from_user=%s"
-        v = username
-        results = self.sql.q(q,v)
-        return results
-        
-    def GetAllText(self):
-        q = "SELECT text FROM tweets"
-        return self.sql.q(q)
-
+    @perftest
     def GetUserTweets(self, user, can_retry=True):
         user_data = None
         if self.tf.canFetchTimeline():
@@ -57,7 +49,7 @@ class DataGrabber:
 
         return user_data
 
-    
+    @perftest
     def GetUserTFIDFs(self, user_data):
         tfidf_obj = TfIdf()
 
@@ -65,7 +57,7 @@ class DataGrabber:
         terms = {}
         token_mapping = {}
         user_tweets = {}
-        
+
         for tweet in user_data['results']:
             user_tweets[tweet['id']] = tweet
 #            tokens = [UnicodeDammit(t).unicode_markup
@@ -87,7 +79,7 @@ class DataGrabber:
                     token_mapping[token] = [tweet['id']]
 
         #CALCULATE TFIDF        
-        idfs = DataGrabber().GetTermIDFs(terms.keys())
+        idfs = self.GetTermIDFs(terms.keys())
         scores = {}
     
         for term in terms.keys():
@@ -108,6 +100,7 @@ class DataGrabber:
                 'tweets':user_tweets,
                 'token_mapping':token_mapping}
 
+    @perftest
     def GetTermIDFs(self, terms):
         if not terms or not len(terms):
             return json.loads({"idfs":[]})
@@ -124,9 +117,9 @@ class DataGrabber:
         data = json.loads(txt, encoding=txt_unicode.original_encoding)
         return data
 
-
+    @perftest
     def GetCelebTFIDFsForTerms(self, terms):
-        q = "SELECT * FROM celeb_tfidf WHERE score > .005 AND token IN("
+        q = "SELECT * FROM celeb_tfidf WHERE token IN("
         count = 0
         vals = {}
         for term in terms:
@@ -141,12 +134,14 @@ class DataGrabber:
 
         return results
 
+    @perftest
     def GetCelebTweetStats(self):
         q = "SELECT * FROM celeb_stats WHERE tr_day > -1"
         results = self.sql.q(q)
 
         return results
 
+    @perftest
     def GetCelebMatchesForUser(self, user):
         """
         Generate object with information about user and matches with celeb (including matching tweets) to pass to the
@@ -287,6 +282,18 @@ class DataGrabber:
         self.sql.q(q, vals)
         return hash
 
+@perftest
+def createDataGrabber():
+    return DataGrabber()
+
+@perftest
+def testGetMatchFromFresh(user):
+    DataGrabber().GetCelebMatchesForUser(user)
+
+@perftest
+def testPerfWithExistingDataGrabber(dg, user):
+    dg.GetCelebMatchesForUser(user)
+
 if __name__ == '__main__':
     #jbtweets = DataGrabber().GetTweetsForUser("justinbieber")
     #debuglog.pprint_msg(jbtweets)
@@ -299,7 +306,7 @@ if __name__ == '__main__':
     #user = "liltunechi"
     #user = "KingGails"
     #user = "King32David"
-    #user = "joshrweinstein"
+    user = "joshrweinstein"
     #user = "simplycary"
     #user = "Live_2Belieb"
     #user = "iluvjb1518"
@@ -313,13 +320,13 @@ if __name__ == '__main__':
     #user = "EmilyAnneNichol"
     #user = "james_quinlan"
     #user = "ggrenley"
-    #user = "Suciaaaaa"
-    user = "tjfaust"
+    #user2 = "Suciaaaaa"
+    #user = "tjfaust"
 
-    #user = "dulcineadelech"
+    #user2 = "dulcineadelech"
     #user = "pr0crastin8r"
 
-    #user = "cooper_carter"
+    #user2 = "cooper_carter"
     #user = "ava361"
     #user = "JonathanPezzino"
 
@@ -329,10 +336,13 @@ if __name__ == '__main__':
     #user with 0 tweets for testing
     #user = "Adared"
 
-    pprint.pprint(DataGrabber().GetCelebMatchesForUser(user))
-    
-    
+    dg = DataGrabber()
+    testPerfWithExistingDataGrabber(dg, user)
+    #pprint.pprint(dg.GetCelebMatchesForUser(user))
+    #pprint.pprint(dg.GetCelebMatchesForUser(user2))
     #pprint.pprint(DataGrabber().GetCelebTFIDFsForTerms(["weed"]))
-    
+    #testGetMatchFromFresh(user)
+    #testPerfWithExistingDataGrabber(dg, user)
+    #testGetMatchFromFresh(user)
 
     
