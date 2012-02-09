@@ -120,17 +120,22 @@ var directive = {
 	}
 };
 
-// DOING STUFF (should probably be $(document).ready()) ===================================================================
 
-$("#go").click(getMatches);
-
-if (getParameterByName('permalink'))
-{
-	// TODO check in_request and other shit
-	$.getJSON('cgi-bin/GetStoredResult.py', {'id':getParameterByName('permalink')}, populateFromStoredResult);
-}
-
-// END OF DOING STUFF =====================================================================================================
+$(document).ready(function(){
+		// if the permalink is empty do nothing, otherwise get a stored result
+	if (getParameterByName('permalink'))
+	{
+		// TODO check in_request and other shit
+		$.getJSON('cgi-bin/GetStoredResult.py', {'id':getParameterByName('permalink')}, populateFromStoredResult);
+	} else if(getParameterByName('test')) {
+		$.get('mock.json', {
+			'user' : 'nil'
+		}, populateMatchesFromFreshResult);
+		console.log('getting json baby');
+	}
+	// bind the go
+	$("#go").click(getMatches);
+})
 
 function getMatches() {
 	// TODO validate arg first
@@ -153,14 +158,10 @@ function getMatches() {
 	// console.log('arg: ' + arg);
 	$('#go').attr('disabled', true);
 	in_request = true;
-	/*
-	 var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', { 'user' : arg },
-	 populateMatchesFromFreshResult);
-	  */
+
+	var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', { 'user' : arg },
+	populateMatchesFromFreshResult);
 	 
-	var jqxhr = $.get('mock.json', {
-		'user' : arg
-	}, populateMatchesFromFreshResult);
 	
 	console.log('txed request');
 	return false;
@@ -366,7 +367,12 @@ function dispError(type) {
 		$('.null').removeClass('visuallyhidden');
 	}
 }
-
+/**
+ * 
+ * @param Takes
+ *            the name of URL param
+ * @returns empty string if no parameter, otherwise return val
+ */
 function getParameterByName(name)
 {
   name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
