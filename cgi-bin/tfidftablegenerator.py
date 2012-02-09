@@ -54,7 +54,7 @@ class TFIDFTableGenerator:
                 celeb_scores[celeb] = (celeb_tfidf_for_term, term_count_for_celeb)
 
             # GENERATE QUERY
-            insert_q = "INSERT INTO celeb_tfidf (user, token, score, count) VALUES"
+            insert_q = "INSERT INTO celeb_tfidf_all (user, token, score, count) VALUES"
 
             count = 0
             vals = {'token':token}
@@ -72,6 +72,10 @@ class TFIDFTableGenerator:
 
                 # EXECUTE QUERY
                 self.sql.q(insert_q,vals)
+
+            # move high-scoring words over celeb_tfidf
+            q = "INSERT INTO celeb_tfidf (SELECT * FROM celeb_tfidf_all WHERE score > 0.005) ON DUPLICATE KEY UPDATE score=VALUES(score), count=VALUES(count)"
+            self.sql.q(q)
 
     def GenerateDocFreqsTable(self):
         # TODO: just update the frequencies as data is read in instead of generating this table (low priority).

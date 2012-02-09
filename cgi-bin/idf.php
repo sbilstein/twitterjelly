@@ -11,7 +11,8 @@
 	$terms = implode('","',explode(",",$GLOBALS['terms']));
 
 	//$sql = "SELECT COUNT(DISTINCT tweets.from_user) FROM tweets";
-	$sql = "SELECT COUNT(*) FROM (SELECT DISTINCT from_user FROM tweets) as t";
+	//$sql = "SELECT COUNT(*) FROM (SELECT DISTINCT from_user FROM tweets) as t";
+	$sql = "SELECT val FROM num_celebs_with_tweets ORDER BY entry_date DESC LIMIT 1";
 	$results = mysql_query($sql);
 	$num_users = 0;
 	while($row = mysql_fetch_array($results))

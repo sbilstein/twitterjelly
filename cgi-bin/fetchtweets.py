@@ -13,14 +13,16 @@ import debuglog
 from dbsql import SQLQuery
 from tweetadder import TweetAdder
 from dammit import UnicodeDammit
-
+from util import *
 
 class TweetFetcher:
+    #@perftest
     def __init__(self):
         self.rate_data = self.fetchRateData()
         self.tweet_adder = TweetAdder()
         self.sql = SQLQuery()
 
+    #@perftest
     def fetchRateData(self):
         return json.loads(urllib.request.urlopen("https://api.twitter.com/1/account/rate_limit_status.json").read().decode("ascii"))
 
