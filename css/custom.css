@@ -92,6 +92,10 @@ a.twitlink {
 	text-align: left;
 }
 
+a.leadname:visited {
+	color: #607890;
+}
+
 div.twitprof {
 	float: left;
 	display: table-cell;
@@ -110,8 +114,8 @@ div.matchlead {
 	letter-spacing: -0.11em;
 	padding-top: 5px;
 	background-color: #FAFAFA;
-	margin-top:20px;
-	margin-bottom:5px;
+	margin-top: 20px;
+	margin-bottom: 5px;
 }
 
 .list-lead {
@@ -224,7 +228,7 @@ div.row {
 	margin-top: 5px;
 }
 
-.error{
+.error {
 	padding: 10px;
 	text-align: center;
 }
@@ -240,8 +244,8 @@ div.row {
 }
 
 .error .errormsg {
-	font-weight:bold;
-	font-size:16px;
+	font-weight: bold;
+	font-size: 16px;
 }
 
 #ajax-load {
