@@ -114,8 +114,8 @@ div.matchlead {
 	letter-spacing: -0.11em;
 	padding-top: 5px;
 	background-color: #FAFAFA;
-	margin-top: 20px;
-	margin-bottom: 5px;
+	margin-top: 15px;
+	margin-bottom: 2px;
 }
 
 .list-lead {
@@ -281,4 +281,21 @@ div.row {
 	border-right: 1px solid grey;
 	border-bottom: 1px solid grey;
 	font-style: bold;
+}
+
+#permalink_container { /* 	padding: 5px; */
+	text-align: center;
+	font-size: 10px;
+	color: grey;
+	vertical-align: middle;
+}
+
+#permalink:visited {
+	color: grey;
+}
+
+span.celeb-screen {
+/* 	display: block; */
+	font-size: 1.3em;
+
 }
