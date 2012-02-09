@@ -17,10 +17,14 @@ from util import *
 
 class TweetFetcher:
     @perftest
-    def __init__(self):
+    def __init__(self, sql_obj=None):
         self.rate_data = self.fetchRateData()
-        self.tweet_adder = TweetAdder()
-        self.sql = SQLQuery()
+        if not sql_obj:
+            self.sql = SQLQuery()
+        else:
+            self.sql = sql_obj
+
+        self.tweet_adder = TweetAdder(sql_obj=self.sql)
 
     @perftest
     def fetchRateData(self):
@@ -149,7 +153,7 @@ class TweetFetcher:
             if self.checkRateLimit() > 0:
                 debuglog.msg("\t\tHave to wait.")
                 return {'status':'wait'}
-            url = "https://api.twitter.com/1/statuses/user_timeline.json?&screen_name=%s&count=200"%user
+            url = "https://api.twitter.com/1/statuses/user_timeline.json?&screen_name=%s&count=150"%user
             debuglog.msg(url)
             try:
                 response = urllib.request.urlopen(url)
