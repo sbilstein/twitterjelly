@@ -1,18 +1,10 @@
 from dbsql import *
-import pprint
 from tfidf import *
-import time
-import math
-import pickle
 import unidecode
 import urllib.request
 import json
 from util import *
-import hashlib
 from fetchtweets import TweetFetcher
-import tweetadder
-import datetime
-import collections
 import hashlib
 import celebmatcher
 import debuglog
@@ -23,7 +15,7 @@ class DataGrabber:
     #@perftest
     def __init__(self):
         self.sql = SQLQuery()
-        self.tf = TweetFetcher()
+        self.tf = TweetFetcher(sql_obj=self.sql)
 
     #@perftest
     def GetUserTweets(self, user, can_retry=True):
@@ -60,9 +52,6 @@ class DataGrabber:
 
         for tweet in user_data['results']:
             user_tweets[tweet['id']] = tweet
-#            tokens = [UnicodeDammit(t).unicode_markup
-#                      for t in tfidf_obj.get_tokens(tweet['text'],
-#                                                    tagtypes=False, wordsonly=True, excludeUrls=True, minLength=3)]
 
             tokens = [t for t in tfidf_obj.get_tokens(tweet['text'],
                                                       tagtypes=False, wordsonly=True, excludeUrls=True, minLength=3)]
@@ -108,7 +97,7 @@ class DataGrabber:
         url = 'http://50.56.221.228/cgi-bin/idf.php?'
         # TODO: HTML entity encoding (?)
         # TODO: Enhanced encoding detection - first term's encoding may not be always appropriate.
-        data = ('terms='+','.join(terms).replace("#","%23")).encode("latin1")
+        data = ('terms='+','.join(terms).replace("#","%23")).encode("utf-8")
         debuglog.msg(data)
 
         txt_unicode = UnicodeDammit(urllib.request.urlopen(url,data).read())
@@ -291,10 +280,10 @@ if __name__ == '__main__':
     #DataGrabber().GenerateLDAData()
     #DataGrabber().GetTfIdfScores()
 
-    #user = "liltunechi"
+    user = "liltunechi"
     #user = "KingGails"
     #user = "King32David"
-    user = "joshrweinstein"
+    #user = "joshrweinstein"
     #user = "simplycary"
     #user = "Live_2Belieb"
     #user = "iluvjb1518"
@@ -324,13 +313,17 @@ if __name__ == '__main__':
     #user with 0 tweets for testing
     #user = "Adared"
 
-    dg = DataGrabber()
-    testPerfWithExistingDataGrabber(dg, user)
+    #user = "adamcarolla"
+    #user = "robdelaney"
+    #user = "2chambers"
+
+    #dg = DataGrabber()
+    #testPerfWithExistingDataGrabber(dg, user)
     #pprint.pprint(dg.GetCelebMatchesForUser(user))
     #pprint.pprint(dg.GetCelebMatchesForUser(user2))
     #pprint.pprint(DataGrabber().GetCelebTFIDFsForTerms(["weed"]))
     #testGetMatchFromFresh(user)
     #testPerfWithExistingDataGrabber(dg, user)
-    #testGetMatchFromFresh(user)
+    testGetMatchFromFresh(user)
 
     
