@@ -57,6 +57,9 @@
 					placeholder="Enter your twitter username..." id="usern" /> <input
 					type="button" id="go" class="submit" value="GO" />
 
+				<div id="permalink_container" class="visuallyhidden">
+					share your results with this link: <a id="permalink"></a>
+				</div>
 			</div>
 			<div id="ajax-load" class="visuallyhidden">
 				<img src="img/loader.gif"></img>
@@ -64,30 +67,27 @@
 			<div class="error visuallyhidden">
 				<div class="protected visuallyhidden">
 					<img src="img/protected.jpg "></img>
-					<p class="errormsg">
-						TwitterJelly can't access your tweets if they are protected.
-						Try using another twitter account or unprotect your tweets if
-						you'd like.
-					</p>
+					<p class="errormsg">TwitterJelly can't access your tweets if they
+						are protected. Try using another twitter account or unprotect your
+						tweets if you'd like.</p>
 				</div>
 				<div class="no_tweets visuallyhidden">
-					<p class="errormsg">
-						You don't have any tweets!
-					</p>
+					<p class="errormsg">You don't have any tweets!</p>
 					<img src="img/no_tweets.png" />
 				</div>
 				<div class="null visuallyhidden">
-					<p class="errormsg">
-						Whoa, something went wrong and we couldn't get your matches! We're sorry :(
-					</p>
+					<p class="errormsg">Whoa, something went wrong and we couldn't get
+						your matches! We're sorry :(</p>
 					<img src="img/sadguy.png" />
 				</div>
 			</div>
-			<div id="permalink_container"></div>
+
 			<div class="results_col" id="results">
 				<div id="row-container">
 					<div class="row visuallyhidden" id="row-template">
 						<div class="matchlead"></div>
+						
+						
 						<div class="words">
 							<span class="list-lead">you both tweet about</span>
 						</div>

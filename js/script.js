@@ -21,7 +21,7 @@ var directive = {
 				// MATCH</span>';
 				// return 'you and <span class="celeb-name">'
 				// + arg.item.name + '</span> tweet about';
-				return '<span class="celeb-name">' + arg.item.name + '</span>';
+				return '<span class="celeb-name">' + arg.item.name + '</span><span class="celeb-screen">&nbsp;@' + arg.item.screen_name +"</span>";
 			},
 			'div.words+' : function(arg) {
 				var str = "";
@@ -51,7 +51,7 @@ var directive = {
 						var len = arg.item.word.length;
 						var word_match = new RegExp(arg.item.word);
 						// workaround in case first word is match.
-						var text = "" + arg.item.celeb_tweet.text;
+						var text = arg.item.celeb_tweet.text;
 						var new_str = '';
 
 						while ((pos = text.toLowerCase().search(word_match)) > -1) {
@@ -63,8 +63,7 @@ var directive = {
 							text = text.slice(pos + len);
 						}
 						new_str += text;
-						// Trim out first additional space.
-						return new_str.slice(1);
+						return new_str;
 					},
 					'@class+' : function(arg) {
 						var word_class = ' word-' + arg.item.word;
@@ -102,7 +101,7 @@ var directive = {
 					'img.user@src' : 'user.pic_url',
 					'img.celeb@src' : 'match.pic_url',
 					'.user.tweetbox span a' : function(arg) {
-						return arg.context.user.screen_name;
+						return '@' + arg.context.user.screen_name;
 					},
 					'.user.tweetbox span a@href' : function(arg) {
 						return 'http://www.twitter.com/'
@@ -112,7 +111,7 @@ var directive = {
 						return ' tweeted ';
 					},
 					'.celeb.tweetbox span a' : function(arg) {
-						return curr_celeb;
+						return '@' + curr_celeb;
 					},
 					'.celeb.tweetbox span a@href' : function(arg) {
 						return 'http://www.twitter.com/' + curr_celeb;
@@ -176,22 +175,26 @@ function getMatches() {
 }
 
 function populateMatchesFromFreshResult(data) {
-	console.log('rxed response');
-	console.log(data);
+// console.log('rxed response');
+// console.log(data);
 	in_request = false;
 	if (!validateData(data))
 		return;
-	console.log("Successful response");
-	permalink_url = window.location.origin+window.location.pathname+"?permalink="+data["permalink_id"]
-	console.log(permalink_url)
+// console.log("Successful response");
+	permalink_url = window.location.origin+window.location.pathname+"?permalink="+data["permalink_id"];
+// console.log(permalink_url)
 	
 	populateMatches(data);
+	$("#permalink").attr("href", permalink_url);
+	$("#permalink").html(permalink_url);
 	
-	$("#permalink_container").append(
-			$("<span>Got your results!&nbsp;</span>")
-		).append(
-			$("<a>Share this link with your friends to make them jelly!</span>").attr("href",permalink_url)
-		)
+	$("#permalink_container").removeClass('visuallyhidden');
+
+// .append(
+// $("<span>share your resultS&nbsp;</span>")
+// ).append(
+// $("<a>or copy this link</a>").attr("href",permalink_url)
+// )
 }
 
 function populateMatches(data) {
@@ -234,29 +237,11 @@ function populateMatches(data) {
 	$('.show-more input').click(
 
 			function(arg) {
-// // check for pressed filter
-// var button_node;
-// var button_pressed = false;
-// if ((button_node = $(this).parent().siblings('.words')
-// .children('.pressed')).length == 1) {
-// console.log("filter " + button_node.val() + " selected");
-// button_pressed = true;
-// }
 
 				if ($(this).hasClass('expanded')) {
 					$(this).removeClass('expanded');
 					$(this).val('SHOW MORE');
-// if (button_pressed) {
-// // hide extra tweets for button
-// $(button_pressed).removeClass('expanded');
-// $(this).parent().siblings('.word-' + button_node.val())
-// .each(function(index) {
-// if (index > 2) {
-// $(this).addClass('visuallyhidden');
-// }
-// });
-//
-// } else {
+
 						// hide extra tweets for all
 						$(this).parent().siblings('.tweet_entry').each(
 								function(index) {
@@ -265,21 +250,12 @@ function populateMatches(data) {
 									}
 								});
 
-// }
-
 				} else {
 					$(this).addClass('expanded');
 					$(this).val('SHOW LESS');
-// if (button_pressed) {
-// // show extra tweets for word
-// $(this).parent().siblings('.word-' + button_node.val())
-// .removeClass('visuallyhidden');
-//
-// } else {
-						// show extra tweets for all
+
 						$(this).parent().siblings('.tweet_entry').removeClass(
 								'visuallyhidden');
-// }
 
 				}
 
@@ -293,7 +269,7 @@ function populateFromStoredResult(data) {
 		return;
 	}
 	
-	$("#usern").val(data['user']['screen_name'])
+	$("#usern").val(data['user']['screen_name']);
 	populateMatches(data);
 }
 
@@ -307,7 +283,7 @@ function validateData(data) {
 	} else if (data['status'] == 'error') {
 		if ("error" in data)
 		{
-			dispError(data['error'])
+			dispError(data['error']);
 		}
 		else
 		{
