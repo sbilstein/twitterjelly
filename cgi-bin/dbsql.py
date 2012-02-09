@@ -6,7 +6,7 @@ import debuglog
 from util import *
 
 class SQLQuery:
-    #@perftest
+    ##@perftest
     def __init__(self):
         #self.conn = pymysql.connect(host='66.147.244.176', port=3306, user='sbilstei_default', passwd='db$wag', db='sbilstei_twitter')
         self.conn = pymysql.connect(host='50.56.221.228', port=3306, user='default_swag', passwd='db$wag', db='tjelly')

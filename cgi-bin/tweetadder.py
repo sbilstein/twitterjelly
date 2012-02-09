@@ -16,7 +16,7 @@ def replaceMonth(datetime_str):
 
 class TweetAdder:
 
-    @perftest
+    #@perftest
     def __init__(self, sql_obj=None):
         if not sql_obj:
             self.sql = SQLQuery()

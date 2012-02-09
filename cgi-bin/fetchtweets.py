@@ -17,7 +17,7 @@ from util import *
 
 class TweetFetcher:
 
-    @perftest
+    #@perftest
     def __init__(self, sql_obj=None):
         self.rate_data = self.fetchRateData()
         if not sql_obj:
@@ -27,7 +27,7 @@ class TweetFetcher:
 
         self.tweet_adder = TweetAdder(sql_obj=self.sql)
 
-    #@perftest
+    ##@perftest
     def fetchRateData(self):
         return json.loads(urllib.request.urlopen("https://api.twitter.com/1/account/rate_limit_status.json").read().decode("ascii"))
 
