@@ -20,12 +20,12 @@ from dammit import UnicodeDammit
 from decimal import *
 
 class DataGrabber:
-    @perftest
+    #@perftest
     def __init__(self):
         self.sql = SQLQuery()
         self.tf = TweetFetcher()
 
-    @perftest
+    #@perftest
     def GetUserTweets(self, user, can_retry=True):
         user_data = None
         if self.tf.canFetchTimeline():
@@ -49,7 +49,7 @@ class DataGrabber:
 
         return user_data
 
-    @perftest
+    #@perftest
     def GetUserTFIDFs(self, user_data):
         tfidf_obj = TfIdf()
 
@@ -100,7 +100,7 @@ class DataGrabber:
                 'tweets':user_tweets,
                 'token_mapping':token_mapping}
 
-    @perftest
+    #@perftest
     def GetTermIDFs(self, terms):
         if not terms or not len(terms):
             return json.loads({"idfs":[]})
@@ -117,7 +117,7 @@ class DataGrabber:
         data = json.loads(txt, encoding=txt_unicode.original_encoding)
         return data
 
-    @perftest
+    #@perftest
     def GetCelebTFIDFsForTerms(self, terms):
         q = "SELECT * FROM celeb_tfidf WHERE token IN("
         count = 0
@@ -134,14 +134,14 @@ class DataGrabber:
 
         return results
 
-    @perftest
+    #@perftest
     def GetCelebTweetStats(self):
         q = "SELECT * FROM celeb_stats WHERE tr_day > -1"
         results = self.sql.q(q)
 
         return results
 
-    @perftest
+    #@perftest
     def GetCelebMatchesForUser(self, user):
         """
         Generate object with information about user and matches with celeb (including matching tweets) to pass to the
@@ -281,18 +281,6 @@ class DataGrabber:
 
         self.sql.q(q, vals)
         return hash
-
-@perftest
-def createDataGrabber():
-    return DataGrabber()
-
-@perftest
-def testGetMatchFromFresh(user):
-    DataGrabber().GetCelebMatchesForUser(user)
-
-@perftest
-def testPerfWithExistingDataGrabber(dg, user):
-    dg.GetCelebMatchesForUser(user)
 
 if __name__ == '__main__':
     #jbtweets = DataGrabber().GetTweetsForUser("justinbieber")
