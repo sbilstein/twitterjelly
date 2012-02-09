@@ -37,6 +37,14 @@ var directive = {
 				return str;
 
 			},
+			'.show-more@class+' : function(arg){
+				if(arg.item.tweets.length < 4){
+					return ' visuallyhidden';
+				} else {
+					return '';
+				}
+			}
+			,
 			'div.tweet_entry' : {
 				'tweet<-match.tweets' : {
 					'+.celeb.tweet' : function(arg) {
@@ -198,6 +206,11 @@ function populateMatches(data) {
 			function(arg) {
 
 				if (deselectFilter(this)) {
+					$(this).parent().siblings('.show-more').children('input').val('SHOW MORE');
+					$(this).parent().siblings('show-more').removeClass('expanded');
+					$(this).parent().siblings('.show-more').children('input').attr('disabled', true);
+					$(this).parent().siblings('.show-more').children('input').removeClass('visuallyhidden');
+					
 					return false;
 				}
 				// hide all of them
@@ -207,44 +220,43 @@ function populateMatches(data) {
 				// show the top entries otherwise
 				$(this).parent().siblings('.word-' + this.value).each(
 						function(index) {
-							if (index < 3) {
 								$(this).removeClass('visuallyhidden');
-							}
 						});
-				$(this).parent().siblings('.show-more').children('input').val(
-						'SHOW MORE');
+
 
 				$(this).siblings().removeClass('pressed');
 				$(this).addClass('pressed');
-
+				// Instead of hiding, disable button and do showing all tweets
+				$(this).parent().siblings('.show-more').children('input').attr('disabled', true);
+				$(this).parent().siblings('.show-more').children('input').val('SHOWING ALL TWEETS FOR \'' +this.value.toUpperCase()+ '\'');
 			});
 
 	$('.show-more input').click(
 
 			function(arg) {
-				// check for pressed filter
-				var button_node;
-				var button_pressed = false;
-				if ((button_node = $(this).parent().siblings('.words')
-						.children('.pressed')).length == 1) {
-					console.log("filter " + button_node.val() + " selected");
-					button_pressed = true;
-				}
+// // check for pressed filter
+// var button_node;
+// var button_pressed = false;
+// if ((button_node = $(this).parent().siblings('.words')
+// .children('.pressed')).length == 1) {
+// console.log("filter " + button_node.val() + " selected");
+// button_pressed = true;
+// }
 
 				if ($(this).hasClass('expanded')) {
 					$(this).removeClass('expanded');
 					$(this).val('SHOW MORE');
-					if (button_pressed) {
-						// hide extra tweets for button
-						$(button_pressed).removeClass('expanded');
-						$(this).parent().siblings('.word-' + button_node.val())
-								.each(function(index) {
-									if (index > 2) {
-										$(this).addClass('visuallyhidden');
-									}
-								});
-
-					} else {
+// if (button_pressed) {
+// // hide extra tweets for button
+// $(button_pressed).removeClass('expanded');
+// $(this).parent().siblings('.word-' + button_node.val())
+// .each(function(index) {
+// if (index > 2) {
+// $(this).addClass('visuallyhidden');
+// }
+// });
+//
+// } else {
 						// hide extra tweets for all
 						$(this).parent().siblings('.tweet_entry').each(
 								function(index) {
@@ -253,21 +265,21 @@ function populateMatches(data) {
 									}
 								});
 
-					}
+// }
 
 				} else {
 					$(this).addClass('expanded');
 					$(this).val('SHOW LESS');
-					if (button_pressed) {
-						// show extra tweets for word
-						$(this).parent().siblings('.word-' + button_node.val())
-								.removeClass('visuallyhidden');
-
-					} else {
+// if (button_pressed) {
+// // show extra tweets for word
+// $(this).parent().siblings('.word-' + button_node.val())
+// .removeClass('visuallyhidden');
+//
+// } else {
 						// show extra tweets for all
 						$(this).parent().siblings('.tweet_entry').removeClass(
 								'visuallyhidden');
-					}
+// }
 
 				}
 
