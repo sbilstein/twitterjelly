@@ -37,6 +37,14 @@ var directive = {
 				return str;
 
 			},
+			'.show-more@class+' : function(arg){
+				if(arg.item.tweets.length < 4){
+					return ' visuallyhidden';
+				} else {
+					return '';
+				}
+			}
+			,
 			'div.tweet_entry' : {
 				'tweet<-match.tweets' : {
 					'+.celeb.tweet' : function(arg) {
