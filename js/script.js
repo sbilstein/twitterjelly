@@ -22,9 +22,9 @@ var directive = {
 				// return 'you and <span class="celeb-name">'
 				// + arg.item.name + '</span> tweet about';
 				
-				var str = '<span class="celeb-name">' + arg.item.name + '</span><span class="celeb-screen">&nbsp;@' + arg.item.screen_name +"</span>";
+				var str = '<span class="celeb-name">' + arg.item.name + '</span><span class="celeb-screen">&nbsp;@' + curr_celeb +"</span>";
 				
-				str+='<div class="result-share"><a href="https://twitter.com/intent/tweet?screen_name=sbilstein" class="twitter-mention-button"' + 
+				str+='<div class="result-share"><a href="https://twitter.com/intent/tweet?screen_name=' + curr_celeb + '&text='+ 'results' + ' " class="twitter-mention-button"' + 
 					'data-related="sbilstein">Tweet to @sbilstein</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></div>';
 				return str;
 			},
@@ -134,41 +134,61 @@ $(document).ready(function(){
 			'user' : 'nil'
 		}, populateMatchesFromFreshResult);
 		console.log('getting json baby');
+	} else if(getParameterByName('user'))
+	{
+		var user_arg = getParameterByName('user');
 	}
 	// bind the go
 	$("#go").click(getMatches);
 })
 
-function getMatches() {
+function getUserMatch(username){
+	var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', { 'user' : username },
+			populateMatchesFromFreshResult);
+	in_request = true;
+};
+/**
+ * Does a bunch of cleanup, and setting templates. Must be called before any
+ * rendering.
+ * 
+ * @returns whether or not the process should continue
+ */
+function initMatchLoading(){
 	// TODO validate arg first
-	// Erase previous data
 	// do not continue if in request
 	if (in_request == true) {
 		return false;
 	}
+	// store a template
 	if (template == null) {
 		template = $('#row-template').clone();
 	} else {
-		console.log('removing container');
+		// erase old container add the template so pure.js can render
 		$('#row-container').empty();
 		$('#row-container').html(template);
 	}
 	// TODO check for error flag
 	$('.error').addClass('visuallyhidden');
 	$("#ajax-load").removeClass('visuallyhidden');
+	return true;
+}
+
+function getMatchesFromButton() {
+	if(initMatchLoading() == false){
+		return false;
+	}
 	var arg = $('#usern').val();
 	// console.log('arg: ' + arg);
 	$('#go').attr('disabled', true);
-	in_request = true;
-
-	var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', { 'user' : arg },
-	populateMatchesFromFreshResult);
-	 
+	getUserMatch(arg);
 	
-	console.log('txed request');
 	return false;
 }
-
+/**
+ * Set up a result from that isn't accesed via a permalink
+ * 
+ * @param data
+ */
 function populateMatchesFromFreshResult(data) {
 // console.log('rxed response');
 // console.log(data);
@@ -185,11 +205,6 @@ function populateMatchesFromFreshResult(data) {
 	
 	$("#permalink_container").removeClass('visuallyhidden');
 
-// .append(
-// $("<span>share your resultS&nbsp;</span>")
-// ).append(
-// $("<a>or copy this link</a>").attr("href",permalink_url)
-// )
 }
 
 function populateMatches(data) {

@@ -202,12 +202,9 @@ div.results_col {
 }
 
 div.result-share {
-	display: inline-block;
-	width: 100%;
-	text-align: right;
-	
-	margin-left: 75;
-	/* text-align: right; */
+	float: right;
+	margin-top: 9px;
+	margin-right: 10px;
 }
 
 #twitter {
