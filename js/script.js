@@ -72,31 +72,21 @@ var directive = {
 						}
 						return word_class;
 					},
-					'a.celeb.twitlink@href' : 'tweet.celeb_tweet.url',
-					'a.celeb.twitlink' : function(arg) {
-						return tweet_text;
-					},
-					'+.user.tweet' : function(arg) {
-						var word = arg.item.word;
+					'.user.tweet' : function(arg) {
+						var len = arg.item.word.length;
+						var word_match = new RegExp(arg.item.word);
 						var text = arg.item.user_tweet.text;
 						var new_str = '';
 
-						while ((pos = text.toLowerCase().search(word)) > -1) {
+						while ((pos = text.toLowerCase().search(word_match)) > -1) {
 							new_str += text.slice(0, pos);
 							new_str += '<span class="matched-word">'
-									+ text.slice(pos, pos + word.length)
+									+ text.slice(pos, pos + len)
 									+ '</span>';
-							text = text.slice(pos + word.length);
+							text = text.slice(pos + len);
 						}
 						new_str += text;
 						return new_str;
-					}
-
-					,
-
-					'a.user.twitlink@href' : 'tweet.user_tweet.url',
-					'a.user.twitlink' : function(arg) {
-						return tweet_text;
 					},
 					'img.user@src' : 'user.pic_url',
 					'img.celeb@src' : 'match.pic_url',

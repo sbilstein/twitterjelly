@@ -86,8 +86,8 @@
 				<div id="row-container">
 					<div class="row visuallyhidden" id="row-template">
 						<div class="matchlead"></div>
-						
-						
+
+
 						<div class="words">
 							<span class="list-lead">you both tweet about</span>
 						</div>
@@ -97,7 +97,7 @@
 									<img class="user" src="" /><br /> <a
 										class="user twitlink visuallyhidden"></a>
 								</div>
-								<span><a></a> </span>null
+								<span><a></a> </span>
 								<div class="user tweet"></div>
 							</div>
 							<div class="celeb tweetbox">
