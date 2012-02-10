@@ -15,7 +15,7 @@ var in_request = false;
 var directive = {
 	'div.row' : {
 		'match<-celeb_matches' : {
-			'.matchlead' : function(arg) {
+			'+.matchlead' : function(arg) {
 				curr_celeb = arg.item.screen_name;
 				// return "you and " + arg.item.name.toUpperCase() + ' <span>98%
 				// MATCH</span>';
@@ -23,11 +23,11 @@ var directive = {
 				// + arg.item.name + '</span> tweet about';
 				
 				var str = '<span class="celeb-name">' + arg.item.name + '</span><span class="celeb-screen">&nbsp;@' + curr_celeb +"</span>";
-				
-				str+='<div class="result-share"><a href="https://twitter.com/intent/tweet?screen_name=' + curr_celeb + '&text='+ 'results' + ' " class="twitter-mention-button"' + 
-					'data-related="sbilstein">Tweet to @sbilstein</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></div>';
 				return str;
 			},
+			'.result-share a@href' : function(arg){
+				return 'https://twitter.com/intent/tweet?screen_name=' + curr_celeb + '&text=results';
+			}, 
 			'div.words+' : function(arg) {
 				var str = "";
 
