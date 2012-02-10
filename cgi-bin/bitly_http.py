@@ -13,33 +13,33 @@ try:
 except ImportError:
     PYCURL = False
 
-import urllib2
-import cStringIO
+import urllib.request, urllib.error, urllib.parse
+import io
 
-class DontRedirect(urllib2.HTTPRedirectHandler):
+class DontRedirect(urllib.request.HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl):
         if code in (301, 302, 303, 307):
-            raise urllib2.HTTPError(req.get_full_url(), code, msg, headers, fp)
+            raise urllib.error.HTTPError(req.get_full_url(), code, msg, headers, fp)
 
 def makeUrllib2Http(url, user_agent):
     dont_redirect = DontRedirect()
-    opener = urllib2.build_opener(dont_redirect)
+    opener = urllib.request.build_opener(dont_redirect)
     opener.addheaders = [('User-agent', user_agent + ' urllib')]
 
     try:
         response = opener.open(url)
         code = response.code
         data = response.read()
-    except urllib2.URLError, e:
+    except urllib.error.URLError as e:
         return 500, str(e)
-    except urllib2.HTTPError, e:
+    except urllib.error.HTTPError as e:
         code = e.code
         data = e.read()
     return code, data
 
 def makePycurlHttp(url, timeout, user_agent):
     try:
-        buffer = cStringIO.StringIO()
+        buffer = io.StringIO()
 
         curl = pycurl.Curl()
         curl.setopt(pycurl.TIMEOUT_MS, timeout)

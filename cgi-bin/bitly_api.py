@@ -7,7 +7,8 @@ except ImportError:
 import sys
 import time
 import types
-import urllib
+import urllib.request, urllib.parse, urllib.error
+from dammit import UnicodeDammit
 
 class Error(Exception):
     pass
@@ -211,10 +212,10 @@ class Connection(object):
             # note, this uses a utc timestamp not a local timestamp
             params['t'] = str(int(time.mktime(time.gmtime())))
         
-        keys = params.keys()
+        keys = list(params.keys())
         keys.sort()
         for k in keys:
-            if type(params[k]) in [types.ListType, types.TupleType]:
+            if type(params[k]) in [list, tuple]:
                 for v in params[k]:
                     hash_string += v
             else:
@@ -232,26 +233,36 @@ class Connection(object):
         
         # force to utf8 to fix ascii codec errors
         encoded_params = []
-        for k,v in params.items():
-            if type(v) in [types.ListType, types.TupleType]:
-                v = [e.encode('UTF8') for e in v]
+        for k,v in list(params.items()):
+            if type(v) in [list, tuple]:
+                v = [e.encode("utf-8") for e in v]
+                v = []
+                for e in v:
+                    if type(e).__name__ == 'bytes':
+                        e = e.decode("ascii").encode("utf-8")
+                    else:
+                        e = e.encode("utf-8")
+                    v.append(e)
             else:
-                v = v.encode('UTF8')
+                if type(v).__name__ == 'bytes':
+                    v.decode("ascii").encode("utf-8")
+                else:
+                    v = v.encode("utf-8")
             encoded_params.append((k,v))
         params = dict(encoded_params)
         
         request = "http://%(host)s/%(method)s?%(params)s" % {
             'host':host,
             'method':method,
-            'params':urllib.urlencode(params, doseq=1)
+            'params':urllib.parse.urlencode(params, doseq=1)
             }
         try:
             http_response = bitly_http.get(request, timeout, user_agent = self.user_agent)
             if http_response['http_status_code'] != 200:
                 raise BitlyError(500, http_response['result'])
-            if not http_response['result'].startswith('{'):
+            if not http_response['result'].startswith(b'{'):
                 raise BitlyError(500, http_response['result'])
-            data = json.loads(http_response['result'])
+            data = json.loads(http_response['result'].decode("utf-8"))
             if data.get('status_code', 500) != 200:
                 raise BitlyError(data.get('status_code', 500), data.get('status_txt', 'UNKNOWN_ERROR'))
             return data
