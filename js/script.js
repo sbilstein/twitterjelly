@@ -139,7 +139,7 @@ $(document).ready(function(){
 		var user_arg = getParameterByName('user');
 	}
 	// bind the go
-	$("#go").click(getMatches);
+	$("#go").click(getMatchesFromButton);
 })
 
 function getUserMatch(username){
@@ -318,7 +318,7 @@ $("body").ajaxError((function(e, jqxhr, settings, exception) {
 $('#usern').keyup(function(e) {
 	e.preventDefault();
 	if (e.which == 13) {
-		getMatches();
+		getMatchesFromButton();
 	}
 });
 
