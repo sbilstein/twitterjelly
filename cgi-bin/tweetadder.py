@@ -179,7 +179,7 @@ class TweetAdder:
         q = q[:len(q)-1] #remove last comma
         self.sql.q(q,vals)
 
-    def fixRackSpaceDB(self):
+    def fixTokens(self):
         q = "SELECT text, from_user, id FROM tweets"
 
         results = self.sql.q(q)
@@ -189,7 +189,7 @@ class TweetAdder:
             debuglog.msg("Adding tokens for tweet",result[2])
             try:
                 self.addTokens({'text':result[0], 'from_user':result[1]})
-                self.addTokenMapping({'text':result[0], 'from_user':result[1]})
+                self.addTokenMapping({'text':result[0], 'from_user':result[1], 'id':result[2]})
             except:
                 failures.append(result[2])
                 debuglog.msg("\tAdding tokens failed!")
@@ -228,4 +228,4 @@ class TweetAdder:
             print("%s%% of celebs updated."% str(100*count/float(len(celebs))))
 
 if __name__ == '__main__':
-    TweetAdder().addTweetIdsToTokenUserMapping()
+    TweetAdder().fixTokens()
