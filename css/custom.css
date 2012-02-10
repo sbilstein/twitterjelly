@@ -201,6 +201,14 @@ div.results_col {
 	/* 	padding-bottom: 7px; */
 }
 
+div.result-share {
+	display: inline-block;
+	width: 100%;
+	text-align: right;
+	margin-left: 75;
+	/* text-align: right; */
+}
+
 #twitter {
 	display: inline-block;
 	/* 	padding-bottom: 7px; */
@@ -294,8 +302,6 @@ div.row {
 	color: grey;
 }
 
-span.celeb-screen {
-/* 	display: block; */
+span.celeb-screen { /* 	display: block; */
 	font-size: 1.3em;
-
 }
