@@ -6,7 +6,8 @@ from unidecode import unidecode
 from tfidf import TfIdf
 import time
 import debuglog
-
+from util import *
+import timeit
 def replaceMonth(datetime_str):
     month_nums = [("Jan","01"),("Feb","02"),("Mar","03"),("Apr","04"),("May","05"),("Jun","06"),("Jul","07"),("Aug","08"),("Sep","09"),("Oct","10"),("Nov","11"),("Dec","12")]
     for month_num in month_nums:
@@ -14,11 +15,16 @@ def replaceMonth(datetime_str):
     return datetime_str
 
 class TweetAdder:
-    def __init__(self):
-        self.sql = SQLQuery()
-        self.tfidf_obj = TfIdf()
 
-        self.ids = [i[0] for i in self.sql.q("SELECT id FROM tweets")]
+    #@perftest
+    def __init__(self, sql_obj=None):
+        if not sql_obj:
+            self.sql = SQLQuery()
+        else:
+            self.sql = sql_obj
+
+        self.tfidf_obj = TfIdf()
+        self.ids = None
 
     def addTimelineTweet(self, timeline_tweet):
         """
@@ -64,6 +70,9 @@ class TweetAdder:
         Adds a tweet to tweet_table (celebrity tweet table by default).
         Tweet must be in the format provided by Search API.
         """
+
+        if not self.ids:
+            self.ids = [i[0] for i in self.sql.q("SELECT id FROM tweets")]
 
         debuglog.msg("Inserting tweet", tweet['id'])
         #debuglog.pprint_msg(tweet)

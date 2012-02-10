@@ -13,14 +13,21 @@ import debuglog
 from dbsql import SQLQuery
 from tweetadder import TweetAdder
 from dammit import UnicodeDammit
-
+from util import *
 
 class TweetFetcher:
-    def __init__(self):
-        self.rate_data = self.fetchRateData()
-        self.tweet_adder = TweetAdder()
-        self.sql = SQLQuery()
 
+    #@perftest
+    def __init__(self, sql_obj=None):
+        self.rate_data = self.fetchRateData()
+        if not sql_obj:
+            self.sql = SQLQuery()
+        else:
+            self.sql = sql_obj
+
+        self.tweet_adder = TweetAdder(sql_obj=self.sql)
+
+    ##@perftest
     def fetchRateData(self):
         return json.loads(urllib.request.urlopen("https://api.twitter.com/1/account/rate_limit_status.json").read().decode("ascii"))
 
@@ -147,7 +154,7 @@ class TweetFetcher:
             if self.checkRateLimit() > 0:
                 debuglog.msg("\t\tHave to wait.")
                 return {'status':'wait'}
-            url = "https://api.twitter.com/1/statuses/user_timeline.json?&screen_name=%s&count=200"%user
+            url = "https://api.twitter.com/1/statuses/user_timeline.json?&screen_name=%s&count=150"%user
             debuglog.msg(url)
             try:
                 response = urllib.request.urlopen(url)
