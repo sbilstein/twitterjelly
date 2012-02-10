@@ -128,8 +128,10 @@ $(document).ready(function(){
 	if (getParameterByName('permalink'))
 	{
 		// TODO check in_request and other shit
+		initMatchLoading();
 		$.getJSON('cgi-bin/GetStoredResult.py', {'id':getParameterByName('permalink')}, populateFromStoredResult);
 	} else if(getParameterByName('test')) {
+		initMatchLoading();
 		$.get('mock.json', {
 			'user' : 'nil'
 		}, populateMatchesFromFreshResult);
