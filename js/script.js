@@ -26,7 +26,8 @@ var directive = {
 				return str;
 			},
 			'.result-share a@href' : function(arg){
-				return 'https://twitter.com/intent/tweet?screen_name=' + curr_celeb + '&text=results';
+				
+				return 'https://www.twitter.com/intent/tweet?source=celebjelly&text=TWATTER+CELEB+MATCH+IS+@' + curr_celeb + '.+WE+BOTH+USE+DA+WORDS.+CHECK+MY+RESULTS!';
 			}, 
 			'div.words+' : function(arg) {
 				var str = "";

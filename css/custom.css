@@ -203,8 +203,23 @@ div.results_col {
 
 div.result-share {
 	float: right;
-	margin-top: 9px;
-	margin-right: 10px;
+	/* 	margin-top: 9px;
+	/*margin-right: 10px; */
+	margin-top: 10px;
+	margin-right: 5px;
+	font-size: 13px;
+	color: black; border : 1px solid silver;
+	font-weight: normal;
+	padding: 3px;
+	border: 1px solid silver;
+}
+
+div.result-share a:hover {
+	color: blue;
+}
+
+div.result-share a {
+	color: black;
 }
 
 #twitter {

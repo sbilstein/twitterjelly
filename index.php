@@ -87,9 +87,7 @@
 					<div class="row visuallyhidden" id="row-template">
 						<div class="matchlead">
 							<div class="result-share">
-								<a class="twitter-mention-button" data-related="celebjelly">Tweet
-									to @celebjelly</a>
-								<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+								<a target="_blank">TWEET RESULTS</a>
 							</div>
 						</div>
 						<div class="words">
