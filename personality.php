@@ -20,6 +20,7 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 <link rel="stylesheet" href="css/style.css?v=2">
+<link rel="stylesheet" href="css/custom.css">
 <link rel="stylesheet" href="css/persStyle.css?v=2">
 <script src="js/libs/modernizr-1.6.min.js"></script>
 
@@ -42,7 +43,6 @@
 	<div id="container" class="container_16">
 
 	<?php include("header.html"); ?>
-		tw
 
 		<div class="grid_2 spacer"></div>
 		<div id="main" class="grid_12 main centercol">
@@ -50,8 +50,7 @@
 			<div id="lead">
 				<h1 class="lead">
 					FIND YOUR TWITTER PERSONALITY
-				</h2>
-			
+				</h1>
 			</div>
 			<div class="query-box">
 
@@ -60,130 +59,78 @@
 					type="button" id="go" class="submit" value="GO" />
 
 			</div>
+			<div id="ajax-load" class="visuallyhidden">
+				<img src="img/loader.gif"></img>
+			</div>
+			<div class="error-pic visuallyhidden">
+				<img src="img/protected.jpg "></img>
+				<div>
+					<h3>TwitterJelly can't access your tweets if they are protected.
+						Try using another twitter account or unprotect your tweets if
+						you'd like.</h3>
+				</div>
+			</div>
 
 			<div class="results_col" id="results">
 
 				<div class="row">
 				
-					<div id="pers_section">
-						<div class="pers_id">Twitter Personality: <span id="pers_id">ECTM</span></div>
+					<div class = "visuallyhidden" id="pers_section">
+						<p id="test_ro"></p>
+						<div class="pers_id">Twitter Personality: <span id="pers_id"></span></div>
 						
-						<div class ="pers_dim">
+						<div id="E" class ="pers_dim visuallyhidden">
 						<img src="img/E.png" />
 							<h3>Usage Purpose</h3>							
 							<p>Entertainment: You tweet in your free time for fun. Twitter is probably the best thing to happen to you since the day you discovered reddit.</p>
 						</div>
-						<!--<div class ="pers_dim">
+						<div id="A" class ="pers_dim visuallyhidden">
 						<img src="img/A.png" />
 							<h3>Usage Purpose</h3>							
 							<p>Amusement: You tweet when you need a distraction. Try to enjoy dinner with your grandma instead of tweeting about the toothless geriatrics at the early bird special.</p>
 						</div>
-						<div class ="pers_dim">
+						<div id="S" class ="pers_dim visuallyhidden">
 						<img src="img/C.png" />
 							<h3>Information Use</h3>
 							<p>Sharer: You're an Info Sharer. For good or for bad, you post tons of links to share with the twitter world.</p>
-						</div>-->
-						<div class ="pers_dim">
+						</div>
+						<div id="C" class ="pers_dim visuallyhidden">
 						<img src="img/C.png" />
 							<h3>Information Use</h3>
 							<p>Consumer: You're an info consumer. You use Twitter to filter the internet down to the things that interest you most.</p>
 						</div>
-						<div class ="pers_dim">
+						<div id="T" class ="pers_dim visuallyhidden">
 						<img src="img/T.png" />
 							<h3>Social Circle Density</h3>
 							<p>Tight: You have a tight twitter network, and are not gung ho on interacting with randoms on the Internet.</p>
 						</div>
-						<!--<div class ="pers_dim">
-						<img src="img/W.png" />
+						<div id="W"class ="pers_dim visuallyhidden">
+						<img  src="img/W.png" />
 							<h3>Social Circle Density</h3>
 							<p>Wide: You interact with a wide and varied group of twitter users. Strangers are just friends you haven't met yet, right?</p>
 						</div>
-						<div class ="pers_dim">
+						<div id="J" class ="pers_dim visuallyhidden">
 						<img src="img/J.png" />
 							<h3>Twitter Role</h3>
 							<p>Joiner: If twitter were a party, you would be the host. You naturally connect people and topics.</p>
-						</div>-->
-						<div class ="pers_dim">
+						</div>
+						<div id="E" class ="pers_dim visuallyhidden">
 						<img src="img/M.png" />
 							<h3>Twitter Role</h3>
 							<p>Maverick: You are a lone wolf. You make twitter interesting. Do you have thousands of followers?</p>
 						</div>
 						
-						<div class="pers_id">Celebrities With the Same Personality</div>
+						<div class="pers_id">Celebrities With Same Personality</div>
+						<div id="pers_celebs"> </div>
 						
-						<div id="pers_celebs">
-							<div class="pers_celeb">
-							<a href="http://twitter.com/travisbarker" class="pers_celeb_name">travisbarker</a><br>
-							<a href="http://twitter.com/travisbarker">
-								<img src="http://a2.twimg.com/profile_images/1219518343/coverart_normal.jpeg" />
-							</a>
-							</div>
-							
-							<div class="pers_celeb">
-							<a href="http://twitter.com/travisbarker" class="pers_celeb_name">travisbarker</a><br>
-							<a href="http://twitter.com/travisbarker">
-								<img src="http://a2.twimg.com/profile_images/1219518343/coverart_normal.jpeg" />
-							</a>
-							</div>
-							
-							<div class="pers_celeb">
-							<a href="http://twitter.com/travisbarker" class="pers_celeb_name">travisbarker</a><br>
-							<a href="http://twitter.com/travisbarker">
-								<img src="http://a2.twimg.com/profile_images/1219518343/coverart_normal.jpeg" />
-							</a>
-							</div>
-							
-							<div class="pers_celeb">
-							<a href="http://twitter.com/travisbarker" class="pers_celeb_name">travisbarker</a><br>
-							<a href="http://twitter.com/travisbarker">
-								<img src="http://a2.twimg.com/profile_images/1219518343/coverart_normal.jpeg" />
-							</a>
-							</div>
-							
-							<div class="pers_celeb">
-							<a href="http://twitter.com/travisbarker" class="pers_celeb_name">travisbarker</a><br>
-							<a href="http://twitter.com/travisbarker">
-								<img src="http://a2.twimg.com/profile_images/1219518343/coverart_normal.jpeg" />
-							</a>
-							</div>
-							
-							<div class="pers_celeb">
-							<a href="http://twitter.com/travisbarker" class="pers_celeb_name">travisbarker</a><br>
-							<a href="http://twitter.com/travisbarker">
-								<img src="http://a2.twimg.com/profile_images/1219518343/coverart_normal.jpeg" />
-							</a>
-							</div>
-							
-							<div class="pers_celeb">
-							<a href="http://twitter.com/travisbarker" class="pers_celeb_name">travisbarker</a><br>
-							<a href="http://twitter.com/travisbarker">
-								<img src="http://a2.twimg.com/profile_images/1219518343/coverart_normal.jpeg" />
-							</a>
-							</div>
-							
-							<div class="pers_celeb">
-							<a href="http://twitter.com/travisbarker" class="pers_celeb_name">travisbarker</a><br>
-							<a href="http://twitter.com/travisbarker">
-								<img src="http://a2.twimg.com/profile_images/1219518343/coverart_normal.jpeg" />
-							</a>
-							</div>
-							
-							<div class="pers_celeb">
-							<a href="http://twitter.com/travisbarker" class="pers_celeb_name">travisbarker</a><br>
-							<a href="http://twitter.com/travisbarker">
-								<img src="http://a2.twimg.com/profile_images/1219518343/coverart_normal.jpeg" />
-							</a>
-							</div>
-							
-							
-						
-						
-						</div>
+
+
 					</div>
 					
 
 				</div>
 				
+				<!--
 				<div id="social">
 					<div id="facebook">
 						<div class="fb-like" data-href="http://www.twitterjelly.com"
@@ -198,6 +145,7 @@
 				</div>
 					<a href="#">How do we compute jellyrank?</a>
 				</div>
+				-->
 			</div>
 		</div>
 

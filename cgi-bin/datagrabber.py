@@ -180,8 +180,22 @@ class DataGrabber:
         celeb_stats = self.GetCelebTweetStats()
         celeb_matches = celebmatcher.getCelebMatches(user_data, celeb_stats)
 
+        celebs = celeb_matches[1]
         results['user']['personality'] = celeb_matches[0]
-        results['celeb_matches_pers'] = celeb_matches[1]
+	#get pic urls for celeb pers matches
+        if len(celebs) > 0:
+                q = "SELECT from_user,profile_image_url FROM tweets WHERE from_user='" + celebs[0] + "'"
+                for celeb in celebs:
+                        q = q + " OR from_user= '" + celeb +"'"
+        
+                q = q + " GROUP BY from_user"
+        
+                q_results = self.sql.q(q)
+
+                celeb_match_pers_array = []
+                for res in q_results:
+                    celeb_match_pers_array.append([res[0],res[1]])
+                results['celeb_matches_pers'] = celeb_match_pers_array
 
         # GET USER TFIDF
         user_tfidf = self.GetUserTFIDFs(user_data)

@@ -143,14 +143,14 @@ function getMatches() {
 	// console.log('arg: ' + arg);
 	$('#go').attr('disabled', true);
 	in_request = true;
-	/**
-	 * var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', { 'user' : arg },
-	 * ajax_ret);
-	 * 
-	 */
+	
+	  var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', { 'user' : arg },
+	  ajax_ret);
+
+	 /*
 	var jqxhr = $.get('mock.json', {
 		'user' : arg
-	}, ajax_ret);
+	}, ajax_ret);*/
 
 	console.log('txed request');
 	return false;
@@ -173,7 +173,30 @@ function ajax_ret(data) {
 		return;
 	}
 	console.log("Successful response");
-	$('#results').render(data, directive);
+	
+	//render tweet match page
+	//$('#results').render(data, directive);
+	
+	//render personality page
+	$('#pers_section').removeClass('visuallyhidden');
+	pers = data["user"]["personality"];
+	$('#pers_id').append(pers);
+	$('#'+pers[0]).removeClass('visuallyhidden');
+	$('#'+pers[1]).removeClass('visuallyhidden');
+	$('#'+pers[2]).removeClass('visuallyhidden');
+	$('#'+pers[3]).removeClass('visuallyhidden');
+	
+	pers_celebs = data["celeb_matches_pers"];
+	for (i=0; i < pers_celebs.length ; i = i+1){
+		celeb_name = pers_celebs[i][0]
+		pic_url = pers_celebs[i][1]
+		to_append = 	"<div class='pers_celeb'> <a href='http://twitter.com/"+celeb_name+"'class='pers_celeb_name'>"+celeb_name+"</a><br>"+
+						"<a href='http://twitter.com/"+celeb_name+"'><img src='"+pic_url+"'/></a>"+
+						"</div>";
+		$("#pers_celebs").append(to_append);
+		}
+	
+	
 	$("#ajax-load").addClass('visuallyhidden');
 	/**
 	 * Bind all the buttons to the correct event

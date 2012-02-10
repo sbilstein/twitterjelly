@@ -211,8 +211,8 @@ def getCelebMatches(userdata, celebstats):
 
     toreturn=[dim_1+dim_2+dim_3+dim_4]
     random.shuffle(matches)
-    if len(matches) > 4:
-        toreturn.append(matches[0:4])
+    if len(matches) > 24:
+        toreturn.append(matches[0:24])
     else:
         toreturn.append(matches[0:len(matches)])
         

@@ -1,7 +1,7 @@
 /* Personality Page Style */
 #pers_section{
 	font-size: 1.5em;
-	padding:15px;
+
 }
 
 #pers_section div.pers_dim{
@@ -20,18 +20,26 @@
 }
 
 #pers_section div.pers_id {
-	font-size: 1.9em;
+	font-size: 28px;
+	font-style: italic;
 	font-weight: 900;
 	letter-spacing: -0.08em;
+	color: black;
+	padding-left: 10px;
+	padding-top: 5px;
+	background-color: #FAFAFA;
 }
 
 #pers_section #pers_id {
-	font-style: italic;
+	font-style: normal;
 }
 
 #pers_section div.pers_celeb{
 	float: left;
 	margin: 18px;
+	width: 80px;
+	text-align:center;
+	font-size:13px;
 }
 
 #pers_section div.pers_celeb img{
@@ -39,11 +47,13 @@
 	margin-left: auto;
 	margin-right: auto;
 	display: block;
+	border: 1px solid black;
 }
 
 #pers_section div.pers_celeb a,#pers_section div.pers_celeb a:active,#pers_section div.pers_celeb a:visited {
 	color: #607890;
 	letter-spacing: -0.08em;
+	font-weight:500;
 }
 
 #pers_section div.pers_celeb a:hover {
