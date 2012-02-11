@@ -208,66 +208,7 @@ function populateMatches(data) {
 		renderPersonality(data);
 	}
 	
-			/**
-		 * Bind all the buttons to the correct event
-		 */
-		$('.word').click(
-				function(arg) {
-
-					if (deselectFilter(this)) {
-						$(this).parent().siblings('.show-more').children('input').val('SHOW MORE');
-						$(this).parent().siblings('show-more').removeClass('expanded');
-						$(this).parent().siblings('.show-more').children('input').attr('disabled', true);
-						$(this).parent().siblings('.show-more').children('input').removeClass('visuallyhidden');
-
-						return false;
-					}
-					// hide all of them
-					$(this).parent().siblings('.tweet_entry').addClass(
-							'visuallyhidden');
-
-					// show the top entries otherwise
-					$(this).parent().siblings('.word-' + this.value).each(
-							function(index) {
-									$(this).removeClass('visuallyhidden');
-							});
-
-
-					$(this).siblings().removeClass('pressed');
-					$(this).addClass('pressed');
-					// Instead of hiding, disable button and do showing all tweets
-					$(this).parent().siblings('.show-more').children('input').attr('disabled', true);
-					$(this).parent().siblings('.show-more').children('input').val('SHOWING ALL TWEETS FOR \'' +this.value.toUpperCase()+ '\'');
-				});
-
-		$('.show-more input').click(
-
-				function(arg) {
-
-					if ($(this).hasClass('expanded')) {
-						$(this).removeClass('expanded');
-						$(this).val('SHOW MORE');
-
-							// hide extra tweets for all
-							$(this).parent().siblings('.tweet_entry').each(
-									function(index) {
-										if (index > 2) {
-											$(this).addClass('visuallyhidden');
-										}
-									});
-
-					} else {
-						$(this).addClass('expanded');
-						$(this).val('SHOW LESS');
-
-							$(this).parent().siblings('.tweet_entry').removeClass(
-									'visuallyhidden');
-
-					}
-
-					return;
-				});
-		$('.row').removeClass('visuallyhidden');
+	
 	$("#ajax-load").addClass('visuallyhidden');
 }
 
