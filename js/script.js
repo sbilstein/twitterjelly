@@ -141,7 +141,7 @@ $(document).ready(function(){
 	{
 		var user_arg = getParameterByName('user');
 	}
-	// bind the go
+	//bind the go
 	$("#go").click(getMatchesFromButton);
 })
 
