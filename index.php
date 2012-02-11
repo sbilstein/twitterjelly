@@ -63,6 +63,7 @@
 			</div>
 			<div id="ajax-load" class="visuallyhidden">
 				<img src="img/loader.gif"></img>
+				<span id="load-text'></span>
 			</div>
 			<div class="error visuallyhidden">
 				<div class="protected visuallyhidden">
