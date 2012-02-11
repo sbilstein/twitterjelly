@@ -168,10 +168,10 @@ class TweetAdder:
             tokens = self.tfidf_obj.get_tokens(txt)
 
         count = 0
-        vals = {'user':tweet['from_user']}            
-        q = "INSERT INTO token_user_mapping (user, token) VALUES"
+        vals = {'user':tweet['from_user'], 'tweet_id':tweet['id']}
+        q = "INSERT INTO token_user_mapping (user, token, tweet_id) VALUES"
         for token in tokens:
-            q += "(%(user)s, %(token"+str(count)+")s),"
+            q += "(%(user)s, %(token"+str(count)+")s, %(tweet_id)s),"
             vals['token'+str(count)] = token[0]
             count+=1
 
@@ -179,7 +179,7 @@ class TweetAdder:
         q = q[:len(q)-1] #remove last comma
         self.sql.q(q,vals)
 
-    def fixRackSpaceDB(self):
+    def fixTokens(self):
         q = "SELECT text, from_user, id FROM tweets"
 
         results = self.sql.q(q)
@@ -189,7 +189,7 @@ class TweetAdder:
             debuglog.msg("Adding tokens for tweet",result[2])
             try:
                 self.addTokens({'text':result[0], 'from_user':result[1]})
-                self.addTokenMapping({'text':result[0], 'from_user':result[1]})
+                self.addTokenMapping({'text':result[0], 'from_user':result[1], 'id':result[2]})
             except:
                 failures.append(result[2])
                 debuglog.msg("\tAdding tokens failed!")
@@ -199,3 +199,33 @@ class TweetAdder:
         f.close()
 
         debuglog.msg(failures)
+
+    def addTweetIdsToTokenUserMapping(self):
+        q = "SELECT user FROM celebs WHERE user!='ladygaga'"
+        celebs = [result[0] for result in self.sql.q(q)]
+
+        count = 0
+        for celeb in celebs:
+            print("Adding tweet ids for", celeb)
+            q = "SELECT id, text FROM tweets WHERE from_user=%(celeb)s"
+            vals = {'celeb':celeb}
+            celeb_tweets = self.sql.q(q, vals)
+
+            num_tweets = str(len(celeb_tweets))
+            tweet_count = 0
+            for tweet in celeb_tweets:
+                tokens = self.tfidf_obj.get_tokens(tweet[1])
+                for token in tokens:
+                    vals = {'celeb':celeb, 'token':token[0], 'tweet_id':tweet[0]}
+                    q = "UPDATE token_user_mapping SET tweet_id=%(tweet_id)s WHERE user=%(celeb)s AND token=%(token)s AND tweet_id is null LIMIT 1;"
+
+                    self.sql.q(q, vals)
+
+                tweet_count += 1
+                print("\t%s/%s tweets."%(tweet_count, num_tweets))
+
+            count += 1
+            print("%s%% of celebs updated."% str(100*count/float(len(celebs))))
+
+if __name__ == '__main__':
+    TweetAdder().fixTokens()

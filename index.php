@@ -66,6 +66,7 @@
 			</div>
 			<div id="ajax-load" class="visuallyhidden">
 				<img src="img/loader.gif"></img>
+				<span id="load-text'></span>
 			</div>
 			<div class="error visuallyhidden">
 				<div class="protected visuallyhidden">
@@ -88,9 +89,11 @@
 			<div class="results_col" id="results">
 				<div id="row-container">
 					<div class="row visuallyhidden" id="row-template">
-						<div class="matchlead"></div>
-
-
+						<div class="matchlead">
+							<div class="result-share">
+								<a target="_blank">TWEET RESULTS</a>
+							</div>
+						</div>
 						<div class="words">
 							<span class="list-lead">you both tweet about</span>
 						</div>

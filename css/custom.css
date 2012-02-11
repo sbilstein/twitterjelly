@@ -201,6 +201,27 @@ div.results_col {
 	/* 	padding-bottom: 7px; */
 }
 
+div.result-share {
+	float: right;
+	/* 	margin-top: 9px;
+	/*margin-right: 10px; */
+	margin-top: 10px;
+	margin-right: 5px;
+	font-size: 13px;
+	color: black; border : 1px solid silver;
+	font-weight: normal;
+	padding: 3px;
+	border: 1px solid silver;
+}
+
+div.result-share a:hover {
+	color: blue;
+}
+
+div.result-share a {
+	color: black;
+}
+
 #twitter {
 	display: inline-block;
 	/* 	padding-bottom: 7px; */
@@ -294,8 +315,7 @@ div.row {
 	color: grey;
 }
 
-span.celeb-screen {
-/* 	display: block; */
+span.celeb-screen { /* 	display: block; */
 	font-size: 1.3em;
 
 }
@@ -327,4 +347,5 @@ span.celeb-screen {
 	-webkit-transform: rotate(90deg);  /* Saf3.1+, Chrome */              
 	filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=1);  /* IE6,IE7 */          
 	-ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1); /* IE8 */           
+
 }

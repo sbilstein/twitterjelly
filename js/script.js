@@ -15,14 +15,20 @@ var in_request = false;
 var directive = {
 	'div.row' : {
 		'match<-celeb_matches' : {
-			'.matchlead' : function(arg) {
+			'+.matchlead' : function(arg) {
 				curr_celeb = arg.item.screen_name;
 				// return "you and " + arg.item.name.toUpperCase() + ' <span>98%
 				// MATCH</span>';
 				// return 'you and <span class="celeb-name">'
 				// + arg.item.name + '</span> tweet about';
-				return '<span class="celeb-name">' + arg.item.name + '</span><span class="celeb-screen">&nbsp;@' + arg.item.screen_name +"</span>";
+				
+				var str = '<span class="celeb-name">' + arg.item.name + '</span><span class="celeb-screen">&nbsp;@' + curr_celeb +"</span>";
+				return str;
 			},
+			'.result-share a@href' : function(arg){
+				
+				return 'https://www.twitter.com/intent/tweet?source=celebjelly&text=TWATTER+CELEB+MATCH+IS+@' + curr_celeb + '.+WE+BOTH+USE+DA+WORDS.+CHECK+MY+RESULTS!';
+			}, 
 			'div.words+' : function(arg) {
 				var str = "";
 
@@ -123,47 +129,70 @@ $(document).ready(function(){
 	if (getParameterByName('permalink'))
 	{
 		// TODO check in_request and other shit
+		initMatchLoading();
 		$.getJSON('cgi-bin/GetStoredResult.py', {'id':getParameterByName('permalink')}, populateFromStoredResult);
 	} else if(getParameterByName('test')) {
+		initMatchLoading();
 		$.get('mock.json', {
 			'user' : 'nil'
 		}, populateMatchesFromFreshResult);
 		console.log('getting json baby');
+	} else if(getParameterByName('user'))
+	{
+		var user_arg = getParameterByName('user');
 	}
 	// bind the go
-	$("#go").click(getMatches);
+	$("#go").click(getMatchesFromButton);
 })
 
-function getMatches() {
+function getUserMatch(username){
+	var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', { 'user' : username },
+			populateMatchesFromFreshResult);
+	in_request = true;
+};
+/**
+ * Does a bunch of cleanup, and setting templates. Must be called before any
+ * rendering.
+ * 
+ * @returns whether or not the process should continue
+ */
+function initMatchLoading(){
 	// TODO validate arg first
-	// Erase previous data
 	// do not continue if in request
 	if (in_request == true) {
 		return false;
 	}
+	// store a template
 	if (template == null) {
 		template = $('#row-template').clone();
 	} else {
-		console.log('removing container');
+		// erase old container add the template so pure.js can render
 		$('#row-container').empty();
 		$('#row-container').html(template);
 	}
 	// TODO check for error flag
 	$('.error').addClass('visuallyhidden');
 	$("#ajax-load").removeClass('visuallyhidden');
+	return true;
+}
+
+function getMatchesFromButton() {
+	if(initMatchLoading() == false){
+		return false;
+	}
 	var arg = $('#usern').val();
 	// console.log('arg: ' + arg);
 	$('#go').attr('disabled', true);
-	in_request = true;
 
-	var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', { 'user' : arg },
-	populateMatchesFromFreshResult);
-
-
-	console.log('txed request');
+	getUserMatch(arg);
+	
 	return false;
 }
-
+/**
+ * Set up a result from that isn't accesed via a permalink
+ * 
+ * @param data
+ */
 function populateMatchesFromFreshResult(data) {
 // console.log('rxed response');
 // console.log(data);
@@ -180,11 +209,6 @@ function populateMatchesFromFreshResult(data) {
 
 	$("#permalink_container").removeClass('visuallyhidden');
 
-// .append(
-// $("<span>share your resultS&nbsp;</span>")
-// ).append(
-// $("<a>or copy this link</a>").attr("href",permalink_url)
-// )
 }
 
 function populateMatches(data) {
@@ -298,7 +322,7 @@ $("body").ajaxError((function(e, jqxhr, settings, exception) {
 $('#usern').keyup(function(e) {
 	e.preventDefault();
 	if (e.which == 13) {
-		getMatches();
+		getMatchesFromButton();
 	}
 });
 
