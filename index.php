@@ -45,6 +45,9 @@
 		<div class="grid_2 spacer"></div>
 		<div id="main" class="grid_12 main centercol">
 			<div class="vert-spacer"></div>
+			<div id="p_nav">
+				<a id="nav_link" href="personality.php" >Personality</a>
+			</div>
 			<div id="lead">
 				<h1 class="lead">FIND YOUR TOP CELEB TWITTER MATCHES</h1>
 
@@ -141,7 +144,7 @@
 	<script src="js/libs/pure_min.js"></script>
 	<!-- TODO: Concat and minify -->
 	<script src="js/plugins.js"></script>
-	<script src="js/script.js"></script>
+	<script src="js/scriptP.js"></script>
 
 
 	<!--[if lt IE 7 ]>

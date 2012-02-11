@@ -20,7 +20,6 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 <link rel="stylesheet" href="css/style.css?v=2">
-<link rel="stylesheet" href="css/custom.css">
 <link rel="stylesheet" href="css/persStyle.css?v=2">
 <script src="js/libs/modernizr-1.6.min.js"></script>
 
@@ -43,10 +42,17 @@
 	<div id="container" class="container_16">
 
 	<?php include("header.html"); ?>
+			
 
-		<div class="grid_2 spacer"></div>
+		<div class="grid_2 spacer"></div>					
 		<div id="main" class="grid_12 main centercol">
+
 			<div class="vert-spacer"></div>
+			<div id="p_nav">
+				<a id="nav_link" href="index.php" >MATCHES</a>
+				<!--<div id="nav_text">Matches</div>-->
+			</div>
+			
 			<div id="lead">
 				<h1 class="lead">
 					FIND YOUR TWITTER PERSONALITY
@@ -57,6 +63,10 @@
 				<input type="search" size="26"
 					placeholder="Enter your twitter username..." id="usern" /> <input
 					type="button" id="go" class="submit" value="GO" />
+					
+				<div id="permalink_container" class="visuallyhidden">
+					share your results with this link: <a id="permalink"></a>
+				</div>
 
 			</div>
 			<div id="ajax-load" class="visuallyhidden">
@@ -76,7 +86,6 @@
 				<div class="row">
 				
 					<div class = "visuallyhidden" id="pers_section">
-						<p id="test_ro"></p>
 						<div class="pers_id">Twitter Personality: <span id="pers_id"></span></div>
 						
 						<div id="E" class ="pers_dim visuallyhidden">
@@ -90,7 +99,7 @@
 							<p>Amusement: You tweet when you need a distraction. Try to enjoy dinner with your grandma instead of tweeting about the toothless geriatrics at the early bird special.</p>
 						</div>
 						<div id="S" class ="pers_dim visuallyhidden">
-						<img src="img/C.png" />
+						<img src="img/S.png" />
 							<h3>Information Use</h3>
 							<p>Sharer: You're an Info Sharer. For good or for bad, you post tons of links to share with the twitter world.</p>
 						</div>
@@ -114,7 +123,7 @@
 							<h3>Twitter Role</h3>
 							<p>Joiner: If twitter were a party, you would be the host. You naturally connect people and topics.</p>
 						</div>
-						<div id="E" class ="pers_dim visuallyhidden">
+						<div id="M" class ="pers_dim visuallyhidden">
 						<img src="img/M.png" />
 							<h3>Twitter Role</h3>
 							<p>Maverick: You are a lone wolf. You make twitter interesting. Do you have thousands of followers?</p>

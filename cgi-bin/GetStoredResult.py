@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!C:/Python32/python.exe
 __author__ = 'jonathan'
 
 import cgi
@@ -18,7 +18,9 @@ if "id" in form and len(form["id"].value) == 32 and not form["id"].value.count('
 
     results = SQLQuery().q(q, vals)
     if results and len(results):
-        print(results[0][0])
+        results = results[0][0]
+        results= results[0]+ "\"permalink_id\": \"" + form["id"].value +"\"," +results[1:len(results)]
+        print(results)
     else:
         print(json.dumps({'status':'error'}))
 else:
