@@ -193,111 +193,118 @@ function populateMatchesFromFreshResult(data) {
 
 function populateMatches(data) {
 	$('#go').attr('disabled', false);
-		permalink_url = window.location.origin+window.location.pathname+"?permalink="+data["permalink_id"];
 
 	if($('.matchlead').length){
 		//add nav link
 		nav_permalink_url = "personality.php?permalink=" +data["permalink_id"];
 		$("#nav_link").attr("href",nav_permalink_url);
+		
+		//render index page
 		$('#results').render(data, directive);
+		
 	}
 	else{
 		//render personality page
-	
-		//delete old values
-		$('#pers_id').empty();
-		$('.pers_dim').addClass('visuallyhidden');
-		$("#pers_celebs").empty();
-		
-		//add nav link
-		nav_permalink_url = "index.php?permalink=" +data["permalink_id"];
-		$("#nav_link").attr("href",nav_permalink_url);
-		
-		//populate new values
-		pers = data["user"]["personality"];
-		$('#pers_id').append(pers);
-		$('#'+pers[0]).removeClass('visuallyhidden');
-		$('#'+pers[1]).removeClass('visuallyhidden');
-		$('#'+pers[2]).removeClass('visuallyhidden');
-		$('#'+pers[3]).removeClass('visuallyhidden');
-		
-		pers_celebs = data["celeb_matches_pers"];
-		for (i=0; i < pers_celebs.length ; i = i+1){
-			celeb_name = pers_celebs[i][0]
-			pic_url = pers_celebs[i][1]
-			to_append = 	"<div class='pers_celeb'> <a href='http://twitter.com/"+celeb_name+"'class='pers_celeb_name'>"+celeb_name+"</a><br>"+
-							"<a href='http://twitter.com/"+celeb_name+"'><img src='"+pic_url+"'/></a>"+
-							"</div>";
-			$("#pers_celebs").append(to_append);
-			}
-		
-		//unhide pers section
-		$('#pers_section').removeClass('visuallyhidden');
+		renderPersonality(data);
 	}
 	
-	
-	$("#ajax-load").addClass('visuallyhidden');
-	/**
-	 * Bind all the buttons to the correct event
-	 */
-	$('.word').click(
-			function(arg) {
+			/**
+		 * Bind all the buttons to the correct event
+		 */
+		$('.word').click(
+				function(arg) {
 
-				if (deselectFilter(this)) {
-					$(this).parent().siblings('.show-more').children('input').val('SHOW MORE');
-					$(this).parent().siblings('show-more').removeClass('expanded');
+					if (deselectFilter(this)) {
+						$(this).parent().siblings('.show-more').children('input').val('SHOW MORE');
+						$(this).parent().siblings('show-more').removeClass('expanded');
+						$(this).parent().siblings('.show-more').children('input').attr('disabled', true);
+						$(this).parent().siblings('.show-more').children('input').removeClass('visuallyhidden');
+
+						return false;
+					}
+					// hide all of them
+					$(this).parent().siblings('.tweet_entry').addClass(
+							'visuallyhidden');
+
+					// show the top entries otherwise
+					$(this).parent().siblings('.word-' + this.value).each(
+							function(index) {
+									$(this).removeClass('visuallyhidden');
+							});
+
+
+					$(this).siblings().removeClass('pressed');
+					$(this).addClass('pressed');
+					// Instead of hiding, disable button and do showing all tweets
 					$(this).parent().siblings('.show-more').children('input').attr('disabled', true);
-					$(this).parent().siblings('.show-more').children('input').removeClass('visuallyhidden');
+					$(this).parent().siblings('.show-more').children('input').val('SHOWING ALL TWEETS FOR \'' +this.value.toUpperCase()+ '\'');
+				});
 
-					return false;
-				}
-				// hide all of them
-				$(this).parent().siblings('.tweet_entry').addClass(
-						'visuallyhidden');
+		$('.show-more input').click(
 
-				// show the top entries otherwise
-				$(this).parent().siblings('.word-' + this.value).each(
-						function(index) {
-								$(this).removeClass('visuallyhidden');
-						});
+				function(arg) {
 
+					if ($(this).hasClass('expanded')) {
+						$(this).removeClass('expanded');
+						$(this).val('SHOW MORE');
 
-				$(this).siblings().removeClass('pressed');
-				$(this).addClass('pressed');
-				// Instead of hiding, disable button and do showing all tweets
-				$(this).parent().siblings('.show-more').children('input').attr('disabled', true);
-				$(this).parent().siblings('.show-more').children('input').val('SHOWING ALL TWEETS FOR \'' +this.value.toUpperCase()+ '\'');
-			});
+							// hide extra tweets for all
+							$(this).parent().siblings('.tweet_entry').each(
+									function(index) {
+										if (index > 2) {
+											$(this).addClass('visuallyhidden');
+										}
+									});
 
-	$('.show-more input').click(
+					} else {
+						$(this).addClass('expanded');
+						$(this).val('SHOW LESS');
 
-			function(arg) {
+							$(this).parent().siblings('.tweet_entry').removeClass(
+									'visuallyhidden');
 
-				if ($(this).hasClass('expanded')) {
-					$(this).removeClass('expanded');
-					$(this).val('SHOW MORE');
+					}
 
-						// hide extra tweets for all
-						$(this).parent().siblings('.tweet_entry').each(
-								function(index) {
-									if (index > 2) {
-										$(this).addClass('visuallyhidden');
-									}
-								});
-
-				} else {
-					$(this).addClass('expanded');
-					$(this).val('SHOW LESS');
-
-						$(this).parent().siblings('.tweet_entry').removeClass(
-								'visuallyhidden');
-
-				}
-
-				return;
-			});
-	$('.row').removeClass('visuallyhidden');
+					return;
+				});
+		$('.row').removeClass('visuallyhidden');
+	$("#ajax-load").addClass('visuallyhidden');
 }
+
+function renderPersonality(data){
+	//delete old values
+	$('#pers_id').empty();
+	$('.pers_dim').addClass('visuallyhidden');
+	$("#pers_celebs").empty();
+	
+	//add nav link
+	nav_permalink_url = "index.php?permalink=" +data["permalink_id"];
+	$("#nav_link").attr("href",nav_permalink_url);
+	
+	//populate new values
+	pers = data["user"]["personality"];
+	$('#pers_id').append(pers);
+	$('#'+pers[0]).removeClass('visuallyhidden');
+	$('#'+pers[1]).removeClass('visuallyhidden');
+	$('#'+pers[2]).removeClass('visuallyhidden');
+	$('#'+pers[3]).removeClass('visuallyhidden');
+	
+	pers_celebs = data["celeb_matches_pers"];
+	for (i=0; i < pers_celebs.length ; i = i+1){
+		celeb_name = pers_celebs[i][0]
+		pic_url = pers_celebs[i][1]
+		to_append = 	"<div class='pers_celeb'> <a href='http://twitter.com/"+celeb_name+"'class='pers_celeb_name'>"+celeb_name+"</a><br>"+
+						"<a href='http://twitter.com/"+celeb_name+"'><img src='"+pic_url+"'/></a>"+
+						"</div>";
+		$("#pers_celebs").append(to_append);
+		}
+	
+	//unhide pers section
+	$('#pers_section').removeClass('visuallyhidden');
+
+
+}
+
 
 function populateFromStoredResult(data) {
 	if (!validateData(data)) {
@@ -335,6 +342,7 @@ function validateData(data) {
 function ret_error(log) {
 	console.log(log);
 }
+
 $("body").ajaxError((function(e, jqxhr, settings, exception) {
 
 	dispError('ajax');
