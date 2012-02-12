@@ -79,7 +79,7 @@
 					<p class="errormsg">You don't have any tweets!</p>
 					<img src="img/no_tweets.png" />
 				</div>
-				<div class="null visuallyhidden">
+				<div class="misc visuallyhidden">
 					<p class="errormsg">Whoa, something went wrong and we couldn't get
 						your matches! We're sorry :(</p>
 					<img src="img/sadguy.png" />

@@ -174,6 +174,7 @@ function initMatchLoading() {
         $('#row-container').html(template);
     }
     $('.error').addClass('visuallyhidden');
+    $('.error').children().addClass('visuallyhidden');
     $("#ajax-load").removeClass('visuallyhidden');
     return true;
 }
@@ -463,8 +464,9 @@ function dispError(type) {
         $('.no_tweets').removeClass('visuallyhidden');
     }
     else {
-        $('.null').removeClass('visuallyhidden');
+        $('.misc').removeClass('visuallyhidden');
     }
+    $('.error').removeClass('visuallyhidden');
 }
 /**
  *
