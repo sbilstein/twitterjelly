@@ -122,7 +122,7 @@ div.matchlead {
 }
 
 .list-lead {
-	font-size: 28px;
+	font-size: 22px;
 	color: black;
 	letter-spacing: 0em;
 	margin-left: 50px;
@@ -131,12 +131,12 @@ div.matchlead {
 }
 
 span.celeb-name {
-	font-size: 28px;
+	font-size: 22px;
 	/* background-color: #ffe38f; */
 }
 
 div.words {
-	font-size: 24px;
+	font-size: 22px;
 	margin-bottom: 5px;
 	/* 	font-weight: 900; */
 	/* //width: 100%; */
@@ -147,7 +147,7 @@ div.words {
 
 .word { /* 	background-color: silver; */
 	background-color: #FFCF90;
-	padding: 2px 2px 2px 2px;
+	padding: 2px 5px 2px 5px;
 	margin-left: 10px;
 }
 
@@ -206,18 +206,12 @@ div.results_col {
 
 div.result-share {
 	float: right;
-	/* 	margin-top: 9px;*/
-	/*margin-right: 10px; */
-	/*margin-top: 10px;*/
-	/*margin-right: 5px;*/
-	font-size: 13px;
-	color: black;
-	/*border: 1px solid silver;*/
-	font-weight: normal;
-	padding: 3px;
-	/*border: 1px solid silver;*/
+    font-size: 14px;
+    color: black;
+    padding: 3px;
     height: 39px;
-    margin-top: 10px;
+
+    /*margin-top: 10px;*/
 }
 
 div.result-share a:hover {
@@ -225,6 +219,7 @@ div.result-share a:hover {
 }
 
 div.result-share a {
+    text-decoration: none;
 	color: black;
 }
 
@@ -239,6 +234,10 @@ div.result-share a {
 .celeb-name {
 	font-style: italic;
 	text-transform: uppercase;
+}
+
+.celeb-screen { /* 	display: block; */
+    font-size: 13px;
 }
 
 .matched-word {
@@ -322,9 +321,6 @@ div.row {
 	color: grey;
 }
 
-span.celeb-screen { /* 	display: block; */
-	font-size: 12px;
-}
 
 /*nav link style */
 #p_nav {
