@@ -1,4 +1,4 @@
-#!c:/Python32/python.exe
+#!/usr/bin/env python
 __author__ = 'jonathan'
 
 import cgi
