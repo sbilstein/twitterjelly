@@ -138,6 +138,10 @@ $(document).ready(function () {
         initMatchLoading();
         var user_arg = getParameterByName('user');
         getUserMatch(user_arg);
+    } else if(getParameterByName('error'))
+    {
+
+        dispError(getParameterByName('error'));
     }
     //bind the go
     $("#go").click(getMatchesFromButton);
@@ -174,7 +178,7 @@ function initMatchLoading() {
         $('#row-container').html(template);
     }
     $('.error').addClass('visuallyhidden');
-    $('.error').children().addClass('visuallyhidden');
+    $('.error').empty();
     $("#ajax-load").removeClass('visuallyhidden');
     return true;
 }
@@ -234,7 +238,7 @@ function populateMatches(data) {
 }
 
 function shortenURLCall(url) {
-       console.log('shorten url call');
+    console.log('shorten url call');
     var jqxhr = $.get('cgi-bin/GetBitlyLink.py', { 'url':url },
         shortenURLResponse);
 
@@ -327,9 +331,9 @@ function renderMatches(data) {
  * otherwise leave the word untouched.
  */
 function hash2dash(str){
-        if(str.charAt(0) == '#'){
-            return '-' + str.slice(1);
-        }
+    if(str.charAt(0) == '#'){
+        return '-' + str.slice(1);
+    }
     return str;
 }
 
@@ -456,17 +460,44 @@ function deselectFilter(selector) {
 }
 function dispError(type) {
     // TODO create images for each error type and switch on error type and inject data
+    /**
+     <div class="protected visuallyhidden">
+     <img src="img/protected.jpg "></img>
+     <p class="errormsg">TwitterJelly can't access your tweets if they
+     are protected. Try using another twitter account or unprotect your
+     tweets if you'd like.</p>
+     </div>
+
+     <div class="misc visuallyhidden">
+     <p class="errormsg">Whoa, something went wrong and we couldn't get
+     your matches! We're sorry :(</p>
+     <img src="img/misc_error.png" />
+     </div>
+     **/
+    var error_string;
     $("#ajax-load").addClass('visuallyhidden');
     if (type == "protected") {
-        $('.protected').removeClass('visuallyhidden');
+        error_string = '<div><img src="img/protected.jpg"></img><p>TwitterJelly can\'t access your tweets if they' +
+            'are protected. Try using another twitter account or unprotect your' +
+            'tweets if you\'d like.</p></div>';
     }
     else if (type == "no_tweets") {
-        $('.no_tweets').removeClass('visuallyhidden');
+        error_string = '<div class="no_tweets">'+
+            '<p class="errormsg">You don\'t have any tweets!</p>' +
+            '<img src="img/no_tweets.png" height="75%" width="75%"/>' +
+            '</div>';
     }
     else {
-        $('.misc').removeClass('visuallyhidden');
+        error_string = '<div class="misc">' +
+            '<p class="errormsg">Whoa, something went wrong and we couldn\'t get' +
+            'your matches! We\'re sorry :(</p>' +
+            '<img src="img/misc_error.png" />' +
+            '</div>';
     }
+
+    $('.error').html(error_string);
     $('.error').removeClass('visuallyhidden');
+    console.log('error should be visible');
 }
 /**
  *

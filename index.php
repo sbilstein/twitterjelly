@@ -66,26 +66,9 @@
 			</div>
 			<div id="ajax-load" class="visuallyhidden">
 				<img src="img/loader.gif"></img>
-				<span id="load-text'></span>
+				<span id="load-text"></span>
 			</div>
-			<div class="error visuallyhidden">
-				<div class="protected visuallyhidden">
-					<img src="img/protected.jpg "></img>
-					<p class="errormsg">TwitterJelly can't access your tweets if they
-						are protected. Try using another twitter account or unprotect your
-						tweets if you'd like.</p>
-				</div>
-				<div class="no_tweets visuallyhidden">
-					<p class="errormsg">You don't have any tweets!</p>
-					<img src="img/no_tweets.png" />
-				</div>
-				<div class="misc visuallyhidden">
-					<p class="errormsg">Whoa, something went wrong and we couldn't get
-						your matches! We're sorry :(</p>
-					<img src="img/misc_error.png" />
-				</div>
-			</div>
-
+			<div class="error"></div>
 			<div class="results_col" id="results">
 				<div id="row-container">
 					<div class="row visuallyhidden" id="row-template">
