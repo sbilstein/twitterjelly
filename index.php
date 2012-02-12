@@ -82,7 +82,7 @@
 				<div class="misc visuallyhidden">
 					<p class="errormsg">Whoa, something went wrong and we couldn't get
 						your matches! We're sorry :(</p>
-					<img src="img/sadguy.png" />
+					<img src="img/misc_error.png" />
 				</div>
 			</div>
 
