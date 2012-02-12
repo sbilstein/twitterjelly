@@ -434,3 +434,4 @@ function getParameterByName(name)
   else
     return decodeURIComponent(results[1].replace(/\+/g, " "));
 }
+

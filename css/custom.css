@@ -327,7 +327,7 @@ span.celeb-screen { /* 	display: block; */
 #p_nav {
 	height: 110px;
 	width: 730px;
-	background-color: #FFCF73;
+	background-color: #FFCF90;
 	position: absolute;
 	z-index: -5;
 	border-bottom-right-radius: 5px 5px;
@@ -336,21 +336,36 @@ span.celeb-screen { /* 	display: block; */
 }
 
 #nav_link {
+	letter-spacing: -0.05em;
+	font-weight:600;
 	color: #000000;
 	font-style: normal;
 	text-decoration: none;
 	float: right;
 	position: relative;
 	display: block;
-	height: 125px;
-	width: 103px;
-	padding-left: 40px;
+	height: 115px;
+	width: 120px;
+	padding-left: 20px;
 	-moz-transform: rotate(90deg); /* FF3.5+ */
 	-o-transform: rotate(90deg); /* Opera 10.5 */
 	-webkit-transform: rotate(90deg); /* Saf3.1+, Chrome */
-	filter: progid :   DXImageTransform.Microsoft.BasicImage (   rotation =
-		  1 );
-	/* IE6,IE7 */
-	-ms-filter: " progid :   DXImageTransform.Microsoft.BasicImage (  
-		rotation =   1); /* IE8 */
+	filter: progid :   DXImageTransform.Microsoft.BasicImage (   rotation = 1 ); /* IE6,IE7 */
+	-ms-filter: " progid :   DXImageTransform.Microsoft.BasicImage ( rotation =   1); /* IE8 */
+}
+
+/*progress bar style */
+#progress_table{
+	width: 242px;
+	margin-top:10px;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+	
+#showbar{
+	font-size:12pt;
+	padding:2px;
+	border:solid black 1px;
+	visibility:hidden"
 }
