@@ -70,7 +70,27 @@
 
 			</div>
 			<div id="ajax-load" class="visuallyhidden">
-				<img src="img/loader.gif"></img>
+				<h1 id="current_progress_step">Hold tight.. we gotta get your tweets</h1>
+					<table id="progress_table" align="center"><tr><td>
+					<div id="showbar">
+						<span id="progress1">&nbsp; &nbsp;</span>
+						<span id="progress2">&nbsp; &nbsp;</span>
+						<span id="progress3">&nbsp; &nbsp;</span>
+						<span id="progress4">&nbsp; &nbsp;</span>
+						<span id="progress5">&nbsp; &nbsp;</span>
+						<span id="progress6">&nbsp; &nbsp;</span>
+						<span id="progress7">&nbsp; &nbsp;</span>
+						<span id="progress8">&nbsp; &nbsp;</span>
+						<span id="progress9">&nbsp; &nbsp;</span>
+						<span id="progress10">&nbsp; &nbsp;</span>
+						<span id="progress11">&nbsp; &nbsp;</span>
+						<span id="progress12">&nbsp; &nbsp;</span>
+						<span id="progress13">&nbsp; &nbsp;</span>
+						<span id="progress14">&nbsp; &nbsp;</span>
+						<span id="progress15">&nbsp; &nbsp;</span>
+					</div>
+					</td></tr>
+					</table>
 			</div>
 			<div class="error-pic visuallyhidden">
 				<img src="img/protected.jpg "></img>
@@ -177,7 +197,8 @@
 	<script src="js/libs/pure_min.js"></script>
 	<!-- TODO: Concat and minify -->
 	<script src="js/plugins.js"></script>
-	<script src="js/script.js"></script>
+	<script src="js/scriptP.js"></script>
+	<script src="js/animation.js"></script>
 
 
 	<!--[if lt IE 7 ]>

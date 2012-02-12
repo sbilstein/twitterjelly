@@ -46,7 +46,7 @@
 		<div id="main" class="grid_12 main centercol">
 			<div class="vert-spacer"></div>
 			<div id="p_nav">
-				<a id="nav_link" href="personality.php" >Personality</a>
+				<a id="nav_link" href="personality.php">PERSONALITY</a>
 			</div>
 			<div id="lead">
 				<h1 class="lead">FIND YOUR TOP CELEB TWITTER MATCHES</h1>
@@ -65,8 +65,27 @@
 				</div>
 			</div>
 			<div id="ajax-load" class="visuallyhidden">
-				<img src="img/loader.gif"></img>
-				<span id="load-text"></span>
+					<h1 id="current_progress_step">Hold tight.. we gotta get your tweets</h1>
+					<table id="progress_table" align="center"><tr><td>
+					<div id="showbar">
+						<span id="progress1">&nbsp; &nbsp;</span>
+						<span id="progress2">&nbsp; &nbsp;</span>
+						<span id="progress3">&nbsp; &nbsp;</span>
+						<span id="progress4">&nbsp; &nbsp;</span>
+						<span id="progress5">&nbsp; &nbsp;</span>
+						<span id="progress6">&nbsp; &nbsp;</span>
+						<span id="progress7">&nbsp; &nbsp;</span>
+						<span id="progress8">&nbsp; &nbsp;</span>
+						<span id="progress9">&nbsp; &nbsp;</span>
+						<span id="progress10">&nbsp; &nbsp;</span>
+						<span id="progress11">&nbsp; &nbsp;</span>
+						<span id="progress12">&nbsp; &nbsp;</span>
+						<span id="progress13">&nbsp; &nbsp;</span>
+						<span id="progress14">&nbsp; &nbsp;</span>
+						<span id="progress15">&nbsp; &nbsp;</span>
+					</div>
+					</td></tr>
+					</table>
 			</div>
 			<div class="error"></div>
 			<div class="results_col" id="results">
@@ -131,7 +150,8 @@
 	<script src="js/libs/pure_min.js"></script>
 	<!-- TODO: Concat and minify -->
 	<script src="js/plugins.js"></script>
-	<script src="js/script.js"> </script>
+	<script src="js/scriptP.js"> </script>
+	<script src="js/animation.js"></script>
 
 
 	<!--[if lt IE 7 ]>
