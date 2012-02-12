@@ -478,7 +478,7 @@ function dispError(type) {
     $("#ajax-load").addClass('visuallyhidden');
     if (type == "protected") {
         error_string = '<div><img src="img/protected.jpg"></img><p>TwitterJelly can\'t access your tweets if they' +
-            'are protected. Try using another twitter account or unprotect your' +
+            ' are protected. Try using another twitter account or unprotect your' +
             'tweets if you\'d like.</p></div>';
     }
     else if (type == "no_tweets") {
