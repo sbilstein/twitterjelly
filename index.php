@@ -87,29 +87,13 @@
 					</td></tr>
 					</table>
 			</div>
-			<div class="error visuallyhidden">
-				<div class="protected visuallyhidden">
-					<img src="img/protected.jpg "></img>
-					<p class="errormsg">TwitterJelly can't access your tweets if they
-						are protected. Try using another twitter account or unprotect your
-						tweets if you'd like.</p>
-				</div>
-				<div class="no_tweets visuallyhidden">
-					<p class="errormsg">You don't have any tweets!</p>
-					<img src="img/no_tweets.png" />
-				</div>
-				<div class="null visuallyhidden">
-					<p class="errormsg">Whoa, something went wrong and we couldn't get
-						your matches! We're sorry :(</p>
-					<img src="img/sadguy.png" />
-				</div>
-			</div>
-
+			<div class="error"></div>
 			<div class="results_col" id="results">
 				<div id="row-container">
 					<div class="row visuallyhidden" id="row-template">
 						<div class="matchlead">
 							<div class="result-share">
+							<img src="img/twitter-icon.gif"></img>
 								<a target="_blank">TWEET RESULTS</a>
 							</div>
 						</div>

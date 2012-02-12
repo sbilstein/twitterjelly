@@ -172,7 +172,7 @@ div.tweet {
 
 div.tweet_entry {
 	text-align: left;
-	font-size: 11px;
+	font-size: 12px;
 	display: table-row;
 }
 
@@ -206,16 +206,18 @@ div.results_col {
 
 div.result-share {
 	float: right;
-	/* 	margin-top: 9px;
+	/* 	margin-top: 9px;*/
 	/*margin-right: 10px; */
-	margin-top: 10px;
-	margin-right: 5px;
+	/*margin-top: 10px;*/
+	/*margin-right: 5px;*/
 	font-size: 13px;
 	color: black;
-	border: 1px solid silver;
+	/*border: 1px solid silver;*/
 	font-weight: normal;
 	padding: 3px;
-	border: 1px solid silver;
+	/*border: 1px solid silver;*/
+    height: 39px;
+    margin-top: 10px;
 }
 
 div.result-share a:hover {
@@ -256,7 +258,8 @@ div.row {
 }
 
 .error {
-	padding: 10px;
+	/*padding: 10px;*/
+    margin-top: 10px;
 	text-align: center;
 }
 
@@ -320,7 +323,7 @@ div.row {
 }
 
 span.celeb-screen { /* 	display: block; */
-	font-size: 1.3em;
+	font-size: 12px;
 }
 
 /*nav link style */
