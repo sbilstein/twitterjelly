@@ -200,13 +200,6 @@ function populateMatchesFromFreshResult(data) {
     in_request = false;
     if (!validateData(data))
         return;
-
-    permalink_url = window.location.origin + window.location.pathname + "?permalink=" + data["permalink_id"];
-
-    console.log(permalink_url)
-    //TODO convert the permalink to a bit.ly link
-    shortenURLCall(permalink_url);
-
     populateMatches(data);
 
 
@@ -226,7 +219,12 @@ function populateMatches(data) {
         //render personality page
         renderPersonality(data);
     }
+    permalink_url = window.location.origin + window.location.pathname + "?permalink=" + data["permalink_id"];
 
+    console.log(permalink_url)
+    //TODO convert the permalink to a bit.ly link
+    shortenURLCall(permalink_url);
+    
     $("#ajax-load").addClass('visuallyhidden');
 }
 
