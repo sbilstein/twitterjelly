@@ -416,7 +416,7 @@ function ret_error(log) {
     console.log(log);
 }
 $("body").ajaxError((function (e, jqxhr, settings, exception) {
-    if(match_success = false){
+    if(match_success == false){
         dispError('ajax');
     }
     console.log(jqxhr);
