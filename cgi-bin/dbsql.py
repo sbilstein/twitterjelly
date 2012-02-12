@@ -25,10 +25,10 @@ class SQLQuery:
             self.conn.commit()
             return self.cur.fetchall()
         except:
-            print("Query failed!")
-            print("Query:",query)
+            debuglog.msg("Query failed!")
+            debuglog.msg("Query:",query)
             if values is not None:
-                print("Vals:")
+                debuglog.msg("Vals:")
                 debuglog.pprint_msg(values)
             #traceback.print_exc(file=sys.stdout)
             debuglog.msg(traceback.format_exc())
