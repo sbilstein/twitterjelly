@@ -490,7 +490,7 @@ function dispError(type) {
     else {
         error_string = '<div class="misc">' +
             '<p class="errormsg">Whoa, something went wrong and we couldn\'t get' +
-            'your matches! We\'re sorry :(</p>' +
+            ' your matches! We\'re sorry :(</p>' +
             '<img src="img/misc_error.png" />' +
             '</div>';
     }
