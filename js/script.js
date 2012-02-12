@@ -414,6 +414,7 @@ $("body").ajaxError((function (e, jqxhr, settings, exception) {
 
     dispError('ajax');
     console.log("AJAX ERROR");
+    console.log(exception);
 }));
 
 $('#usern').keyup(function (e) {
