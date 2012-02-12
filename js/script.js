@@ -135,6 +135,7 @@ $(document).ready(function () {
         }, populateMatchesFromFreshResult);
         console.log('getting json baby');
     } else if (getParameterByName('user')) {
+        initMatchLoading();
         var user_arg = getParameterByName('user');
         getUserMatch(user_arg);
     }
@@ -224,7 +225,7 @@ function populateMatches(data) {
     console.log(permalink_url)
     //TODO convert the permalink to a bit.ly link
     shortenURLCall(permalink_url);
-    
+
     $("#ajax-load").addClass('visuallyhidden');
 }
 
