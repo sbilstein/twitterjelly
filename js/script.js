@@ -233,7 +233,7 @@ function populateMatches(data) {
 function shortenURLCall(url) {
     //TODO ajax call return shorted version
        console.log('shorten url call');
-    var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', { 'url':url },
+    var jqxhr = $.get('cgi-bin/GetBitlyLink.py', { 'url':url },
         shortenURLResponse);
 
 }
@@ -241,6 +241,8 @@ function shortenURLCall(url) {
 function shortenURLResponse(data) {
     console.log('url shortened response rxed');
 //    $("#nav_link").attr("href",data['url']);
+
+    console.log(data);
     var url = data['url'];
     $("#permalink").attr("href", url);
     $("#permalink").html(url);
