@@ -91,6 +91,7 @@
 					<div class="row visuallyhidden" id="row-template">
 						<div class="matchlead">
 							<div class="result-share">
+							<img src="img/twitter-icon.gif"></img>
 								<a target="_blank">TWEET RESULTS</a>
 							</div>
 						</div>

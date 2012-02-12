@@ -71,7 +71,7 @@ var directive = {
                         return new_str;
                     },
                     '@class+':function (arg) {
-                        var word_class = ' word-' + arg.item.word;
+                        var word_class = ' word-' + hash2dash(arg.item.word);
                         if (arg.pos > 2) {
                             return ' visuallyhidden ' + word_class;
                         }
@@ -213,8 +213,11 @@ function populateMatchesFromFreshResult(data) {
 function populateMatches(data) {
     $('#go').attr('disabled', false);
     //check for a index.php specific element.
+
     if ($('.matchlead').length) {
         renderMatches(data);
+        nav_permalink_url = "personality.php?permalink=" +data["permalink_id"];
+        $("#nav_link").attr("href",nav_permalink_url);
     }
     else {
         //render personality page
@@ -230,7 +233,6 @@ function populateMatches(data) {
 }
 
 function shortenURLCall(url) {
-    //TODO ajax call return shorted version
        console.log('shorten url call');
     var jqxhr = $.get('cgi-bin/GetBitlyLink.py', { 'url':url },
         shortenURLResponse);
@@ -252,8 +254,7 @@ function shortenURLResponse(data) {
 function renderMatches(data) {
     //add nav link
     //TODO fix this call
-//    nav_permalink_url = "personality.php?permalink=" +data["permalink_id"];
-//    $("#nav_link").attr("href",nav_permalink_url);
+
 
     //render index page
     $('#results').render(data, directive);
@@ -277,7 +278,7 @@ function renderMatches(data) {
                 'visuallyhidden');
 
             // show the top entries otherwise
-            $(this).parent().siblings('.word-' + this.value).each(
+            $(this).parent().siblings('.word-' + hash2dash(this.value)).each(
                 function (index) {
                     $(this).removeClass('visuallyhidden');
                 });
@@ -319,6 +320,24 @@ function renderMatches(data) {
         });
     $('.row').removeClass('visuallyhidden');
 
+}
+/**
+ * If a string is a hash tag, return a version with the hashtag replaced with a dash.
+ * otherwise leave the word untouched.
+ */
+function hash2dash(str){
+        if(str.charAt(0) == '#'){
+            return '-' + str.slice(1);
+        }
+    return str;
+}
+
+function dash2hash(str)
+{
+    if(str.charAt(0) == '-'){
+        return '#' + str.slice(1);
+    }
+    return str;
 }
 
 function renderPersonality(data) {
