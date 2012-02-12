@@ -17,11 +17,6 @@ var directive = {
         'match<-celeb_matches':{
             '+.matchlead':function (arg) {
                 curr_celeb = arg.item.screen_name;
-                // return "you and " + arg.item.name.toUpperCase() + ' <span>98%
-                // MATCH</span>';
-                // return 'you and <span class="celeb-name">'
-                // + arg.item.name + '</span> tweet about';
-
                 var str = '<span class="celeb-name">' + arg.item.name + '</span><span class="celeb-screen">&nbsp;@' + curr_celeb + "</span>";
                 return str;
             },
