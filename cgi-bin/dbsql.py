@@ -30,7 +30,8 @@ class SQLQuery:
             if values is not None:
                 print("Vals:")
                 debuglog.pprint_msg(values)
-            traceback.print_exc(file=sys.stdout)
+            #traceback.print_exc(file=sys.stdout)
+            debuglog.msg(traceback.format_exc())
             exit
 
     

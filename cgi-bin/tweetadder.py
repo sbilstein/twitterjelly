@@ -147,7 +147,10 @@ class TweetAdder:
         if tokens is None:
             txt = tweet['text']
             tokens = self.tfidf_obj.get_tokens(txt)
-        
+
+        if not tokens or not len(tokens):
+            return
+
         count = 0
         vals = {}
         q =  "INSERT IGNORE INTO tokens (token, type) VALUES"
@@ -167,6 +170,9 @@ class TweetAdder:
             txt = tweet['text']
             tokens = self.tfidf_obj.get_tokens(txt)
 
+        if not tokens or not len(tokens):
+            return
+
         count = 0
         vals = {'user':tweet['from_user'], 'tweet_id':tweet['id']}
         q = "INSERT INTO token_user_mapping (user, token, tweet_id) VALUES"
@@ -183,6 +189,51 @@ class TweetAdder:
         q = "SELECT text, from_user, id FROM tweets"
 
         results = self.sql.q(q)
+        failures = []
+        f = open('token_fix_failures.txt','w')
+        for result in results:
+            debuglog.msg("Adding tokens for tweet",result[2])
+            try:
+                self.addTokens({'text':result[0], 'from_user':result[1]})
+                self.addTokenMapping({'text':result[0], 'from_user':result[1], 'id':result[2]})
+            except:
+                failures.append(result[2])
+                debuglog.msg("\tAdding tokens failed!")
+                debuglog.msg("\tFailures so far:",len(failures))
+                f.write(result[2]+"\n")
+
+        f.close()
+
+        debuglog.msg(failures)
+
+    def identityMissingTweets(self):
+        f = open('added_tweets.txt')
+        added_tweet_ids = [int(line.replace('\n','')) for line in f.readlines()]
+        f.close()
+
+        #pprint.pprint(added_tweet_ids)
+
+        q = "SELECT id FROM tweets"
+        all_tweet_ids = [result[0] for result in self.sql.q(q)]
+
+
+        missing_tweets = list(filter(lambda x: x not in added_tweet_ids, all_tweet_ids))
+
+        pprint.pprint(missing_tweets)
+
+    def fixTokensInterrupted(self):
+        f = open('missing_tweets2.txt')
+        missing_tweets = [line.replace('\n','') for line in f.readlines()]
+
+        q = "SELECT text, from_user, id FROM tweets WHERE id IN("
+        vals = {}
+
+        q += ','.join(missing_tweets) + ')'
+
+        results = self.sql.q(q)
+        #pprint.pprint(results)
+        #return
+
         failures = []
         f = open('token_fix_failures.txt','w')
         for result in results:
@@ -228,4 +279,4 @@ class TweetAdder:
             print("%s%% of celebs updated."% str(100*count/float(len(celebs))))
 
 if __name__ == '__main__':
-    TweetAdder().fixTokens()
+    TweetAdder().fixTokensInterrupted()

@@ -10,7 +10,7 @@ print("Content-Type: application/json\n")
 form = cgi.FieldStorage()
 
 if "id" in form and len(form["id"].value) == 32 and not form["id"].value.count(' '):
-    q = "SELECT json FROM stored_matches_json WHERE hash=%(hash)s"
+    q = "SELECT json FROM stored_matches_json WHERE hashed=%(hash)s"
     vals = {'hash':form["id"].value}
     if "user" in form and len(form["user"].value) < 20 and not form["user"].value.count(' '):
         q += " AND user=%(user)s"
