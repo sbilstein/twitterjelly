@@ -75,7 +75,7 @@
 						<div class="matchlead">
 							<div class="result-share">
 							<img src="img/twitter-icon.gif"></img>
-								<a target="_blank">TWEET RESULTS</a>
+								<a target="_blank">tweet results</a>
 							</div>
 						</div>
 						<div class="words">

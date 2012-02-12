@@ -418,7 +418,9 @@ function ret_error(log) {
 $("body").ajaxError((function (e, jqxhr, settings, exception) {
 
     dispError('ajax');
-    console.log("AJAX ERROR");
+    console.log(jqxhr);
+    console.log(e);
+//    console.log("AJAX ERROR");
     console.log(exception);
 }));
 
