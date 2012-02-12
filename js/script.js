@@ -8,20 +8,15 @@ if (!console) {
         }
     };
 }
-var tweet_text = '...';
-var cur_celeb;
+
 var template = null;
 var in_request = false;
+var match_success = false;
 var directive = {
     'div.row':{
         'match<-celeb_matches':{
             '+.matchlead':function (arg) {
                 curr_celeb = arg.item.screen_name;
-                // return "you and " + arg.item.name.toUpperCase() + ' <span>98%
-                // MATCH</span>';
-                // return 'you and <span class="celeb-name">'
-                // + arg.item.name + '</span> tweet about';
-
                 var str = '<span class="celeb-name">' + arg.item.name + '</span><span class="celeb-screen">&nbsp;@' + curr_celeb + "</span>";
                 return str;
             },
@@ -140,24 +135,24 @@ $(document).ready(function () {
         getUserMatch(user_arg);
     } else if(getParameterByName('error'))
     {
-
         dispError(getParameterByName('error'));
     }
     //bind the go
     $("#go").click(getMatchesFromButton);
 
-})
+});
 
 /**
- * Call the python to get celeb TFIDF matches
+ *  Call the python to get celeb TFIDF matches
  * @param username
  */
+
 function getUserMatch(username) {
     var jqxhr = $.get('cgi-bin/GetCelebMatchesJSON.py', { 'user':username },
         populateMatchesFromFreshResult);
     in_request = true;
-}
-;
+};
+
 /**
  * Does a bunch of cleanup, and setting templates. Must be called before any
  * rendering.
@@ -166,6 +161,7 @@ function getUserMatch(username) {
  */
 function initMatchLoading() {
     // do not continue if in request
+    match_success = false;
     if (in_request == true) {
         return false;
     }
@@ -180,6 +176,7 @@ function initMatchLoading() {
     $('.error').addClass('visuallyhidden');
     $('.error').empty();
     $("#ajax-load").removeClass('visuallyhidden');
+    progress_update();
     return true;
 }
 
@@ -207,8 +204,6 @@ function populateMatchesFromFreshResult(data) {
     if (!validateData(data))
         return;
     populateMatches(data);
-
-
 }
 /**
  * Make the call to the rendering function using pure.js.
@@ -216,6 +211,7 @@ function populateMatchesFromFreshResult(data) {
  * @param data
  */
 function populateMatches(data) {
+    match_success = true;
     $('#go').attr('disabled', false);
     //check for a index.php specific element.
 
@@ -233,15 +229,14 @@ function populateMatches(data) {
     console.log(permalink_url)
     //TODO convert the permalink to a bit.ly link
     shortenURLCall(permalink_url);
-
     $("#ajax-load").addClass('visuallyhidden');
+    progress_stop();
 }
 
 function shortenURLCall(url) {
     console.log('shorten url call');
     var jqxhr = $.get('cgi-bin/GetBitlyLink.py', { 'url':url },
         shortenURLResponse);
-
 }
 
 function shortenURLResponse(data) {
@@ -416,8 +411,9 @@ function ret_error(log) {
     console.log(log);
 }
 $("body").ajaxError((function (e, jqxhr, settings, exception) {
-
-    dispError('ajax');
+    if(match_success == false){
+        dispError('ajax');
+    }
     console.log(jqxhr);
     console.log(e);
 //    console.log("AJAX ERROR");
@@ -462,22 +458,10 @@ function deselectFilter(selector) {
 }
 function dispError(type) {
     // TODO create images for each error type and switch on error type and inject data
-    /**
-     <div class="protected visuallyhidden">
-     <img src="img/protected.jpg "></img>
-     <p class="errormsg">TwitterJelly can't access your tweets if they
-     are protected. Try using another twitter account or unprotect your
-     tweets if you'd like.</p>
-     </div>
 
-     <div class="misc visuallyhidden">
-     <p class="errormsg">Whoa, something went wrong and we couldn't get
-     your matches! We're sorry :(</p>
-     <img src="img/misc_error.png" />
-     </div>
-     **/
     var error_string;
     $("#ajax-load").addClass('visuallyhidden');
+    progress_stop();
     if (type == "protected") {
         error_string = '<div><img src="img/protected.jpg"></img><p>TwitterJelly can\'t access your tweets if they' +
             ' are protected. Try using another twitter account or unprotect your' +

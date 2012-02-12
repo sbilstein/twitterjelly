@@ -150,8 +150,9 @@
 	<script src="js/libs/pure_min.js"></script>
 	<!-- TODO: Concat and minify -->
 	<script src="js/plugins.js"></script>
-	<script src="js/scriptP.js"> </script>
 	<script src="js/animation.js"></script>
+	<script src="js/script.js"> </script>
+
 
 
 	<!--[if lt IE 7 ]>
