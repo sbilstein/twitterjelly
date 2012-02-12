@@ -220,10 +220,10 @@ function populateMatches(data) {
 		//add nav link
 		nav_permalink_url = "personality.php?permalink=" +data["permalink_id"];
 		$("#nav_link").attr("href",nav_permalink_url);
-		
+
 		//render index page
 		$('#results').render(data, directive);
-		
+
 		/**
 		 * Bind all the buttons to the correct event
 		 */
