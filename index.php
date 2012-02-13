@@ -65,7 +65,7 @@
 				</div>
 			</div>
 			<div id="ajax-load" class="visuallyhidden">
-					<h1 id="current_progress_step">Hold tight.. we gotta get your tweets</h1>
+					<h3 id="current_progress_step">Hold tight.. we gotta get your tweets</h3>
 					<table id="progress_table" align="center"><tr><td>
 					<div id="showbar">
 						<span id="progress1">&nbsp; &nbsp;</span>
@@ -151,6 +151,7 @@
 	<!-- TODO: Concat and minify -->
 	<script src="js/plugins.js"></script>
 	<script src="js/animation.js"></script>
+	<script src="js/images.js"></script>
 	<script src="js/script.js"> </script>
 
 

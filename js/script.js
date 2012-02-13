@@ -22,7 +22,7 @@ var directive = {
             },
             '.result-share a@href':function (arg) {
 
-                return 'https://www.twitter.com/intent/tweet?source=celebjelly&text=TWATTER+CELEB+MATCH+IS+@' + curr_celeb + '.+WE+BOTH+USE+DA+WORDS.+CHECK+MY+RESULTS!';
+                return 'https://www.twitter.com/intent/tweet?source=celebjelly&text=hey+@' + curr_celeb + '+is+my+match+on+@celebjelly.+See+my+results+and+find+your+match+here+';
             },
             'div.words+':function (arg) {
                 var str = "";
@@ -124,11 +124,24 @@ $(document).ready(function () {
         initMatchLoading();
         $.getJSON('cgi-bin/GetStoredResult.py', {'id':getParameterByName('permalink')}, populateFromStoredResult);
     } else if (getParameterByName('test')) {
+        //time_len is in seconds
+        var time_len = parseInt(getParameterByName('time'));
+        console.log('time_len: ' + time_len);
         initMatchLoading();
-        $.get('mock.json', {
-            'user':'nil'
-        }, populateMatchesFromFreshResult);
-        console.log('getting json baby');
+        if(time_len == NaN){
+            time_len = 1;
+        } else {
+            time_len = time_len * 1000;
+        }
+
+        var to = setTimeout(
+            function(){
+            $.get('mock.json', {
+                'user':'nil'
+            }, populateMatchesFromFreshResult);
+                clearTimeout(to);
+        }, time_len);
+
     } else if (getParameterByName('user')) {
         initMatchLoading();
         var user_arg = getParameterByName('user');
@@ -229,6 +242,7 @@ function populateMatches(data) {
     console.log(permalink_url)
     //TODO convert the permalink to a bit.ly link
     shortenURLCall(permalink_url);
+
     $("#ajax-load").addClass('visuallyhidden');
     progress_stop();
 }
@@ -255,7 +269,6 @@ function renderMatches(data) {
     //add nav link
     //TODO fix this call
 
-
     //render index page
     $('#results').render(data, directive);
 
@@ -276,14 +289,11 @@ function renderMatches(data) {
             // hide all of them
             $(this).parent().siblings('.tweet_entry').addClass(
                 'visuallyhidden');
-
             // show the top entries otherwise
             $(this).parent().siblings('.word-' + hash2dash(this.value)).each(
                 function (index) {
                     $(this).removeClass('visuallyhidden');
                 });
-
-
             $(this).siblings().removeClass('pressed');
             $(this).addClass('pressed');
             // Instead of hiding, disable button and do showing all tweets
@@ -292,13 +302,10 @@ function renderMatches(data) {
         });
 
     $('.show-more input').click(
-
         function (arg) {
-
             if ($(this).hasClass('expanded')) {
                 $(this).removeClass('expanded');
                 $(this).val('SHOW MORE');
-
                 // hide extra tweets for all
                 $(this).parent().siblings('.tweet_entry').each(
                     function (index) {
@@ -306,19 +313,26 @@ function renderMatches(data) {
                             $(this).addClass('visuallyhidden');
                         }
                     });
-
             } else {
                 $(this).addClass('expanded');
                 $(this).val('SHOW LESS');
-
                 $(this).parent().siblings('.tweet_entry').removeClass(
                     'visuallyhidden');
-
             }
-
             return;
         });
+
     $('.row').removeClass('visuallyhidden');
+    /**
+     * TODO get this image loading working.
+     */
+
+//    $('.celeb-name').before(function(arg){
+//        var celeb = $(this).html();
+//        getImageForCeleb(celeb);
+//        return '<img id="' + celeb.replace(/ /, '-') + '" alt="' + celeb + '"></img>';
+//    });
+
 
 }
 /**
