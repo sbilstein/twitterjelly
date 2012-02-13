@@ -35,7 +35,7 @@ if filename and environment:
                          for line in read_original_file.readlines()]
     read_original_file.close()
 
-    configured_file_contents = [line.replace(environment_shebangs[destination_environment], environment_shebangs[environment])
+    configured_file_contents = [line.replace(environment_shebangs[environment], environment_shebangs[destination_environment])
                                 for line in original_contents]
 
     original_file_backup = open(filename+'.bak','w')
@@ -47,7 +47,7 @@ if filename and environment:
     write_original_file.write(''.join(configured_file_contents))
     write_original_file.close()
 
-    print("configured %s to %s"%(filename, environment))
+    print("configured %s to %s"%(filename, destination_environmentenvironment))
 
 else:
     print("fail!")
