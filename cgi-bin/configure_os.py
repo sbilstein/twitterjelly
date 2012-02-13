@@ -38,10 +38,10 @@ if filename and environment:
     configured_file_contents = [line.replace(environment_shebangs[from_environment], environment_shebangs[environment])
                                 for line in original_contents]
 
-    original_file_backup = open(filename+'.bak','w')
-    for line in original_contents:
-        original_file_backup.write(line)
-    original_file_backup.close()
+    #original_file_backup = open(filename+'.bak','w')
+    #for line in original_contents:
+    #    original_file_backup.write(line)
+    #original_file_backup.close()
 
     write_original_file = open(filename,'w')
     write_original_file.write(''.join(configured_file_contents))
