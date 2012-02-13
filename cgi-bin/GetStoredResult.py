@@ -18,9 +18,9 @@ if "id" in form and len(form["id"].value) == 32 and not form["id"].value.count('
 
     results = SQLQuery().q(q, vals)
     if results and len(results):
-        results = results[0][0]
-        results= results[0]+ "\"permalink_id\": \"" + form["id"].value +"\"," +results[1:len(results)]
-        print(results)
+        jresults = json.loads(results[0][0])
+        jresults["permalink_id"] = form["id"].value
+        print(json.dumps(jresults))
     else:
         print(json.dumps({'status':'error'}))
 else:
