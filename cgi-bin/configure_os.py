@@ -47,7 +47,7 @@ if filename and environment:
     write_original_file.write(''.join(configured_file_contents))
     write_original_file.close()
 
-    print("configured %s to %s"%(filename, destination_environmentenvironment))
+    print("configured %s to %s"%(filename, destination_environment))
 
 else:
     print("fail!")
