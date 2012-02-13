@@ -222,7 +222,7 @@ class DataGrabber:
         matches.sort(key=lambda x: -cumulative_celeb_scores[x[0]])
 
         # FIND MATCHING TWEETS FOR TOP 10 CELEBS
-        for top_10_celeb_index in range(10):
+        for top_10_celeb_index in range(min(10, len(matches))):
             celeb_match =  {
                         'screen_name' : matches[top_10_celeb_index][0],
                         'name' : '',
@@ -322,7 +322,8 @@ if __name__ == '__main__':
     #DataGrabber().GenerateLDAData()
     #DataGrabber().GetTfIdfScores()
 
-    user = "liltunechi"
+    user = "perezhilton"
+    #user = "liltunechi"
     #user = "KingGails"
     #user = "King32David"
     #user = "joshrweinstein"
