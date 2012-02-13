@@ -22,7 +22,7 @@ var directive = {
             },
             '.result-share a@href':function (arg) {
 
-                return 'https://www.twitter.com/intent/tweet?source=celebjelly&text=TWATTER+CELEB+MATCH+IS+@' + curr_celeb + '.+WE+BOTH+USE+DA+WORDS.+CHECK+MY+RESULTS!';
+                return 'https://www.twitter.com/intent/tweet?source=celebjelly&text=hey+@' + curr_celeb + '+is+my+match+on+@celebjelly.+See+my+results+and+find+your+match+here+';
             },
             'div.words+':function (arg) {
                 var str = "";
@@ -124,10 +124,25 @@ $(document).ready(function () {
         initMatchLoading();
         $.getJSON('cgi-bin/GetStoredResult.py', {'id':getParameterByName('permalink')}, populateFromStoredResult);
     } else if (getParameterByName('test')) {
+        //time_len is in seconds
+        var time_len = parseInt(getParameterByName('time'));
+        console.log('time_len: ' + time_len);
         initMatchLoading();
-        $.get('mock.json', {
-            'user':'nil'
-        }, populateMatchesFromFreshResult);
+        if(time_len == NaN){
+            time_len = 1;
+        } else {
+            time_len = time_len * 1000;
+        }
+
+        setTimeout(function(){
+            $.get('mock.json', {
+                'user':'nil'
+            }, populateMatchesFromFreshResult);
+        }, time_len);
+
+
+
+
         console.log('getting json baby');
     } else if (getParameterByName('user')) {
         initMatchLoading();
@@ -229,6 +244,7 @@ function populateMatches(data) {
     console.log(permalink_url)
     //TODO convert the permalink to a bit.ly link
     shortenURLCall(permalink_url);
+
     $("#ajax-load").addClass('visuallyhidden');
     progress_stop();
 }
