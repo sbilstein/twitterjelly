@@ -166,16 +166,21 @@ class DataGrabber:
 
         celebs = celeb_matches[1]
         results['user']['personality'] = celeb_matches[0]
-	#get pic urls for celeb pers matches
+
+	#get pic urls for celeb pers matches	
         if len(celebs) > 0:
-                q = "SELECT from_user,profile_image_url FROM tweets WHERE from_user='" + celebs[0] + "'"
+                q = "SELECT from_user,profile_image_url FROM tweets WHERE from_user="
+                count = 0
+                vals = {}
+				
                 for celeb in celebs:
-                        q = q + " OR from_user= '" + celeb +"'"
-        
+                    vals['token'+str(count)] = celeb
+                    q = q + "%(token"+str(count)+")s OR from_user="
+                    count += 1
+                q = q[0:len(q)-14] #remove last ' OR from_user=' string
                 q = q + " GROUP BY from_user"
         
-                q_results = self.sql.q(q)
-
+                q_results = self.sql.q(q, vals)
                 celeb_match_pers_array = []
                 for res in q_results:
                     celeb_match_pers_array.append([res[0],res[1]])
