@@ -324,19 +324,14 @@ function renderMatches(data) {
 
     $('.row').removeClass('visuallyhidden');
     /**
-     * Bind the usernames to their celeb.
+     * TODO get this image loading working.
      */
-//    $('.celeb-name').hover(
-//        function(arg){
-//            //TODO draw a box on top with image of celeb.
-//
-//        }
-//    );
-    $('.celeb-name').before(function(arg){
-        var celeb = $(this).html();
-        getImageForCeleb(celeb);
-        return '<img id="' + celeb.replace(/ /, '-') + '" alt="' + celeb + '"></img>';
-    });
+
+//    $('.celeb-name').before(function(arg){
+//        var celeb = $(this).html();
+//        getImageForCeleb(celeb);
+//        return '<img id="' + celeb.replace(/ /, '-') + '" alt="' + celeb + '"></img>';
+//    });
 
 
 }
