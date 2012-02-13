@@ -54,7 +54,7 @@
 			</div>
 			<div class="query-box">
 				<!--[if IE]>
-					MAKE SURE THIS SHIT SAYS THE RIGHT THING
+					<span>Enter your twitter username below</span>
 				<![endif]-->
 				<input type="search" size="26"
 					placeholder="Enter your twitter username..." id="usern" /> <input
