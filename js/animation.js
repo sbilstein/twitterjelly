@@ -22,12 +22,12 @@ function progress_clear() {
 	progressAt = 0;
 }
 function progress_update() {
-    $('#showbar').removeClass('visuallyhidden');
+    $('#ajax-load').removeClass('visuallyhidden');
 	progressAt++;
 	if (progressAt > progressEnd)
 		progress_clear();
 	else {
-        if((progressAt / 2) > (messages.length -1)){
+        if((progressAt/2) > (messages.length -1)){
             cur_text = messages[messages.length - 1];
         } else {
 		    cur_text= messages[Math.floor(progressAt / 2)];
@@ -54,5 +54,5 @@ function progress_update() {
 function progress_stop() {
 	clearTimeout(progressTimer);
 	progress_clear();
-	$('#showbar').addClass('visuallyhidden');
+	$('#ajax-load').addClass('visuallyhidden');
 }

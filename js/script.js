@@ -134,16 +134,14 @@ $(document).ready(function () {
             time_len = time_len * 1000;
         }
 
-        setTimeout(function(){
+        var to = setTimeout(
+            function(){
             $.get('mock.json', {
                 'user':'nil'
             }, populateMatchesFromFreshResult);
+                clearTimeout(to);
         }, time_len);
 
-
-
-
-        console.log('getting json baby');
     } else if (getParameterByName('user')) {
         initMatchLoading();
         var user_arg = getParameterByName('user');
@@ -271,7 +269,6 @@ function renderMatches(data) {
     //add nav link
     //TODO fix this call
 
-
     //render index page
     $('#results').render(data, directive);
 
@@ -292,14 +289,11 @@ function renderMatches(data) {
             // hide all of them
             $(this).parent().siblings('.tweet_entry').addClass(
                 'visuallyhidden');
-
             // show the top entries otherwise
             $(this).parent().siblings('.word-' + hash2dash(this.value)).each(
                 function (index) {
                     $(this).removeClass('visuallyhidden');
                 });
-
-
             $(this).siblings().removeClass('pressed');
             $(this).addClass('pressed');
             // Instead of hiding, disable button and do showing all tweets
@@ -308,13 +302,10 @@ function renderMatches(data) {
         });
 
     $('.show-more input').click(
-
         function (arg) {
-
             if ($(this).hasClass('expanded')) {
                 $(this).removeClass('expanded');
                 $(this).val('SHOW MORE');
-
                 // hide extra tweets for all
                 $(this).parent().siblings('.tweet_entry').each(
                     function (index) {
@@ -322,19 +313,31 @@ function renderMatches(data) {
                             $(this).addClass('visuallyhidden');
                         }
                     });
-
             } else {
                 $(this).addClass('expanded');
                 $(this).val('SHOW LESS');
-
                 $(this).parent().siblings('.tweet_entry').removeClass(
                     'visuallyhidden');
-
             }
-
             return;
         });
+
     $('.row').removeClass('visuallyhidden');
+    /**
+     * Bind the usernames to their celeb.
+     */
+//    $('.celeb-name').hover(
+//        function(arg){
+//            //TODO draw a box on top with image of celeb.
+//
+//        }
+//    );
+    $('.celeb-name').before(function(arg){
+        var celeb = $(this).html();
+        getImageForCeleb(celeb);
+        return '<img id="' + celeb.replace(/ /, '-') + '" alt="' + celeb + '"></img>';
+    });
+
 
 }
 /**
