@@ -330,10 +330,16 @@ if __name__ == '__main__':
     #TweetAdder().deleteCeleb("markcuban")
     #TweetAdder().deleteCeleb("thumbalip")
     #TweetAdder().deleteCeleb("XSTROLOGY")
+
     ta = TweetAdder()
+    """
     q = "SELECT * FROM celebs WHERE user NOT IN (SELECT DISTINCT from_user FROM tweets GROUP BY from_user);"
 
     celebs_to_delete = [result[0] for result in ta.sql.q(q)]
 
     for celeb in celebs_to_delete:
         ta.deleteCeleb(celeb)
+
+    """
+
+    ta.deleteCeleb("coco")

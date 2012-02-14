@@ -31,12 +31,11 @@ if filename and environment:
         from_environment = nix_aliases[0]
 
     read_original_file = open(filename, 'r')
-    original_contents = [line.replace(environment_shebangs[from_environment], environment_shebangs[environment])
-                         for line in read_original_file.readlines()]
+    original_contents = [line for line in read_original_file.readlines()]
     read_original_file.close()
 
-    configured_file_contents = [line.replace(environment_shebangs[from_environment], environment_shebangs[environment])
-                                for line in original_contents]
+    configured_file_contents = [original_contents[0].replace(environment_shebangs[from_environment], environment_shebangs[environment])]
+    configured_file_contents.extend(original_contents[1:])
 
     #original_file_backup = open(filename+'.bak','w')
     #for line in original_contents:

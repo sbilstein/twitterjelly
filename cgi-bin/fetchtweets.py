@@ -211,9 +211,9 @@ class TweetFetcher:
 
 
 if __name__ == '__main__':
-    #TweetFetcher().fetchTopUserTweets()
+    TweetFetcher().fetchTopUserTweets()
     #TweetFetcher().fetchUserTweets("king32david")
     #TweetFetcher().fetchUserTimeline("eminem")
     #TweetFetcher().fetchUserTimeline("ladygaga")
     #TweetFetcher().fetchTopUserTimelines()
-    TweetFetcher().addCeleb("donttrythis")
+    #TweetFetcher().addCeleb("donttrythis")
