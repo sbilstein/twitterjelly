@@ -17,7 +17,7 @@ var directive = {
         'match<-celeb_matches':{
             '+.matchlead':function (arg) {
                 curr_celeb = arg.item.screen_name;
-                var str = '<span class="celeb-name">' + arg.item.name + '</span><span class="celeb-screen">&nbsp;@' + curr_celeb + "</span>";
+                var str = '<span class="user-name">YOU</span><span class="celeb-name">' + arg.item.name + '</span><span class="celeb-screen">&nbsp;@' + curr_celeb + "</span>";
                 return str;
             },
             '.result-share a@href':function (arg) {
@@ -57,7 +57,7 @@ var directive = {
                 'tweet<-match.tweets':{
                     '+.celeb.tweet':function (arg) {
                         var len = arg.item.word.length;
-                        var patt = '\\b' + arg.item.word + '\\b';
+                        var patt = '\\b' + arg.item.word.toLowerCase() + '\\b';
                         var word_match = new RegExp();
                         word_match.compile(patt);
                         // workaround in case first word is match.
@@ -84,7 +84,7 @@ var directive = {
                     },
                     '.user.tweet':function (arg) {
                         var len = arg.item.word.length;
-                        var patt = '\\b' + arg.item.word + '\\b';
+                        var patt = '\\b' + arg.item.word.toLowerCase() + '\\b';
                         var word_match = new RegExp();
                         word_match.compile(patt);
                         var text = arg.item.user_tweet.text;

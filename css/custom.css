@@ -252,7 +252,11 @@ div.result-share a {
 .celeb-name {
     font-style: italic;
     text-transform: uppercase;
+    margin-left: 270px;
 }
+
+.user-name {    font-style: italic;
+    text-transform: uppercase;}
 
 .celeb-screen { /* 	display: block; */
     font-size: 13px;
