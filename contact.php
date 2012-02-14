@@ -45,36 +45,14 @@
 		<div class="grid_2 spacer"></div>
 		<div id="main" class="grid_12 main centercol">
 			<div class="vert-spacer"></div>
-			<div id="p_nav">
-				<a id="nav_link" href="personality.php">PERSONALITY</a>
-			</div>
+
 			<div id="lead">
-				<h1 class="lead">ABOUT US</h1>
+				<h1 class="lead">CONTACT US</h1>
 			</div>
+            <div class="content">
+            <p>Get in touch with using twitter via <a href="http://twitter.com/celebjelly">@CelebJelly</a> or email us.</p>
+            </div>
 
-			<div class="content">
-			<div align="center">
-			<iframe width="420" height="315" src="http://www.youtube.com/embed/AfpyoGFJNNE" frameborder="0" allowfullscreen></iframe>
-			</div>
-			<div>
-			<h2>Meet the TwitterJelly team</h2>
-			<p>
-			Hi! We're a group of software engineers based out of Seattle, WA.
-			We love machine learning, web design, and working on fun projects. Our other hobbies
-			include listening to Ween, hanging out with our favorite cats Lorie and Gus, and skiing down the streets during the snowpocalypse.
-			</p>
-
-			<h2>How does TwitterJelly work?</h2><p>
-			Our matches are based on an algorithm called <a href="http://en.wikipedia.org/wiki/Tfidf">TFIDF</a> that is used to identify meaningful words in a document.
-			We've processed the tweets of hundreds of celebrities to identify their most important terms. Once you enter your username, we run the same algorithm on a recent
-			selection of tweets. With your list of key terms, we compare your key terms to those of celebrities and then find your best matches along with tweets
-			that showcase your use of those words.
-			</p>
-			<div>
-			</div>
-
-
-			</div>
 		</div>
 	</div>
 

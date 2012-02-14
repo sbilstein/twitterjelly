@@ -45,9 +45,6 @@
 		<div class="grid_2 spacer"></div>
 		<div id="main" class="grid_12 main centercol">
 			<div class="vert-spacer"></div>
-			<div id="p_nav">
-				<a id="nav_link" href="personality.php">PERSONALITY</a>
-			</div>
 			<div id="lead">
 				<h1 class="lead">ABOUT US</h1>
 			</div>
@@ -64,11 +61,12 @@
 			include listening to Ween, hanging out with our favorite cats Lorie and Gus, and skiing down the streets during the snowpocalypse.
 			</p>
 
-			<h2>How does TwitterJelly work?</h2><p>
+			<h2>How does TwitterJelly work?</h2>
+			<p>
 			Our matches are based on an algorithm called <a href="http://en.wikipedia.org/wiki/Tfidf">TFIDF</a> that is used to identify meaningful words in a document.
 			We've processed the tweets of hundreds of celebrities to identify their most important terms. Once you enter your username, we run the same algorithm on a recent
-			selection of tweets. With your list of key terms, we compare your key terms to those of celebrities and then find your best matches along with tweets
-			that showcase your use of those words.
+			selection of tweets. With your list of key terms, we then compare your key terms to those of celebrities and then find your best matches along with tweets
+			that showcase your use of those special terms.
 			</p>
 			<div>
 			</div>
