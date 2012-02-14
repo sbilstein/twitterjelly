@@ -27,7 +27,7 @@ function progress_update() {
 	if (progressAt > progressEnd)
 		progress_clear();
 	else {
-        if((progressAt/2) > (messages.length -1)){
+        if((progressAt / 2) > (messages.length -1)){
             cur_text = messages[messages.length - 1];
         } else {
 		    cur_text= messages[Math.floor(progressAt / 2)];
