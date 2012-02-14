@@ -45,91 +45,14 @@
 		<div class="grid_2 spacer"></div>
 		<div id="main" class="grid_12 main centercol">
 			<div class="vert-spacer"></div>
-			<div id="p_nav">
-				<a id="nav_link" href="personality.php">PERSONALITY</a>
-			</div>
+
 			<div id="lead">
-				<h1 class="lead">FIND YOUR TOP CELEB TWITTER MATCHES</h1>
-
+				<h1 class="lead">CONTACT US</h1>
 			</div>
-			<div class="query-box">
-				<!--[if IE]>
-					<span>Enter your twitter username below</span>
-				<![endif]-->
-				<input type="search" size="26"
-					placeholder="Enter your twitter username..." id="usern" /> <input
-					type="button" id="go" class="submit" value="GO" />
+            <div class="content">
+            <p>Get in touch with using twitter via <a href="http://twitter.com/celebjelly">@CelebJelly</a> or email us.</p>
+            </div>
 
-				<div id="permalink_container" class="visuallyhidden">
-					share your results with this link: <a id="permalink"></a>
-				</div>
-			</div>
-			<div id="ajax-load" class="visuallyhidden">
-					<h3 id="current_progress_step">Hold tight.. we gotta get your tweets</h3>
-					<table id="progress_table" align="center"><tr><td>
-					<div id="showbar">
-						<span id="progress1">&nbsp; &nbsp;</span>
-						<span id="progress2">&nbsp; &nbsp;</span>
-						<span id="progress3">&nbsp; &nbsp;</span>
-						<span id="progress4">&nbsp; &nbsp;</span>
-						<span id="progress5">&nbsp; &nbsp;</span>
-						<span id="progress6">&nbsp; &nbsp;</span>
-						<span id="progress7">&nbsp; &nbsp;</span>
-						<span id="progress8">&nbsp; &nbsp;</span>
-						<span id="progress9">&nbsp; &nbsp;</span>
-						<span id="progress10">&nbsp; &nbsp;</span>
-						<span id="progress11">&nbsp; &nbsp;</span>
-						<span id="progress12">&nbsp; &nbsp;</span>
-						<span id="progress13">&nbsp; &nbsp;</span>
-						<span id="progress14">&nbsp; &nbsp;</span>
-						<span id="progress15">&nbsp; &nbsp;</span>
-					</div>
-					</td></tr>
-					</table>
-			</div>
-			<div class="error"></div>
-			<div class="results_col" id="results">
-				<div id="row-container">
-					<div class="row visuallyhidden" id="row-template">
-						<div class="matchlead">
-							<div class="result-share">
-							<img src="img/twitter-icon.gif"></img>
-								<a target="_blank">tweet results</a>
-							</div>
-						</div>
-						<div class="words">
-							<span class="list-lead">you both tweet about</span>
-						</div>
-						<div class="tweet_entry top-border">
-							<div class="user tweetbox">
-								<div class="twitprof">
-									<img class="user" src="" /><br /> <a
-										class="user twitlink visuallyhidden"></a>
-								</div>
-								<span><a></a> </span>
-								<div class="user tweet"></div>
-							</div>
-							<div class="celeb tweetbox">
-								<div class="twitprof">
-									<img class="celeb" src="" /><br /> <a
-										class="celeb twitlink visuallyhidden"></a>
-								</div>
-								<span><a class="leadname"></a> </span>
-								<div class="celeb tweet">
-									<a class="twitlink"></a>
-								</div>
-							</div>
-
-						</div>
-						<div class="show-more">
-							<input type="button" value="SHOW MORE"></input>
-						</div>
-
-					</div>
-				</div>
-
-
-			</div>
 		</div>
 	</div>
 

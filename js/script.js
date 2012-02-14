@@ -21,8 +21,16 @@ var directive = {
                 return str;
             },
             '.result-share a@href':function (arg) {
+                var i;
+                var ret_url =  'https://www.twitter.com/intent/tweet?source=celebjelly&text=hey+@' + curr_celeb +
+                    '+is+my+celeb+twitter+match!+See+my+results+here+http://www.twitterjelly.com/?user=+' + arg.context.user.screen_name;
+//                for (var key in arg.item.top_words){
+//                    ret_url += key+',+'
+//                        i++;
+//                    if (i > )
+//                }(' + arg.item.name.replace(/ /, '+')+'
 
-                return 'https://www.twitter.com/intent/tweet?source=celebjelly&text=hey+@' + curr_celeb + '+is+my+match+on+@celebjelly.+See+my+results+and+find+your+match+here+';
+                return ret_url;
             },
             'div.words+':function (arg) {
                 var str = "";
