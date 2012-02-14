@@ -185,6 +185,47 @@ class TweetAdder:
         q = q[:len(q)-1] #remove last comma
         self.sql.q(q,vals)
 
+    def deleteCeleb(self, celeb):
+        """
+        Back up and delete data for a celeb who doesn't make the cut.
+        """
+        self.backupCeleb(celeb)
+
+        vals = {'celeb':celeb}
+
+        q = "DELETE FROM celebs WHERE user=%(celeb)s"
+        self.sql.q(q, vals)
+
+        q = "DELETE FROM celeb_tfidf WHERE user=%(celeb)s"
+        self.sql.q(q, vals)
+
+        q = "DELETE FROM token_user_mapping WHERE user=%(celeb)s"
+        self.sql.q(q, vals)
+
+        q = "DELETE FROM tweets WHERE from_user=%(celeb)s"
+        self.sql.q(q, vals)
+
+        print("Deleted",celeb)
+
+
+    def backupCeleb(self, celeb):
+        """
+        Back up data for a celeb (before deleting them).
+        """
+        vals = {'celeb':celeb}
+
+        q = "INSERT INTO celebs_deleted (user) VALUES(%(celeb)s)"
+        self.sql.q(q, vals)
+
+        q = "INSERT INTO celeb_tfidf_deleted (SELECT * FROM celeb_tfidf_all WHERE user=%(celeb)s)"
+        self.sql.q(q, vals)
+
+        q = "INSERT INTO token_user_mapping_deleted (SELECT * FROM token_user_mapping WHERE user=%(celeb)s)"
+        self.sql.q(q, vals)
+
+        q = "INSERT INTO tweets_deleted (SELECT * FROM tweets WHERE from_user=%(celeb)s)"
+        self.sql.q(q, vals)
+
     def fixTokens(self):
         q = "SELECT text, from_user, id FROM tweets"
 
@@ -279,4 +320,26 @@ class TweetAdder:
             print("%s%% of celebs updated."% str(100*count/float(len(celebs))))
 
 if __name__ == '__main__':
-    TweetAdder().fixTokensInterrupted()
+    #TweetAdder().fixTokensInterrupted()
+    #TweetAdder().backupCeleb("adamsavage")
+    #TweetAdder().deleteCeleb("adamsavage")
+    #TweetAdder().deleteCeleb("BreakingNews")
+    #TweetAdder().deleteCeleb("hurricanehelms")
+    #TweetAdder().deleteCeleb("kittie")
+    #TweetAdder().deleteCeleb("lukewilson")
+    #TweetAdder().deleteCeleb("markcuban")
+    #TweetAdder().deleteCeleb("thumbalip")
+    #TweetAdder().deleteCeleb("XSTROLOGY")
+
+    ta = TweetAdder()
+    """
+    q = "SELECT * FROM celebs WHERE user NOT IN (SELECT DISTINCT from_user FROM tweets GROUP BY from_user);"
+
+    celebs_to_delete = [result[0] for result in ta.sql.q(q)]
+
+    for celeb in celebs_to_delete:
+        ta.deleteCeleb(celeb)
+
+    """
+
+    ta.deleteCeleb("coco")

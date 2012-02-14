@@ -125,6 +125,7 @@ class TweetFetcher:
         # if we have matching non-celebrity tweets, and if so return them (in future: possibly add new tweets from
         # search api as well). If not, get tweets from the timeline api, store them in the tweets_non_celeb table,
         # and return an object with those tweets.
+        # Also, if a user is cached and called with default, we will just get back the cached data and not insert anything.
 
         debuglog.msg("Fetching timeline for @%s..."%user)
         got_cache_data = False
@@ -197,9 +198,22 @@ class TweetFetcher:
             
         return {'status':'success'}
 
+    def addCeleb(self, celeb):
+        print("Adding",celeb)
+        q = "INSERT INTO celebs (user) VALUES(%(celeb)s)"
+        vals = {'celeb':celeb}
+
+        self.sql.q(q, vals)
+
+        self.fetchUserTimeline(celeb, use_cache=False)
+
+        print("Added",celeb)
+
+
 if __name__ == '__main__':
     TweetFetcher().fetchTopUserTweets()
     #TweetFetcher().fetchUserTweets("king32david")
     #TweetFetcher().fetchUserTimeline("eminem")
     #TweetFetcher().fetchUserTimeline("ladygaga")
     #TweetFetcher().fetchTopUserTimelines()
+    #TweetFetcher().addCeleb("donttrythis")

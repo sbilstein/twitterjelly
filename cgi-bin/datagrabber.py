@@ -49,12 +49,15 @@ class DataGrabber:
         terms = {}
         token_mapping = {}
         user_tweets = {}
+        tokens_count = 0
 
         for tweet in user_data['results']:
             user_tweets[tweet['id']] = tweet
 
             tokens = [t for t in tfidf_obj.get_tokens(tweet['text'],
                                                       tagtypes=False, wordsonly=True, excludeUrls=True, minLength=3)]
+
+            tokens_count += len(tokens)
 
             for token in tokens:
                 if token in terms:
@@ -73,7 +76,7 @@ class DataGrabber:
     
         for term in terms.keys():
             if term in idfs['idfs']: 
-                tf = Decimal(terms[term]) / Decimal(len(tokens))
+                tf = Decimal(terms[term]) / Decimal(tokens_count)
                 this_tfidf = Decimal(tf) * Decimal(idfs['idfs'][term])
                 scores[term] = float(this_tfidf)
 
@@ -130,11 +133,12 @@ class DataGrabber:
 
         return results
 
-    ##@perftest
     def GetCelebMatchesForUser(self, user):
         """
         Generate object with information about user and matches with celeb (including matching tweets) to pass to the
         UI.
+
+        TODO: Break this into smaller functions, it's way too big.
         """
         
         results = {
@@ -167,7 +171,7 @@ class DataGrabber:
         celebs = celeb_matches[1]
         results['user']['personality'] = celeb_matches[0]
 
-	#get pic urls for celeb pers matches	
+        #get pic urls for celeb pers matches
         if len(celebs) > 0:
                 q = "SELECT from_user,profile_image_url FROM tweets WHERE from_user="
                 count = 0
@@ -218,22 +222,38 @@ class DataGrabber:
         matches.sort(key=lambda x: -cumulative_celeb_scores[x[0]])
 
         # FIND MATCHING TWEETS FOR TOP 10 CELEBS
-        for top_10_celeb_index in range(10):
+        for top_10_celeb_index in range(min(10, len(matches))):
             celeb_match =  {
                         'screen_name' : matches[top_10_celeb_index][0],
                         'name' : '',
                         'pic_url' : '',
                         'match_score':cumulative_celeb_scores[matches[top_10_celeb_index][0]],
-                        'top_words' : matches[top_10_celeb_index][2],
+                        #'top_words' : matches[top_10_celeb_index][2],
+                        'top_words' : {},
                         'tweets' : []
                     }
 
-            vals = {'celeb':matches[top_10_celeb_index][0], 'tokens': ' '.join(matches[top_10_celeb_index][2])}
-            q = "SELECT text, id, from_user_name, profile_image_url FROM tweets WHERE from_user=%(celeb)s AND MATCH(text) AGAINST(%(tokens)s)"
+            #vals = {'celeb':matches[top_10_celeb_index][0], 'tokens': ' '.join(matches[top_10_celeb_index][2])}
+            #q = "SELECT text, id, from_user_name, profile_image_url FROM tweets WHERE from_user=%(celeb)s AND MATCH(text) AGAINST(%(tokens)s)"
+
+            q = "SELECT text, id, from_user_name, profile_image_url FROM tweets, (SELECT tweet_id FROM token_user_mapping WHERE user=%(celeb)s AND token IN ("
+            vals = {'celeb':matches[top_10_celeb_index][0]}
+
+            count = 0
+            for token in list(matches[top_10_celeb_index][2].keys()):
+                vals['token'+str(count)] = token
+                q += '%(token'+str(count)+')s, '
+                count += 1
+
+            # trim last comma and space.
+            if count:
+                q = q[:len(q)-2]
+
+            q += ")) as t WHERE tweets.id=t.tweet_id;"
             q_results = self.sql.q(q, vals)
 
             # skip if we don't have any matching celeb tweets.
-            if not len(q_results):
+            if not q_results or not len(q_results):
                 continue
 
             celeb_match['name'] = q_results[0][2]
@@ -248,6 +268,9 @@ class DataGrabber:
                 celeb_tweets_for_token = list(filter(lambda x: x['text'].lower().count(token.lower()) > 0, matching_celeb_tweets))
                 user_tweets_for_token = [user_tfidf['tweets'][user_tfidf['token_mapping'][token][k]]
                                          for k in range(len(user_tfidf['token_mapping'][token]))]
+
+                if len(celeb_tweets_for_token) or len(user_tweets_for_token):
+                    celeb_match['top_words'][token] = matches[top_10_celeb_index][2][token]
 
                 for matching_tweets_for_token_index in range(min(len(celeb_tweets_for_token), len(user_tweets_for_token))):
                     celeb_match['tweets'].append(
@@ -299,7 +322,8 @@ if __name__ == '__main__':
     #DataGrabber().GenerateLDAData()
     #DataGrabber().GetTfIdfScores()
 
-    user = "liltunechi"
+    user = "perezhilton"
+    #user = "liltunechi"
     #user = "KingGails"
     #user = "King32David"
     #user = "joshrweinstein"
@@ -335,6 +359,9 @@ if __name__ == '__main__':
     #user = "adamcarolla"
     #user = "robdelaney"
     #user = "2chambers"
+
+    #user = "chrisbrown"
+
 
     dg = DataGrabber()
     #testPerfWithExistingDataGrabber(dg, user)
