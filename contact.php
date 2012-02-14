@@ -49,84 +49,29 @@
 				<a id="nav_link" href="personality.php">PERSONALITY</a>
 			</div>
 			<div id="lead">
-				<h1 class="lead">FIND YOUR TOP CELEB TWITTER MATCHES</h1>
-
+				<h1 class="lead">ABOUT US</h1>
 			</div>
-			<div class="query-box">
-				<!--[if IE]>
-					<span>Enter your twitter username below</span>
-				<![endif]-->
-				<input type="search" size="26"
-					placeholder="Enter your twitter username..." id="usern" /> <input
-					type="button" id="go" class="submit" value="GO" />
 
-				<div id="permalink_container" class="visuallyhidden">
-					share your results with this link: <a id="permalink"></a>
-				</div>
+			<div class="content">
+			<div align="center">
+			<iframe width="420" height="315" src="http://www.youtube.com/embed/AfpyoGFJNNE" frameborder="0" allowfullscreen></iframe>
 			</div>
-			<div id="ajax-load" class="visuallyhidden">
-					<h3 id="current_progress_step">Hold tight.. we gotta get your tweets</h3>
-					<table id="progress_table" align="center"><tr><td>
-					<div id="showbar">
-						<span id="progress1">&nbsp; &nbsp;</span>
-						<span id="progress2">&nbsp; &nbsp;</span>
-						<span id="progress3">&nbsp; &nbsp;</span>
-						<span id="progress4">&nbsp; &nbsp;</span>
-						<span id="progress5">&nbsp; &nbsp;</span>
-						<span id="progress6">&nbsp; &nbsp;</span>
-						<span id="progress7">&nbsp; &nbsp;</span>
-						<span id="progress8">&nbsp; &nbsp;</span>
-						<span id="progress9">&nbsp; &nbsp;</span>
-						<span id="progress10">&nbsp; &nbsp;</span>
-						<span id="progress11">&nbsp; &nbsp;</span>
-						<span id="progress12">&nbsp; &nbsp;</span>
-						<span id="progress13">&nbsp; &nbsp;</span>
-						<span id="progress14">&nbsp; &nbsp;</span>
-						<span id="progress15">&nbsp; &nbsp;</span>
-					</div>
-					</td></tr>
-					</table>
+			<div>
+			<h2>Meet the TwitterJelly team</h2>
+			<p>
+			Hi! We're a group of software engineers based out of Seattle, WA.
+			We love machine learning, web design, and working on fun projects. Our other hobbies
+			include listening to Ween, hanging out with our favorite cats Lorie and Gus, and skiing down the streets during the snowpocalypse.
+			</p>
+
+			<h2>How does TwitterJelly work?</h2><p>
+			Our matches are based on an algorithm called <a href="http://en.wikipedia.org/wiki/Tfidf">TFIDF</a> that is used to identify meaningful words in a document.
+			We've processed the tweets of hundreds of celebrities to identify their most important terms. Once you enter your username, we run the same algorithm on a recent
+			selection of tweets. With your list of key terms, we compare your key terms to those of celebrities and then find your best matches along with tweets
+			that showcase your use of those words.
+			</p>
+			<div>
 			</div>
-			<div class="error"></div>
-			<div class="results_col" id="results">
-				<div id="row-container">
-					<div class="row visuallyhidden" id="row-template">
-						<div class="matchlead">
-							<div class="result-share">
-							<img src="img/twitter-icon.gif"></img>
-								<a target="_blank">tweet results</a>
-							</div>
-						</div>
-						<div class="words">
-							<span class="list-lead">you both tweet about</span>
-						</div>
-						<div class="tweet_entry top-border">
-							<div class="user tweetbox">
-								<div class="twitprof">
-									<img class="user" src="" /><br /> <a
-										class="user twitlink visuallyhidden"></a>
-								</div>
-								<span><a></a> </span>
-								<div class="user tweet"></div>
-							</div>
-							<div class="celeb tweetbox">
-								<div class="twitprof">
-									<img class="celeb" src="" /><br /> <a
-										class="celeb twitlink visuallyhidden"></a>
-								</div>
-								<span><a class="leadname"></a> </span>
-								<div class="celeb tweet">
-									<a class="twitlink"></a>
-								</div>
-							</div>
-
-						</div>
-						<div class="show-more">
-							<input type="button" value="SHOW MORE"></input>
-						</div>
-
-					</div>
-				</div>
 
 
 			</div>
@@ -170,7 +115,7 @@
 
 	<!-- change the UA-XXXXX-X to be your site's ID -->
 	<script>
-		var _gaq = [ [ '_setAccount', 'UA-XXXXX-X' ], [ '_trackPageview' ] ];
+		var _gaq = [ [ '_setAccount', 'UA-26514236-2' ], [ '_trackPageview' ] ];
 		(function(d, t) {
 			var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
 			g.async = true;

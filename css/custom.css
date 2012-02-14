@@ -23,7 +23,7 @@ header {
     z-index: 1;
 }
 
-header a,a:visited,a:hover {
+.header a,a:visited,a:hover {
     color: white;
     text-decoration: none;
 }
@@ -70,7 +70,25 @@ div.centercol {
 div.ajaxload {
     text-align: center;
 }
+div.content {
+    margin: 20px;
+}
 
+.content h2 {
+    margin-top: 10px;
+    font-weight: 900;
+    font-size: 20px;
+}
+
+.content a {
+    color: black;
+}
+.content p {
+    font-size: 16px;
+    margin-left: 40px;
+    margin-top: 10px;
+
+}
 div.tweetbox {
     display: table-cell;
     float: left;
@@ -109,7 +127,7 @@ div.twitprof img {
     float: top;
 }
 
-div.matchlead {
+.matchlead {
     color: black;
     letter-spacing: 0em;
     padding-left: 10px;
