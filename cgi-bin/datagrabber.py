@@ -16,6 +16,8 @@ class DataGrabber:
     def __init__(self):
         self.sql = SQLQuery()
         self.tf = TweetFetcher(sql_obj=self.sql)
+        # TODO More sophisticated stopword filtering.
+        self.stopwords = ["the", "lol", "yea", "haha"]
 
     ##@perftest
     def GetUserTweets(self, user, can_retry=True):
@@ -241,9 +243,11 @@ class DataGrabber:
 
             count = 0
             for token in list(matches[top_10_celeb_index][2].keys()):
-                vals['token'+str(count)] = token
-                q += '%(token'+str(count)+')s, '
-                count += 1
+                # TODO Clean up stopword filtering
+                if token.lower() not in self.stopwords:
+                    vals['token'+str(count)] = token
+                    q += '%(token'+str(count)+')s, '
+                    count += 1
 
             # trim last comma and space.
             if count:
@@ -264,7 +268,8 @@ class DataGrabber:
 
             # ADD TWEETS THAT MATCH ON TOKENS
             sorted_tokens = [token for token in  sorted(matches[top_10_celeb_index][2].keys(), key=lambda x: -matches[top_10_celeb_index][2][x])]
-            for token in sorted_tokens:
+            # TODO Clean up stopword filtering
+            for token in list(filter(lambda x: x not in self.stopwords, sorted_tokens)):
                 celeb_tweets_for_token = list(filter(lambda x: x['text'].lower().count(token.lower()) > 0, matching_celeb_tweets))
                 user_tweets_for_token = [user_tfidf['tweets'][user_tfidf['token_mapping'][token][k]]
                                          for k in range(len(user_tfidf['token_mapping'][token]))]
