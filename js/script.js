@@ -57,7 +57,9 @@ var directive = {
                 'tweet<-match.tweets':{
                     '+.celeb.tweet':function (arg) {
                         var len = arg.item.word.length;
-                        var word_match = new RegExp(arg.item.word);
+                        var patt = '\\b' + arg.item.word + '\\b';
+                        var word_match = new RegExp();
+                        word_match.compile(patt);
                         // workaround in case first word is match.
                         var text = arg.item.celeb_tweet.text;
                         var new_str = '';
@@ -82,7 +84,9 @@ var directive = {
                     },
                     '.user.tweet':function (arg) {
                         var len = arg.item.word.length;
-                        var word_match = new RegExp(arg.item.word);
+                        var patt = '\\b' + arg.item.word + '\\b';
+                        var word_match = new RegExp();
+                        word_match.compile(patt);
                         var text = arg.item.user_tweet.text;
                         var new_str = '';
 

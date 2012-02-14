@@ -50,7 +50,7 @@
 				<h1 class="lead">CONTACT US</h1>
 			</div>
             <div class="content">
-            <p>Get in touch with using twitter via <a href="http://twitter.com/celebjelly">@CelebJelly</a> or email us.</p>
+            <p>Get in touch with using Twitter via <a href="http://twitter.com/celebjelly">@CelebJelly</a> or email us at twitterjelly at gmail dot com.</p>
             </div>
 
 		</div>
