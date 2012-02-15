@@ -51,7 +51,7 @@ var directive = {
                 'tweet<-match.tweets':{
                     '+.celeb.tweet':function (arg) {
                         var len = arg.item.word.length;
-                        var patt = '\\b' + hashRemove(arg.item.word.toLowerCase()) + '\\b';
+                        var patt = hashRemove(arg.item.word.toLowerCase()) + '\\b';
                         var word_match = new RegExp();
                         word_match.compile(patt);
                         // workaround in case first word is match.
