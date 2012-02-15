@@ -156,8 +156,9 @@ $(document).ready(function () {
         }, time_len);
 
     } else if (getParameterByName('user')) {
-        initMatchLoading();
         var user_arg = getParameterByName('user');
+        $('#usern').val(user_arg);
+        initMatchLoading();
         getUserMatch(user_arg);
     } else if(getParameterByName('error'))
     {
