@@ -261,6 +261,15 @@ div.result-share a {
     font-size: 13px;
 }
 
+.celeb-screen a {
+    color: black;
+    text-decoration: none;
+}
+
+.celeb-screen a:hover {
+    text-decoration: underline;
+}
+
 .matched-word {
     background-color: #FFF9AD;
     font-weight: 800;

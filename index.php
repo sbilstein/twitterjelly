@@ -106,7 +106,7 @@
 									<img class="user" src="" /><br /> <a
 										class="user twitlink visuallyhidden"></a>
 								</div>
-								<span><a></a> </span>
+								<span><a target="_blank" class="leadname"></a> </span>
 								<div class="user tweet"></div>
 							</div>
 							<div class="celeb tweetbox">
@@ -114,7 +114,7 @@
 									<img class="celeb" src="" /><br /> <a
 										class="celeb twitlink visuallyhidden"></a>
 								</div>
-								<span><a class="leadname"></a> </span>
+								<span><a target="_blank" class="leadname"></a> </span>
 								<div class="celeb tweet">
 									<a class="twitlink"></a>
 								</div>

@@ -11,7 +11,7 @@ var directive = {
         'match<-celeb_matches':{
             '+.matchlead':function (arg) {
                 curr_celeb = arg.item.screen_name;
-                var str = '<span class="celeb-name">' + arg.item.name + '</span><span class="celeb-screen">&nbsp;@' + curr_celeb + "</span>";
+                var str = '<span class="celeb-name">' + arg.item.name + '</span><span class="celeb-screen">&nbsp;<a alt="See these results" href="?user=' + curr_celeb + '">@' + curr_celeb + "</a></span>";
                 return str;
             },
             '.result-share a@href':function (arg) {
