@@ -51,7 +51,7 @@ var directive = {
                 'tweet<-match.tweets':{
                     '+.celeb.tweet':function (arg) {
                         var len = arg.item.word.length;
-                        var patt = '\\b' + arg.item.word.toLowerCase() + '\\b';
+                        var patt = '\\b' + hashRemove(arg.item.word.toLowerCase()) + '\\b';
                         var word_match = new RegExp();
                         word_match.compile(patt);
                         // workaround in case first word is match.
@@ -78,7 +78,7 @@ var directive = {
                     },
                     '.user.tweet':function (arg) {
                         var len = arg.item.word.length;
-                        var patt = '\\b' + arg.item.word.toLowerCase() + '\\b';
+                        var patt = '\\b' + hashRemove(arg.item.word.toLowerCase()) + '\\b';
                         var word_match = new RegExp();
                         word_match.compile(patt);
                         var text = arg.item.user_tweet.text;
@@ -363,6 +363,13 @@ function dash2hash(str)
 {
     if(str.charAt(0) == '-'){
         return '#' + str.slice(1);
+    }
+    return str;
+}
+
+function hashRemove(str){
+    if(str.charAt(0) == '#'){
+        return str.slice(1);
     }
     return str;
 }
