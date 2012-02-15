@@ -199,7 +199,9 @@ function initMatchLoading() {
         $('#row-container').empty();
         $('#row-container').html(template);
     }
+    $('#permalink-container').addClass('visuallyhidden');
     $('.error').addClass('visuallyhidden');
+
     $('.error').empty();
     $("#ajax-load").removeClass('visuallyhidden');
     progress_update();
