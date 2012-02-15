@@ -100,7 +100,7 @@ var directive = {
                         return '@' + arg.context.user.screen_name;
                     },
                     '.user.tweetbox span a@href':function (arg) {
-                        return 'http://www.twitter.com/'
+                        return '?user='
                             + arg.context.user.screen_name;
                     },
                     '.user.tweetbox span+':function (arg) {
@@ -110,7 +110,7 @@ var directive = {
                         return '@' + curr_celeb;
                     },
                     '.celeb.tweetbox span a@href':function (arg) {
-                        return 'http://www.twitter.com/' + curr_celeb;
+                        return '?user=' + curr_celeb;
                     },
                     '.celeb.tweetbox span+':function (arg) {
                         return ' tweeted ';
