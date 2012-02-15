@@ -2,6 +2,11 @@ __author__ = 'jonathan'
 from optparse import OptionParser
 import os
 
+parser = OptionParser()
+parser.add_option("-e", "--environment", action="store", dest="environment", help="The environment for which to configure.")
+parser.add_option("-f", "--file", action="store", dest="filename", help="The file to configure for the chosen environment.")
+(options, args) = parser.parse_args()
+
 environment_shebangs = {}
 
 windows_aliases = ['windows', 'nt']
@@ -12,11 +17,6 @@ for windows_alias in windows_aliases:
 
 for nix_alias in nix_aliases:
     environment_shebangs[nix_alias] = '/usr/bin/env python'
-
-parser = OptionParser()
-parser.add_option("-e", "--environment", action="store", dest="environment", help="The environment for which to configure.")
-parser.add_option("-f", "--file", action="store", dest="filename", help="The file to configure for the chosen environment.")
-(options, args) = parser.parse_args()
 
 environment = options.environment
 filename=options.filename

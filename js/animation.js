@@ -32,7 +32,7 @@ function progress_update() {
         } else {
 		    cur_text= messages[Math.floor(progressAt / 2)];
         }
-        console.log(progressAt);
+        // console.log(progressAt);
 		$('#current_progress_step').empty();
 		$('#current_progress_step').append(cur_text);
 

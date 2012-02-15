@@ -11,7 +11,7 @@ var directive = {
         'match<-celeb_matches':{
             '+.matchlead':function (arg) {
                 curr_celeb = arg.item.screen_name;
-                var str = '<span class="user-name">YOU</span><span class="celeb-name">' + arg.item.name + '</span><span class="celeb-screen">&nbsp;@' + curr_celeb + "</span>";
+                var str = '<span class="celeb-name">' + arg.item.name + '</span><span class="celeb-screen">&nbsp;<a alt="See these results" href="?user=' + curr_celeb + '">@' + curr_celeb + "</a></span>";
                 return str;
             },
             '.result-share a@href':function (arg) {
@@ -51,7 +51,7 @@ var directive = {
                 'tweet<-match.tweets':{
                     '+.celeb.tweet':function (arg) {
                         var len = arg.item.word.length;
-                        var patt = '\\b' + arg.item.word.toLowerCase() + '\\b';
+                        var patt = hashRemove(arg.item.word.toLowerCase()) + '\\b';
                         var word_match = new RegExp();
                         word_match.compile(patt);
                         // workaround in case first word is match.
@@ -78,7 +78,7 @@ var directive = {
                     },
                     '.user.tweet':function (arg) {
                         var len = arg.item.word.length;
-                        var patt = '\\b' + arg.item.word.toLowerCase() + '\\b';
+                        var patt =  hashRemove(arg.item.word.toLowerCase()) + '\\b';
                         var word_match = new RegExp();
                         word_match.compile(patt);
                         var text = arg.item.user_tweet.text;
@@ -139,7 +139,7 @@ $(document).ready(function () {
     } else if (getParameterByName('test')) {
         //time_len is in seconds
         var time_len = parseInt(getParameterByName('time'));
-        console.log('time_len: ' + time_len);
+        // console.log('time_len: ' + time_len);
         initMatchLoading();
         if(time_len == NaN){
             time_len = 1;
@@ -201,7 +201,9 @@ function initMatchLoading() {
         $('#row-container').empty();
         $('#row-container').html(template);
     }
+    $('#permalink-container').addClass('visuallyhidden');
     $('.error').addClass('visuallyhidden');
+
     $('.error').empty();
     $("#ajax-load").removeClass('visuallyhidden');
     progress_update();
@@ -254,7 +256,7 @@ function populateMatches(data) {
     }
     permalink_url = window.location.origin + window.location.pathname + "?permalink=" + data["permalink_id"];
 
-    console.log(permalink_url)
+    // console.log(permalink_url)
     //TODO convert the permalink to a bit.ly link
     shortenURLCall(permalink_url);
 
@@ -263,16 +265,16 @@ function populateMatches(data) {
 }
 
 function shortenURLCall(url) {
-    console.log('shorten url call');
+    // console.log('shorten url call');
     var jqxhr = $.get('cgi-bin/GetBitlyLink.py', { 'url':url },
         shortenURLResponse);
 }
 
 function shortenURLResponse(data) {
-    console.log('url shortened response rxed');
+    // console.log('url shortened response rxed');
 //    $("#nav_link").attr("href",data['url']);
 
-    console.log(data);
+    // console.log(data);
     var url = data['url'];
     $("#permalink").attr("href", url);
     $("#permalink").html(url);
@@ -296,7 +298,7 @@ function renderMatches(data) {
             if (deselectFilter(this)) {
                 $(this).parent().siblings('.show-more').children('input').val('SHOW MORE');
                 $(this).parent().siblings('show-more').removeClass('expanded');
-                $(this).parent().siblings('.show-more').children('input').attr('disabled', true);
+                $(this).parent().siblings('.show-more').children('input').attr('disabled', false);
                 $(this).parent().siblings('.show-more').children('input').removeClass('visuallyhidden');
 
                 return false;
@@ -369,6 +371,14 @@ function dash2hash(str)
     return str;
 }
 
+function hashRemove(str){
+    if(str.charAt(0) == '#'){
+        return str ;
+    }
+    //'(^|\\s)'
+    return  '\\b' + str;
+}
+
 function renderPersonality(data) {
     //delete old values
     $('#pers_id').empty();
@@ -437,16 +447,16 @@ function validateData(data) {
 }
 
 function ret_error(log) {
-    console.log(log);
+    // console.log(log);
 }
 $("body").ajaxError((function (e, jqxhr, settings, exception) {
     if(match_success == false){
         dispError('ajax');
     }
-    console.log(jqxhr);
-    console.log(e);
-//    console.log("AJAX ERROR");
-    console.log(exception);
+    // console.log(jqxhr);
+    // console.log(e);
+// console.log("AJAX ERROR");
+    // console.log(exception);
 }));
 
 $('#usern').keyup(function (e) {
@@ -512,7 +522,7 @@ function dispError(type) {
 
     $('.error').html(error_string);
     $('.error').removeClass('visuallyhidden');
-    console.log('error should be visible');
+    // console.log('error should be visible');
 }
 /**
  *
