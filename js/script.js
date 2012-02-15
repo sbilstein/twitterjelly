@@ -294,7 +294,7 @@ function renderMatches(data) {
             if (deselectFilter(this)) {
                 $(this).parent().siblings('.show-more').children('input').val('SHOW MORE');
                 $(this).parent().siblings('show-more').removeClass('expanded');
-                $(this).parent().siblings('.show-more').children('input').attr('disabled', true);
+                $(this).parent().siblings('.show-more').children('input').attr('disabled', false);
                 $(this).parent().siblings('.show-more').children('input').removeClass('visuallyhidden');
 
                 return false;
