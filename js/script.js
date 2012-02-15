@@ -2,12 +2,6 @@
 //
 // */
 
-if (!console) {
-    console = {
-        log:function () {
-        }
-    };
-}
 
 var template = null;
 var in_request = false;
@@ -131,6 +125,13 @@ var directive = {
 
 
 $(document).ready(function () {
+
+    if (!console) {
+        console = {
+            log:function () {
+            }
+        };
+    }
     // if the permalink is empty do nothing, otherwise get a stored result
     if (getParameterByName('permalink')) {
         initMatchLoading();
