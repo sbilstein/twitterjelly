@@ -195,6 +195,8 @@ function initMatchLoading() {
     if (template == null) {
         template = $('#row-template').clone();
     } else {
+		//make personality invisible
+		$('#pers_section').addClass('visuallyhidden');
         // erase old container add the template so pure.js can render
         $('#row-container').empty();
         $('#row-container').html(template);
@@ -389,8 +391,8 @@ function renderPersonality(data) {
     for (i = 0; i < pers_celebs.length; i = i + 1) {
         celeb_name = pers_celebs[i][0]
         pic_url = pers_celebs[i][1]
-        to_append = "<div class='pers_celeb'> <a href='http://twitter.com/" + celeb_name + "'class='pers_celeb_name'>" + celeb_name + "</a><br>" +
-            "<a href='http://twitter.com/" + celeb_name + "'><img src='" + pic_url + "'/></a>" +
+        to_append = "<div class='roman pers_celeb'> <a href='http://twitter.com/" + celeb_name + "'class='pers_celeb_name'>" + celeb_name + "</a><br>" +
+            "<a target='_blank' href='http://twitter.com/" + celeb_name + "'><img src='" + pic_url + "'/></a>" +
             "</div>";
         $("#pers_celebs").append(to_append);
     }

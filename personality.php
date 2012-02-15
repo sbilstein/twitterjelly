@@ -48,11 +48,11 @@
 		<div id="main" class="grid_12 main centercol">
 
 			<div class="vert-spacer"></div>
+			<!--[if !IE]><!--><!-- THIS TARGETS ALL BROWSERS EXCEPT FOR IE -->
 			<div id="p_nav">
 				<a id="nav_link" href="index.php" >MATCHES</a>
-				<!--<div id="nav_text">Matches</div>-->
 			</div>
-			
+			<!--<![endif]--><!--><!-- ENDS TARGET OF ALL BROWSERS EXCEPT IE -->
 			<div id="lead">
 				<h1 class="lead">
 					FIND YOUR TWITTER PERSONALITY
@@ -146,7 +146,7 @@
 						<div id="M" class ="pers_dim visuallyhidden">
 						<img src="img/M.png" />
 							<h3>Twitter Role</h3>
-							<p>Maverick: You are a lone wolf. You make twitter interesting. Do you have thousands of followers?</p>
+							<p>Maverick: You are unique jelly bean. You make twitter interesting. Do you have thousands of followers?</p>
 						</div>
 						
 						<div class="pers_id">Celebrities With Same Personality</div>
@@ -158,23 +158,7 @@
 					
 
 				</div>
-				
-				<!--
-				<div id="social">
-					<div id="facebook">
-						<div class="fb-like" data-href="http://www.twitterjelly.com"
-							data-send="false" data-width="250" data-show-faces="false"></div>
-					</div>
-					<div id="twitter">
-						<script src="js/libs/twit.js"></script>
-						<a class="twitter-share-button" href="https://twitter.com/share"
-							data-lang="en"
-							data-text="My celeb twitter match is@ ! Find yours at http://www.twitter.jelly.com"></a>
-
-				</div>
-					<a href="#">How do we compute jellyrank?</a>
-				</div>
-				-->
+			
 			</div>
 		</div>
 

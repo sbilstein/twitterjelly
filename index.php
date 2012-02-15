@@ -45,9 +45,11 @@
 		<div class="grid_2 spacer"></div>
 		<div id="main" class="grid_12 main centercol">
 			<div class="vert-spacer"></div>
+			<!--[if !IE]><!--><!-- THIS TARGETS ALL BROWSERS EXCEPT FOR IE -->
 			<div id="p_nav">
 				<a id="nav_link" href="personality.php">PERSONALITY</a>
 			</div>
+			<!--<![endif]--><!--><!-- ENDS TARGET OF ALL BROWSERS EXCEPT IE -->
 			<div id="lead">
 				<h1 class="lead">FIND YOUR TOP CELEB TWITTER MATCHES</h1>
 
