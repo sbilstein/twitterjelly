@@ -17,7 +17,7 @@ var directive = {
             '.result-share a@href':function (arg) {
                 var i;
                 var ret_url =  'https://www.twitter.com/intent/tweet?source=celebjelly&text=hey+@' + curr_celeb +
-                    '+is+my+celeb+twitter+match!+See+my+results+here+http://www.twitterjelly.com/?user=+' + arg.context.user.screen_name;
+                    '+is+my+celeb+twitter+match!+See+my+results+here+http://www.twitterjelly.com/?user=' + arg.context.user.screen_name;
 //                for (var key in arg.item.top_words){
 //                    ret_url += key+',+'
 //                        i++;
