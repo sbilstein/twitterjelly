@@ -78,7 +78,7 @@ var directive = {
                     },
                     '.user.tweet':function (arg) {
                         var len = arg.item.word.length;
-                        var patt = '\\b' + hashRemove(arg.item.word.toLowerCase()) + '\\b';
+                        var patt =  hashRemove(arg.item.word.toLowerCase()) + '\\b';
                         var word_match = new RegExp();
                         word_match.compile(patt);
                         var text = arg.item.user_tweet.text;
@@ -369,9 +369,9 @@ function dash2hash(str)
 
 function hashRemove(str){
     if(str.charAt(0) == '#'){
-        return '#?' + str.slice(1);
+        return '(^|\s)' + str ;
     }
-    return str;
+    return  '\\b' + str;
 }
 
 function renderPersonality(data) {
