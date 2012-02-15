@@ -2,12 +2,6 @@
 //
 // */
 
-if (!console) {
-    console = {
-        log:function () {
-        }
-    };
-}
 
 var template = null;
 var in_request = false;
@@ -57,7 +51,9 @@ var directive = {
                 'tweet<-match.tweets':{
                     '+.celeb.tweet':function (arg) {
                         var len = arg.item.word.length;
-                        var word_match = new RegExp(arg.item.word);
+                        var patt = hashRemove(arg.item.word.toLowerCase()) + '\\b';
+                        var word_match = new RegExp();
+                        word_match.compile(patt);
                         // workaround in case first word is match.
                         var text = arg.item.celeb_tweet.text;
                         var new_str = '';
@@ -82,7 +78,9 @@ var directive = {
                     },
                     '.user.tweet':function (arg) {
                         var len = arg.item.word.length;
-                        var word_match = new RegExp(arg.item.word);
+                        var patt =  hashRemove(arg.item.word.toLowerCase()) + '\\b';
+                        var word_match = new RegExp();
+                        word_match.compile(patt);
                         var text = arg.item.user_tweet.text;
                         var new_str = '';
 
@@ -127,6 +125,13 @@ var directive = {
 
 
 $(document).ready(function () {
+
+    if (!console) {
+        console = {
+            log:function () {
+            }
+        };
+    }
     // if the permalink is empty do nothing, otherwise get a stored result
     if (getParameterByName('permalink')) {
         initMatchLoading();
@@ -194,7 +199,9 @@ function initMatchLoading() {
         $('#row-container').empty();
         $('#row-container').html(template);
     }
+    $('#permalink-container').addClass('visuallyhidden');
     $('.error').addClass('visuallyhidden');
+
     $('.error').empty();
     $("#ajax-load").removeClass('visuallyhidden');
     progress_update();
@@ -289,7 +296,7 @@ function renderMatches(data) {
             if (deselectFilter(this)) {
                 $(this).parent().siblings('.show-more').children('input').val('SHOW MORE');
                 $(this).parent().siblings('show-more').removeClass('expanded');
-                $(this).parent().siblings('.show-more').children('input').attr('disabled', true);
+                $(this).parent().siblings('.show-more').children('input').attr('disabled', false);
                 $(this).parent().siblings('.show-more').children('input').removeClass('visuallyhidden');
 
                 return false;
@@ -360,6 +367,14 @@ function dash2hash(str)
         return '#' + str.slice(1);
     }
     return str;
+}
+
+function hashRemove(str){
+    if(str.charAt(0) == '#'){
+        return str ;
+    }
+    //'(^|\\s)'
+    return  '\\b' + str;
 }
 
 function renderPersonality(data) {
