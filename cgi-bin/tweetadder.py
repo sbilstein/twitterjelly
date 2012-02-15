@@ -342,4 +342,10 @@ if __name__ == '__main__':
 
     """
 
-    ta.deleteCeleb("coco")
+    #ta.deleteCeleb("coco")
+    #ta.deleteCeleb("ClaroRonaldo")
+    #ta.deleteCeleb("LilWayne")
+    #ta.deleteCeleb("OfficialAudrina")
+    #ta.deleteCeleb("nelly")
+    #ta.deleteCeleb("HOOTSUITE")
+    ta.deleteCeleb("mashable")
