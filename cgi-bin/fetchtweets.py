@@ -217,3 +217,5 @@ if __name__ == '__main__':
     #TweetFetcher().fetchUserTimeline("ladygaga")
     #TweetFetcher().fetchTopUserTimelines()
     #TweetFetcher().addCeleb("donttrythis")
+    #TweetFetcher().addCeleb("AudrinaPatridge")
+

@@ -139,7 +139,7 @@ $(document).ready(function () {
     } else if (getParameterByName('test')) {
         //time_len is in seconds
         var time_len = parseInt(getParameterByName('time'));
-        console.log('time_len: ' + time_len);
+        // console.log('time_len: ' + time_len);
         initMatchLoading();
         if(time_len == NaN){
             time_len = 1;
@@ -254,7 +254,7 @@ function populateMatches(data) {
     }
     permalink_url = window.location.origin + window.location.pathname + "?permalink=" + data["permalink_id"];
 
-    console.log(permalink_url)
+    // console.log(permalink_url)
     //TODO convert the permalink to a bit.ly link
     shortenURLCall(permalink_url);
 
@@ -263,16 +263,16 @@ function populateMatches(data) {
 }
 
 function shortenURLCall(url) {
-    console.log('shorten url call');
+    // console.log('shorten url call');
     var jqxhr = $.get('cgi-bin/GetBitlyLink.py', { 'url':url },
         shortenURLResponse);
 }
 
 function shortenURLResponse(data) {
-    console.log('url shortened response rxed');
+    // console.log('url shortened response rxed');
 //    $("#nav_link").attr("href",data['url']);
 
-    console.log(data);
+    // console.log(data);
     var url = data['url'];
     $("#permalink").attr("href", url);
     $("#permalink").html(url);
@@ -445,16 +445,16 @@ function validateData(data) {
 }
 
 function ret_error(log) {
-    console.log(log);
+    // console.log(log);
 }
 $("body").ajaxError((function (e, jqxhr, settings, exception) {
     if(match_success == false){
         dispError('ajax');
     }
-    console.log(jqxhr);
-    console.log(e);
-//    console.log("AJAX ERROR");
-    console.log(exception);
+    // console.log(jqxhr);
+    // console.log(e);
+// console.log("AJAX ERROR");
+    // console.log(exception);
 }));
 
 $('#usern').keyup(function (e) {
@@ -520,7 +520,7 @@ function dispError(type) {
 
     $('.error').html(error_string);
     $('.error').removeClass('visuallyhidden');
-    console.log('error should be visible');
+    // console.log('error should be visible');
 }
 /**
  *
