@@ -369,7 +369,7 @@ function dash2hash(str)
 
 function hashRemove(str){
     if(str.charAt(0) == '#'){
-        return str.slice(1);
+        return '#?' + str.slice(1);
     }
     return str;
 }
