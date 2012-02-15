@@ -369,8 +369,9 @@ function dash2hash(str)
 
 function hashRemove(str){
     if(str.charAt(0) == '#'){
-        return '(^|\\s)' + str ;
+        return str ;
     }
+    //'(^|\\s)'
     return  '\\b' + str;
 }
 
