@@ -53,6 +53,7 @@ div.centercol {
     text-align: center;
     vertical-align: bottom;
     word-spacing: -0.07em;
+    text-transform: uppercase;
 }
 
 .query-box {

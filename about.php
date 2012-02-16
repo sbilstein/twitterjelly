@@ -46,7 +46,7 @@
 		<div id="main" class="grid_12 main centercol">
 			<div class="vert-spacer"></div>
 			<div id="lead">
-				<h1 class="lead">ABOUT US</h1>
+				<h1 class="lead">Meet the TwitterJelly team</h1>
 			</div>
 
 			<div class="content">
@@ -54,7 +54,7 @@
 			<iframe width="420" height="315" src="http://www.youtube.com/embed/AfpyoGFJNNE" frameborder="0" allowfullscreen></iframe>
 			</div>
 			<div>
-			<h2>Meet the TwitterJelly team</h2>
+			<h2>Who are we?</h2>
 			<p>
 			Hi! We're a group of software engineers based out of Seattle, WA.
 			We love machine learning, web design, and working on fun projects. Our other hobbies
