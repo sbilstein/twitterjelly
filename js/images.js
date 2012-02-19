@@ -15,7 +15,5 @@ function getImageForCeleb(name){
 
 function imageResponseHandler(data){
     // console.log('rxed img')
-        // console.log(
-            data
-        );
+        // console.log(data);
 }
