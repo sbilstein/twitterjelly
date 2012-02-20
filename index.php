@@ -51,7 +51,7 @@
 			</div>
 			<!--<![endif]--><!--><!-- ENDS TARGET OF ALL BROWSERS EXCEPT IE -->
 			<div id="lead">
-				<h1 class="lead">FIND YOUR TOP CELEB TWITTER MATCHES</h1>
+				<h1 class="lead">find your top celeb matches</h1>
 
 			</div>
 			<div class="query-box">

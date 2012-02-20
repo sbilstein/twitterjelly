@@ -55,7 +55,7 @@
 			<!--<![endif]--><!--><!-- ENDS TARGET OF ALL BROWSERS EXCEPT IE -->
 			<div id="lead">
 				<h1 class="lead">
-					FIND YOUR TWITTER PERSONALITY
+					Find your twitter personality
 				</h1>
 			</div>
 			<div class="query-box">

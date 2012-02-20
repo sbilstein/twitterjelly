@@ -53,6 +53,7 @@ div.centercol {
     text-align: center;
     vertical-align: bottom;
     word-spacing: -0.07em;
+    text-transform: uppercase;
 }
 
 .query-box {
@@ -134,16 +135,15 @@ div.twitprof img {
     padding-top: 5px;
     background-color: #FAFAFA;
     margin-top: 15px;
-    margin-bottom: 2px;
+    margin-bottom: 5px;
 }
 
 .list-lead {
     font-size: 22px;
     color: black;
-    letter-spacing: 0em;
+    letter-spacing: -0.04em;
     margin-left: 50px;
     font-weight: 600;
-    letter-spacing: -0.11em;
 }
 
 span.celeb-name {
@@ -224,10 +224,11 @@ div.result-share {
     float: right;
     font-size: 14px;
     color: black;
-    padding: 3px;
-    height: 39px;
+  margin-top: 6px;
+    margin-right: 5px;
 
-    /*margin-top: 10px;*/
+
+
 }
 
 div.result-share a:hover {
@@ -358,7 +359,8 @@ div.row {
     width: 730px;
     background-color: #FFCF90;
     position: absolute;
-    z-index: -5;
+    top: 22px;
+    z-index: -1;
     border-bottom-right-radius: 5px 5px;
     border-bottom-left-radius: 5px 5px;
     box-shadow: 0px 0px 5px 0px #888;
