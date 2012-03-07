@@ -353,6 +353,8 @@ span.celeb-screen {
 	margin-left: auto;
 	margin-right: auto;
 	display: block;
+	height: 50px;
+	width: 50px;
 	border: 1px solid black;
 }
 
